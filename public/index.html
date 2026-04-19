@@ -36,15 +36,15 @@
     <nav>
       <a href="#" class="active" onclick="filterCat('todos')">Início</a>
       <a href="#produtos" onclick="filterCat('todos')">Produtos</a>
-      <a href="#" onclick="filterCat('tecnologia')">Tecnologia</a>
-      <a href="#" onclick="filterCat('moda')">Moda</a>
-      <a href="#" onclick="filterCat('esporte')">Esporte</a>
+      <a href="#" onclick="filterCat('ferramentas')">Ferramentas</a>
+      <a href="#" onclick="filterCat('furadeiras')">Furadeiras</a>
+      <a href="#" onclick="filterCat('games')">Games</a>
     </nav>
     <div class="header-search">
       <input type="text" id="searchInput" placeholder="Buscar produtos..." oninput="handleSearch()">
       <button aria-label="Buscar">🔍</button>
     </div>
-    <button class="btn-add-header" onclick="openModal()">+ Adicionar Produto</button>
+
   </div>
 </header>
 
@@ -93,15 +93,14 @@
   </div>
   <div class="cats-grid">
     <button class="cat-btn active" onclick="filterCat('todos')">🔥 Todos</button>
-    <button class="cat-btn" onclick="filterCat('tecnologia')">💻 Tecnologia</button>
-    <button class="cat-btn" onclick="filterCat('moda')">👔 Moda</button>
-    <button class="cat-btn" onclick="filterCat('esporte')">⚽ Esporte</button>
-    <button class="cat-btn" onclick="filterCat('barba')">✂️ Barba & Grooming</button>
-    <button class="cat-btn" onclick="filterCat('acessorios')">⌚ Acessórios</button>
-    <button class="cat-btn" onclick="filterCat('casa')">🏠 Casa & Gadgets</button>
+    <button class="cat-btn" onclick="filterCat('ferramentas')">🔧 Ferramentas</button>
+    <button class="cat-btn" onclick="filterCat('furadeiras')">⚙️ Furadeiras</button>
+    <button class="cat-btn" onclick="filterCat('chaves')">🔑 Chaves</button>
+    <button class="cat-btn" onclick="filterCat('eletroportatil')">⚡ Eletroportátil</button>
+    <button class="cat-btn" onclick="filterCat('seguranca')">🦺 Segurança</button>
+    <button class="cat-btn" onclick="filterCat('medidores')">📏 Medidores</button>
+    <button class="cat-btn" onclick="filterCat('iluminacao')">💡 Iluminação</button>
     <button class="cat-btn" onclick="filterCat('games')">🎮 Games</button>
-    <button class="cat-btn" onclick="filterCat('automotivo')">🚗 Automotivo</button>
-    <button class="cat-btn" onclick="filterCat('saude')">💪 Saúde & Fitness</button>
   </div>
 </section>
 
@@ -123,12 +122,6 @@
     </div>
   </div>
   <div class="products-grid" id="productsGrid"></div>
-  <div class="empty-state" id="emptyState">
-    <div class="empty-icon">📦</div>
-    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:1px;margin-bottom:8px">Nenhum produto encontrado</h3>
-    <p>Adicione seu primeiro produto clicando em "+ Adicionar Produto"</p>
-    <button class="btn-save" style="margin-top:1.5rem;padding:12px 28px" onclick="openModal()">Adicionar Produto</button>
-  </div>
 </section>
 
 <footer>
@@ -136,15 +129,16 @@
     <div class="footer-top">
       <div class="footer-logo">
         <span>Área do Homem</span>
-        <p>Os melhores produtos em um só lugar</p>
+        <p>Ferramentas profissionais e produtos para homem</p>
       </div>
       <div class="footer-links">
         <div class="footer-col">
           <h4>Categorias</h4>
-          <a href="#">Tecnologia</a>
-          <a href="#">Moda Masculina</a>
-          <a href="#">Esporte & Fitness</a>
-          <a href="#">Barba & Grooming</a>
+          <a href="#" onclick="filterCat('ferramentas')">🔧 Ferramentas</a>
+          <a href="#" onclick="filterCat('furadeiras')">⚙️ Furadeiras</a>
+          <a href="#" onclick="filterCat('chaves')">🔑 Chaves</a>
+          <a href="#" onclick="filterCat('seguranca')">🦺 Segurança</a>
+          <a href="#" onclick="filterCat('games')">🎮 Games</a>
         </div>
         <div class="footer-col">
           <h4>Informações</h4>
@@ -167,78 +161,6 @@
 </footer>
 
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">↑</button>
-
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
-  <div class="modal">
-    <div class="modal-header">
-      <h2 class="modal-title" id="modalTitle">Novo Produto</h2>
-      <button class="modal-close" onclick="closeModal()" aria-label="Fechar modal">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="form-group full">
-          <label>Nome do Produto *</label>
-          <input type="text" id="f-name" placeholder="Ex: Smartwatch Samsung Galaxy Watch 6">
-        </div>
-        <div class="form-group full">
-          <label>Link Afiliado *</label>
-          <input type="url" id="f-link" placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label>Preço Atual (R$) *</label>
-          <input type="number" id="f-price" placeholder="299.90" min="0" step="0.01">
-        </div>
-        <div class="form-group">
-          <label>Preço Antigo (R$)</label>
-          <input type="number" id="f-oldprice" placeholder="399.90" min="0" step="0.01">
-        </div>
-        <div class="form-group">
-          <label>Categoria *</label>
-          <select id="f-cat">
-            <option value="tecnologia">💻 Tecnologia</option>
-            <option value="moda">👔 Moda</option>
-            <option value="esporte">⚽ Esporte</option>
-            <option value="barba">✂️ Barba & Grooming</option>
-            <option value="acessorios">⌚ Acessórios</option>
-            <option value="casa">🏠 Casa & Gadgets</option>
-            <option value="games">🎮 Games</option>
-            <option value="automotivo">🚗 Automotivo</option>
-            <option value="saude">💪 Saúde & Fitness</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Loja</label>
-          <input type="text" id="f-store" placeholder="Ex: Amazon, Mercado Livre, Shopee">
-        </div>
-        <div class="form-group">
-          <label>Avaliação (0-5)</label>
-          <input type="number" id="f-rating" placeholder="4.8" min="0" max="5" step="0.1">
-        </div>
-        <div class="form-group">
-          <label>Nº de Avaliações</label>
-          <input type="number" id="f-rcount" placeholder="1250" min="0">
-        </div>
-        <div class="form-group full">
-          <label>URL da Imagem</label>
-          <input type="url" id="f-img" placeholder="https://... (opcional)">
-        </div>
-        <div class="form-group full">
-          <label>Destaque</label>
-          <select id="f-badge">
-            <option value="">Nenhum</option>
-            <option value="hot">🔥 HOT</option>
-            <option value="sale">💰 OFERTA</option>
-            <option value="new">✨ NOVO</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" onclick="saveProduct()">Salvar Produto</button>
-    </div>
-  </div>
-</div>
 
 <div class="toast" id="toast" role="status" aria-live="polite">
   <span class="toast-icon" id="toast-icon">✓</span>
