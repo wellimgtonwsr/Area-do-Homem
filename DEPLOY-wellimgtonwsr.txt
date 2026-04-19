@@ -1,0 +1,238 @@
+🚀 DEPLOY RÁPIDO - wellimgtonwsr
+================================
+
+Seu usuário GitHub: wellimgtonwsr
+Data: 19 de Abril de 2026
+
+INSTRUÇÕES EXATAS PARA COPIAR E COLAR NO POWERSHELL
+====================================================
+
+⏰ Tempo total: ~5 minutos
+
+---
+
+PASSO 1: Abrir PowerShell
+=========================
+1. Pressione: Win + X
+2. Clique: "Windows PowerShell"
+3. Pronto!
+
+---
+
+PASSO 2: Entrar na Pasta
+========================
+Cole este comando:
+
+cd C:\Users\monky\Downloads
+
+Pressione ENTER
+
+---
+
+PASSO 3: Criar Repositório no GitHub
+=====================================
+1. Abra: https://github.com/new
+2. Preencha:
+   - Repository name: area-do-homem
+   - Description: Curadoria de Produtos Masculinos Premium
+   - Public: ✓ (marcado)
+3. Deixe tudo mais abaixo em branco (não inicialize)
+4. Clique: "Create repository"
+5. DEIXE ABERTA ESSA PÁGINA - você precisará dela
+
+---
+
+PASSO 4: Verifica Git e Node
+=============================
+Cole UM DE CADA VEZ:
+
+git --version
+node --version
+npm --version
+
+Se todos mostrarem versão, está OK. Se tiver erro "não encontrado", 
+você precisa instalar (veja FAQ no final)
+
+---
+
+PASSO 5: Instalar Dependências
+===============================
+Cole:
+
+npm install
+
+Espere terminar (demora 1-2 minutos, vai baixar Express)
+
+---
+
+PASSO 6: Configurar Git
+=======================
+Cole CADA LINHA uma de cada vez (pressione ENTER após cada uma):
+
+git init
+
+git config user.name "wellimgtonwsr"
+
+git config user.email "seu-email@exemplo.com"
+
+git add .
+
+git commit -m "🚀 Projeto inicial - Área do Homem"
+
+git branch -M main
+
+---
+
+PASSO 7: Conectar ao GitHub
+============================
+Cole EXATAMENTE (é uma linha só):
+
+git remote add origin https://github.com/wellimgtonwsr/area-do-homem.git
+
+---
+
+PASSO 8: Fazer Push (ENVIAR PARA GITHUB)
+========================================
+Cole:
+
+git push -u origin main
+
+Aqui pode pedir para fazer login no GitHub:
+- Se aparecer navegador → Autorize
+- Se pedir token → Gere em: https://github.com/settings/tokens
+  (Marque: repo, write:packages)
+
+---
+
+PASSO 9: Confirmar Envio
+=======================
+Se aparecer:
+✅ "Branch 'main' set up to track remote tracking branch 'main' from 'origin'."
+
+Significa QUE FUNCIONOU! 🎉
+
+---
+
+PASSO 10: Verificar no GitHub
+=============================
+1. Acesse: https://github.com/wellimgtonwsr/area-do-homem
+2. Você deve ver seus arquivos lá:
+   - server.js
+   - package.json
+   - public/ (com os arquivos)
+   - etc
+
+---
+
+PASSO 11: Deploy no Railway
+===========================
+Agora o PRÓXIMO E ÚLTIMO passo:
+
+1. Abra: https://railway.app/dashboard
+2. Clique: "Create New" → "Project"
+3. Clique: "Deploy from GitHub"
+4. Autorize o Railway (permite acessar GitHub)
+5. Procure por: "area-do-homem"
+6. Clique em "area-do-homem"
+7. Clique: "Deploy"
+8. PRONTO! Espere 2-3 minutos
+
+Railway vai gerar uma URL como:
+https://area-do-homem-xxxxx.up.railway.app
+
+Essa é sua URL pública! Compartilhe com o mundo! 🌍
+
+---
+
+TESTE SEU SITE
+==============
+Abra a URL que Railway gerou:
+https://area-do-homem-xxxxx.up.railway.app
+
+Você deve ver:
+✅ Slider com imagens
+✅ Categorias
+✅ Seção de produtos
+✅ Tudo bonito e escuro
+
+Se algo não aparecer, veja FAQ abaixo.
+
+---
+
+FAQ - PROBLEMAS COMUNS
+======================
+
+❌ "git: command not found"
+→ Git não está instalado
+→ Baixe em: https://git-scm.com/download/win
+
+❌ "node: command not found"
+→ Node.js não está instalado
+→ Baixe em: https://nodejs.org/
+
+❌ "fatal: destination path 'existing' already exists"
+→ Já existe um repositório
+→ Cole: git config user.name "wellimgtonwsr"
+
+❌ "fatal: Authentication failed"
+→ Senha do GitHub errada ou expirou
+→ Vá em: https://github.com/settings/tokens
+→ Crie um novo token
+→ Cole como senha
+
+❌ Railway mostra erro "Build failed"
+→ Vá: Railway Dashboard → seu projeto → Logs
+→ Procure por error ou failed
+→ Se tiver "cannot find module", rode npm install novamente
+
+❌ Imagens não carregam
+→ Via de regra é problema de cache
+→ Atualize o navegador (Ctrl+F5)
+
+---
+
+COMANDOS ÚTEIS PARA O FUTURO
+============================
+
+Fazer mudanças e enviar:
+
+git add .
+git commit -m "Sua descrição aqui"
+git push
+
+Testar servidor localmente antes de enviar:
+
+npm start
+
+(Abre em http://localhost:3000, pressione Ctrl+C para parar)
+
+Ver logs do Railway:
+
+Railway Dashboard → seu projeto → Logs
+
+---
+
+PARABÉNS! 🎉
+============
+
+Você tem:
+✅ Repositório no GitHub
+✅ Código online
+✅ Site em produção
+✅ URL pública para compartilhar
+
+Próximas melhorias:
+- Adicionar domínio próprio
+- Banco de dados
+- Sistema de pagamento
+- Analytics
+
+Mas por agora, O BÁSICO ESTÁ PRONTO! 🚀
+
+---
+
+Se tiver dúvida em algum passo, me chamarei! 💪
+
+Data de criação: 19/04/2026
+Usuário: wellimgtonwsr
+Projeto: area-do-homem

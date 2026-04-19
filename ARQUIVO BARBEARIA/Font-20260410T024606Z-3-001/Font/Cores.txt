@@ -1,0 +1,36 @@
+Amarelo: #EC8C08
+Cinza: #201D22
+
+
+Formulario: 
+cinza: rgba(122, 122, 122, 0.2)
+cinza escuro: #7A7A7A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

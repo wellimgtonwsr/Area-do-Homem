@@ -1,0 +1,25 @@
+{
+  "name": "area-do-homem",
+  "version": "1.0.0",
+  "description": "Curadoria de Produtos Masculinos Premium - Estilo, Tecnologia & Estilo de Vida",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "produtos",
+    "masculino",
+    "curadoria"
+  ],
+  "author": "Seu Nome",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciador de Imagens de Fundo | Área do Homem</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #f0f0f0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #42A5F5;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: rgba(20, 20, 20, 0.8);
+      border: 1px solid rgba(66, 165, 245, 0.2);
+      border-radius: 12px;
+      padding: 25px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card h2 {
+      color: #1976D2;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 1px solid rgba(66, 165, 245, 0.15);
+      border-radius: 8px;
+      color: #f0f0f0;
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #1976D2;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1976D2, #0D47A1);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(66, 165, 245, 0.1);
+      color: #42A5F5;
+      border: 1px solid #42A5F5;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(66, 165, 245, 0.2);
+    }
+
+    .btn-danger {
+      background: rgba(229, 57, 53, 0.15);
+      color: #ef9a9a;
+      border: 1px solid #ef9a9a;
+      flex: 0.5;
+    }
+
+    .btn-danger:hover {
+      background: rgba(229, 57, 53, 0.3);
+    }
+
+    .images-list {
+      grid-column: 1 / -1;
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .image-card {
+      background: #141414;
+      border: 1px solid rgba(66, 165, 245, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .image-card:hover {
+      border-color: #1976D2;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .image-preview {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 3rem;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-info {
+      padding: 15px;
+    }
+
+    .image-id {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .image-description {
+      font-size: 13px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      color: #ddd;
+    }
+
+    .image-url {
+      font-size: 10px;
+      color: #42A5F5;
+      word-break: break-all;
+      margin-bottom: 10px;
+      max-height: 40px;
+      overflow-y: auto;
+      padding: 6px;
+      background: rgba(66, 165, 245, 0.05);
+      border-radius: 4px;
+    }
+
+    .image-focal {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .image-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-small {
+      flex: 1;
+      padding: 8px;
+      font-size: 11px;
+      background: rgba(66, 165, 245, 0.1);
+      color: #42A5F5;
+      border: 1px solid rgba(66, 165, 245, 0.3);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-small:hover {
+      background: rgba(66, 165, 245, 0.2);
+    }
+
+    .btn-small-delete {
+      background: rgba(229, 57, 53, 0.15);
+      color: #ef9a9a;
+      border-color: rgba(229, 57, 53, 0.3);
+    }
+
+    .btn-small-delete:hover {
+      background: rgba(229, 57, 53, 0.3);
+    }
+
+    .tips {
+      background: rgba(66, 165, 245, 0.08);
+      border-left: 4px solid #1976D2;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .tips h4 {
+      color: #42A5F5;
+      margin-bottom: 10px;
+    }
+
+    .tips code {
+      background: #141414;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #90CAF9;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    .tips ul {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+
+    .tips li {
+      margin-bottom: 8px;
+    }
+
+    .alert {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 13px;
+    }
+
+    .alert-success {
+      background: rgba(46, 125, 50, 0.2);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      color: #81C784;
+    }
+
+    .alert-error {
+      background: rgba(229, 57, 53, 0.2);
+      border: 1px solid rgba(239, 154, 154, 0.3);
+      color: #ef9a9a;
+    }
+
+    .no-images {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+    }
+
+    .no-images p {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .images-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🖼️ Gerenciador de Imagens de Fundo</h1>
+
+    <div class="grid">
+      <!-- Formulário de Adição -->
+      <div class="card">
+        <h2>Adicionar Nova Imagem</h2>
+
+        <div id="alert" style="display: none;"></div>
+
+        <div class="form-group">
+          <label>URL da Imagem *</label>
+          <textarea id="imageUrl" placeholder="Cole a URL da imagem aqui. Ex: https://drive.google.com/uc?export=view&id=... ou https://lh3.googleusercontent.com/..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Descrição (opcional)</label>
+          <input type="text" id="imageDescription" placeholder="Ex: Mecânico trabalhando na garagem">
+        </div>
+
+        <div class="form-group">
+          <label>Ponto Focal (opcional)</label>
+          <input type="text" id="imageFocal" placeholder="Ex: center 50% (padrão)" value="center 50%">
+          <small style="font-size: 11px; color: #666; margin-top: 4px; display: block;">
+            Uso: "horizontal vertical" ou "left center", "right 30%", etc
+          </small>
+        </div>
+
+        <div class="button-group">
+          <button class="btn-primary" onclick="addImage()">Adicionar Imagem</button>
+          <button class="btn-secondary" onclick="clearForm()">Limpar</button>
+        </div>
+
+        <div class="tips">
+          <h4>📌 Como Usar URLs de Imagem</h4>
+          <ul>
+            <li><strong>Google Drive:</strong> Clique direito em arquivo > Copiar ID → <code>https://drive.google.com/uc?export=view&id=ID</code></li>
+            <li><strong>Google Photos:</strong> Clique direito > Abrir em nova aba → URL em <code>lh3.googleusercontent.com</code></li>
+            <li><strong>Google Images:</strong> ⚠️ Verificar direitos autorais da imagem</li>
+            <li><strong>Unsplash:</strong> Copiar URL diretamente de <code>images.unsplash.com</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Instruções -->
+      <div class="card">
+        <h2>Instruções</h2>
+        <div class="tips">
+          <h4>🚀 Dimensões Recomendadas</h4>
+          <ul>
+            <li>Largura: 1920px ou maior</li>
+            <li>Altura: 1080px ou similar</li>
+            <li>Formato: JPG (menor tamanho), PNG</li>
+            <li>Qualidade: 90% (balance entre qualidade e velocidade)</li>
+          </ul>
+        </div>
+
+        <div class="tips" style="margin-top: 15px;">
+          <h4>✅ Teste de URL</h4>
+          <input type="text" id="testUrl" placeholder="Teste sua URL aqui..." style="margin-top: 10px; margin-bottom: 10px;">
+          <button class="btn-secondary" onclick="testImageUrl()" style="width: 100%; margin: 0;">Testar Imagem</button>
+          <div id="testResult" style="margin-top: 10px; font-size: 12px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de Imagens -->
+    <div class="card images-list">
+      <h2>Imagens Configuradas</h2>
+      <div id="imagesList" class="images-grid">
+        <!-- Será preenchido por JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script src="images-config.js"></script>
+  <script>
+    function addImage() {
+      const url = document.getElementById('imageUrl').value.trim();
+      const description = document.getElementById('imageDescription').value.trim();
+      const focal = document.getElementById('imageFocal').value.trim() || 'center 50%';
+
+      if (!url) {
+        showAlert('erro', '❌ URL da imagem é obrigatória!');
+        return;
+      }
+
+      const result = addBackgroundImage(url, description, focal);
+
+      if (result) {
+        showAlert('sucesso', `✅ Imagem adicionada com sucesso! (ID: ${result.id})`);
+        clearForm();
+        renderImages();
+      } else {
+        showAlert('erro', '❌ Falha ao adicionar imagem. Verifique a URL.');
+      }
+    }
+
+    function removeImage(id) {
+      if (!confirm('Remover esta imagem?')) return;
+
+      if (removeBackgroundImage(id)) {
+        showAlert('sucesso', '✅ Imagem removida!');
+        renderImages();
+      } else {
+        showAlert('erro', '❌ Erro ao remover imagem');
+      }
+    }
+
+    function clearForm() {
+      document.getElementById('imageUrl').value = '';
+      document.getElementById('imageDescription').value = '';
+      document.getElementById('imageFocal').value = 'center 50%';
+      document.getElementById('alert').style.display = 'none';
+    }
+
+    function testImageUrl() {
+      const url = document.getElementById('testUrl').value.trim();
+      const resultDiv = document.getElementById('testResult');
+
+      if (!url) {
+        resultDiv.innerHTML = '<span style="color: #f0f0f0;">Cole uma URL para testar</span>';
+        return;
+      }
+
+      resultDiv.innerHTML = '<span style="color: #42A5F5;">🔍 Testando...</span>';
+
+      const img = new Image();
+      const timeout = setTimeout(() => {
+        resultDiv.innerHTML = '<span style="color: #ef9a9a;">⏱️ Timeout - URL pode estar lenta</span>';
+      }, 5000);
+
+      img.onload = () => {
+        clearTimeout(timeout);
+        resultDiv.innerHTML = `
+          <span style="color: #81C784;">✅ Imagem carregada com sucesso!</span><br>
+          <small style="color: #888;">Dimensão: ${img.width}x${img.height}px</small>
+        `;
+      };
+
+      img.onerror = () => {
+        clearTimeout(timeout);
+        resultDiv.innerHTML = '<span style="color: #ef9a9a;">❌ Erro ao carregar - URL inválida ou bloqueada</span>';
+      };
+
+      img.src = url;
+    }
+
+    function showAlert(type, message) {
+      const alertDiv = document.getElementById('alert');
+      alertDiv.className = `alert alert-${type}`;
+      alertDiv.textContent = message;
+      alertDiv.style.display = 'block';
+
+      if (type === 'sucesso') {
+        setTimeout(() => {
+          alertDiv.style.display = 'none';
+        }, 4000);
+      }
+    }
+
+    function renderImages() {
+      const container = document.getElementById('imagesList');
+
+      if (window.BACKGROUND_IMAGES.length === 0) {
+        container.innerHTML = '<div class="no-images"><p>Nenhuma imagem configurada</p></div>';
+        return;
+      }
+
+      container.innerHTML = window.BACKGROUND_IMAGES.map(img => `
+        <div class="image-card">
+          <div class="image-preview">
+            <img src="${escapeHtml(img.url)}" alt="${escapeHtml(img.description)}" onerror="this.style.display='none'; this.parentElement.textContent='📷'">
+          </div>
+          <div class="image-info">
+            <div class="image-id">ID: ${img.id}</div>
+            <div class="image-description">${escapeHtml(img.description || 'Sem descrição')}</div>
+            <div class="image-url" title="${img.url}">${escapeHtml(img.url)}</div>
+            <div class="image-focal">🎯 ${escapeHtml(img.focalPoint)}</div>
+            <div class="image-actions">
+              <button class="btn-small" onclick="copyToClipboard('${img.id}')">📋 ID</button>
+              <button class="btn-small btn-small-delete" onclick="removeImage(${img.id})">🗑️</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+      alert('ID copiado: ' + text);
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Renderizar ao carregar
+    window.addEventListener('load', renderImages);
+  </script>
+</body>
+</html>

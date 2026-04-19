@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Área do Homem - Os melhores produtos masculinos com as melhores ofertas">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Área do Homem | Estilo, Tecnologia & Estilo de Vida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="scene">
+  <div id="scene-imgs">
+    <!-- As imagens serão carregadas dinamicamente por app.js -->
+  </div>
+  <div id="scene-vignette"></div>
+  <div id="scene-tint"></div>
+  <div id="scene-grain"></div>
+  <div id="scene-light"></div>
+</div>
+<canvas id="bgCanvas"></canvas>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">⚡</div>
+      <div class="logo-text">
+        <span>Área do Homem</span>
+        <span>Os melhores produtos</span>
+      </div>
+    </a>
+    <nav>
+      <a href="#" class="active" onclick="filterCat('todos')">Início</a>
+      <a href="#produtos" onclick="filterCat('todos')">Produtos</a>
+      <a href="#" onclick="filterCat('tecnologia')">Tecnologia</a>
+      <a href="#" onclick="filterCat('moda')">Moda</a>
+      <a href="#" onclick="filterCat('esporte')">Esporte</a>
+    </nav>
+    <div class="header-search">
+      <input type="text" id="searchInput" placeholder="Buscar produtos..." oninput="handleSearch()">
+      <button aria-label="Buscar">🔍</button>
+    </div>
+    <button class="btn-add-header" onclick="openModal()">+ Adicionar Produto</button>
+  </div>
+</header>
+
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item"><span class="ticker-dot"></span> FRETE GRÁTIS EM PEDIDOS ACIMA DE R$299</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> CUPONS EXCLUSIVOS PARA AFILIADOS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> MELHORES PREÇOS GARANTIDOS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> PAGAMENTO EM ATÉ 12X SEM JUROS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> NOVIDADES TODA SEMANA</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> AVALIAÇÃO 5 ESTRELAS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> FRETE GRÁTIS EM PEDIDOS ACIMA DE R$299</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> CUPONS EXCLUSIVOS PARA AFILIADOS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> MELHORES PREÇOS GARANTIDOS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> PAGAMENTO EM ATÉ 12X SEM JUROS</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> NOVIDADES TODA SEMANA</span>
+    <span class="ticker-item"><span class="ticker-dot"></span> AVALIAÇÃO 5 ESTRELAS</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-line"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🔥 Curadoria Masculina Premium</div>
+    <h1>Área<br><span>do Homem</span></h1>
+    <p>Tecnologia, moda, esporte e estilo de vida em um só lugar.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong id="stat-products">0</strong>
+        <small>Produtos</small>
+      </div>
+      <div class="hero-stat">
+        <strong id="stat-stores">0</strong>
+        <small>Lojas Parceiras</small>
+      </div>
+      <div class="hero-stat">
+        <strong>5★</strong>
+        <small>Avaliação Média</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="categories-section">
+  <div class="section-header">
+    <p class="section-label">Navegar por</p>
+    <h2 class="section-title">Categorias</h2>
+  </div>
+  <div class="cats-grid">
+    <button class="cat-btn active" onclick="filterCat('todos')">🔥 Todos</button>
+    <button class="cat-btn" onclick="filterCat('tecnologia')">💻 Tecnologia</button>
+    <button class="cat-btn" onclick="filterCat('moda')">👔 Moda</button>
+    <button class="cat-btn" onclick="filterCat('esporte')">⚽ Esporte</button>
+    <button class="cat-btn" onclick="filterCat('barba')">✂️ Barba & Grooming</button>
+    <button class="cat-btn" onclick="filterCat('acessorios')">⌚ Acessórios</button>
+    <button class="cat-btn" onclick="filterCat('casa')">🏠 Casa & Gadgets</button>
+    <button class="cat-btn" onclick="filterCat('games')">🎮 Games</button>
+    <button class="cat-btn" onclick="filterCat('automotivo')">🚗 Automotivo</button>
+    <button class="cat-btn" onclick="filterCat('saude')">💪 Saúde & Fitness</button>
+  </div>
+</section>
+
+<section class="products-section" id="produtos">
+  <div style="max-width:1300px;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+    <div class="section-header" style="text-align:left;margin:0">
+      <p class="section-label">Todos os produtos</p>
+      <h2 class="section-title" id="cat-title">Em Destaque</h2>
+    </div>
+    <div class="filters-bar" style="margin:0;padding:0">
+      <div class="filter-count">Mostrando <strong id="count-shown">0</strong> produtos</div>
+      <select class="sort-select" onchange="sortProducts(this.value)">
+        <option value="default">Ordenar: Padrão</option>
+        <option value="price-asc">Menor Preço</option>
+        <option value="price-desc">Maior Preço</option>
+        <option value="rating">Melhor Avaliação</option>
+        <option value="newest">Mais Recente</option>
+      </select>
+    </div>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">📦</div>
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:1px;margin-bottom:8px">Nenhum produto encontrado</h3>
+    <p>Adicione seu primeiro produto clicando em "+ Adicionar Produto"</p>
+    <button class="btn-save" style="margin-top:1.5rem;padding:12px 28px" onclick="openModal()">Adicionar Produto</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <span>Área do Homem</span>
+        <p>Os melhores produtos em um só lugar</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Categorias</h4>
+          <a href="#">Tecnologia</a>
+          <a href="#">Moda Masculina</a>
+          <a href="#">Esporte & Fitness</a>
+          <a href="#">Barba & Grooming</a>
+        </div>
+        <div class="footer-col">
+          <h4>Informações</h4>
+          <a href="#">Como Funciona</a>
+          <a href="#">Parceiros</a>
+          <a href="#">Política de Privacidade</a>
+          <a href="#">Termos de Uso</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Área do Homem. Todos os direitos reservados.</p>
+      <p style="font-size:12px;color:var(--text-muted)">Feito com ❤️ para você</p>
+    </div>
+    <p class="footer-disclaimer">
+      * Este site contém links de afiliados. Ao clicar e realizar uma compra, podemos receber uma comissão sem custo adicional para você. 
+      Os preços e a disponibilidade dos produtos estão sujeitos a alterações sem aviso prévio.
+    </p>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">↑</button>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle">Novo Produto</h2>
+      <button class="modal-close" onclick="closeModal()" aria-label="Fechar modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Nome do Produto *</label>
+          <input type="text" id="f-name" placeholder="Ex: Smartwatch Samsung Galaxy Watch 6">
+        </div>
+        <div class="form-group full">
+          <label>Link Afiliado *</label>
+          <input type="url" id="f-link" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>Preço Atual (R$) *</label>
+          <input type="number" id="f-price" placeholder="299.90" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Preço Antigo (R$)</label>
+          <input type="number" id="f-oldprice" placeholder="399.90" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Categoria *</label>
+          <select id="f-cat">
+            <option value="tecnologia">💻 Tecnologia</option>
+            <option value="moda">👔 Moda</option>
+            <option value="esporte">⚽ Esporte</option>
+            <option value="barba">✂️ Barba & Grooming</option>
+            <option value="acessorios">⌚ Acessórios</option>
+            <option value="casa">🏠 Casa & Gadgets</option>
+            <option value="games">🎮 Games</option>
+            <option value="automotivo">🚗 Automotivo</option>
+            <option value="saude">💪 Saúde & Fitness</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Loja</label>
+          <input type="text" id="f-store" placeholder="Ex: Amazon, Mercado Livre, Shopee">
+        </div>
+        <div class="form-group">
+          <label>Avaliação (0-5)</label>
+          <input type="number" id="f-rating" placeholder="4.8" min="0" max="5" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>Nº de Avaliações</label>
+          <input type="number" id="f-rcount" placeholder="1250" min="0">
+        </div>
+        <div class="form-group full">
+          <label>URL da Imagem</label>
+          <input type="url" id="f-img" placeholder="https://... (opcional)">
+        </div>
+        <div class="form-group full">
+          <label>Destaque</label>
+          <select id="f-badge">
+            <option value="">Nenhum</option>
+            <option value="hot">🔥 HOT</option>
+            <option value="sale">💰 OFERTA</option>
+            <option value="new">✨ NOVO</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveProduct()">Salvar Produto</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-icon" id="toast-icon">✓</span>
+  <span id="toast-msg"></span>
+</div>
+
+<script src="images-config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
