@@ -97,27 +97,6 @@ body {
   mix-blend-mode: overlay;
 }
 
-#scene-light {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  top: 42%;
-  background: linear-gradient(90deg, transparent 0%, rgba(25, 118, 210, 0) 15%, rgba(25, 118, 210, 0.35) 40%, rgba(100, 180, 255, 0.55) 50%, rgba(25, 118, 210, 0.35) 60%, rgba(25, 118, 210, 0) 85%, transparent 100%);
-  animation: lightpulse 6s ease-in-out infinite;
-}
-
-@keyframes lightpulse {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scaleX(0.7);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-}
-
 #bgCanvas {
   position: fixed;
   top: 0;
