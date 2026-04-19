@@ -72,7 +72,7 @@ function getSampleProducts() {
   return [
     {
       id: Date.now() + 1,
-      name: 'Furadeira de Impacto Makita 13mm 810W',
+      name: 'Makita Impacto 13mm 810W',
       link: 'https://www.mercadolivre.com.br/s/makita-furadeira',
       price: 189.90,
       oldPrice: 279.90,
@@ -128,7 +128,7 @@ function getSampleProducts() {
     },
     {
       id: Date.now() + 5,
-      name: 'Furadeira Manual com Broca 10mm',
+      name: 'Makita Manual com Broca 10mm',
       link: 'https://www.mercadolivre.com.br/s/furadeira-manual',
       price: 79.90,
       oldPrice: 129.90,
