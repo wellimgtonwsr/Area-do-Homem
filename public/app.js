@@ -617,9 +617,9 @@ function initParticles() {
   );
 
   ctx.globalAlpha = 0.28;
-  const BLUE1 = '25,118,210';
-  const BLUE2 = '13,71,161';
-  const BLUE3 = '66,165,245';
+  const BLUE1 = '255,140,0';
+  const BLUE2 = '230,126,0';
+  const BLUE3 = '255,184,77';
 
   // Node network
   const NODE_COUNT = 55;

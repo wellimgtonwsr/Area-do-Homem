@@ -83,8 +83,7 @@ body {
 #scene-tint {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(2, 6, 18, 0.55) 0%, rgba(2, 6, 18, 0.18) 30%, rgba(2, 6, 18, 0.18) 60%, rgba(2, 6, 18, 0.75) 100%),
-    radial-gradient(ellipse 80% 60% at 50% 45%, rgba(10, 30, 80, 0.25) 0%, transparent 70%);
+  background: linear-gradient(180deg, rgba(2, 6, 18, 0.35) 0%, rgba(2, 6, 18, 0.08) 35%, rgba(2, 6, 18, 0.08) 60%, rgba(2, 6, 18, 0.6) 100%);
 }
 
 #scene-grain {
@@ -113,7 +112,7 @@ header {
   top: 0;
   z-index: 1000;
   background: rgba(10, 10, 10, 0.95);
-  border-bottom: 1px solid rgba(25, 118, 210, 0.2);
+  border-bottom: 1px solid rgba(255, 140, 0, 0.2);
   backdrop-filter: blur(12px);
   padding: 0 2rem;
 }
@@ -150,10 +149,10 @@ header {
 
 @keyframes pulse-logo {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.4);
+    box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.4);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(25, 118, 210, 0);
+    box-shadow: 0 0 0 8px rgba(255, 140, 0, 0);
   }
 }
 
@@ -195,7 +194,7 @@ nav a {
 
 nav a:hover, nav a.active {
   color: var(--gold);
-  background: rgba(25, 118, 210, 0.08);
+  background: rgba(255, 140, 0, 0.08);
 }
 
 .header-search {
@@ -208,7 +207,7 @@ nav a:hover, nav a.active {
   width: 100%;
   padding: 9px 40px 9px 14px;
   background: var(--dark3);
-  border: 1px solid rgba(25, 118, 210, 0.15);
+  border: 1px solid rgba(255, 140, 0, 0.15);
   border-radius: 8px;
   color: var(--text);
   font-size: 13px;
@@ -251,7 +250,7 @@ nav a:hover, nav a.active {
 
 .btn-add-header:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.4);
+  box-shadow: 0 4px 16px rgba(255, 140, 0, 0.4);
 }
 
 /* ===== HERO ===== */
@@ -375,7 +374,7 @@ nav a:hover, nav a.active {
   font-size: 2rem;
   color: var(--gold);
   display: block;
-  text-shadow: 0 0 20px rgba(25, 118, 210, 0.6);
+  text-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
 }
 
 .hero-stat small {
@@ -472,7 +471,7 @@ nav a:hover, nav a.active {
 
 .cat-btn {
   background: var(--dark3);
-  border: 1px solid rgba(25, 118, 210, 0.15);
+  border: 1px solid rgba(255, 140, 0, 0.15);
   color: var(--text-muted);
   padding: 10px 20px;
   border-radius: 8px;
@@ -760,7 +759,7 @@ nav a:hover, nav a.active {
 
 .modal {
   background: var(--dark2);
-  border: 1px solid rgba(25, 118, 210, 0.2);
+  border: 1px solid rgba(255, 140, 0, 0.2);
   border-radius: 16px;
   width: 100%;
   max-width: 560px;
@@ -910,7 +909,7 @@ nav a:hover, nav a.active {
 }
 
 .btn-save:hover {
-  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.4);
+  box-shadow: 0 4px 16px rgba(255, 140, 0, 0.4);
 }
 
 /* ===== CARD ACTIONS ===== */
@@ -946,13 +945,13 @@ nav a:hover, nav a.active {
 }
 
 .btn-edit {
-  background: rgba(25, 118, 210, 0.15);
+  background: rgba(255, 140, 0, 0.15);
   color: var(--gold);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  border: 1px solid rgba(255, 140, 0, 0.3);
 }
 
 .btn-edit:hover {
-  background: rgba(25, 118, 210, 0.25);
+  background: rgba(255, 140, 0, 0.25);
 }
 
 .btn-del {
@@ -972,7 +971,7 @@ nav a:hover, nav a.active {
   right: 2rem;
   z-index: 3000;
   background: var(--dark2);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  border: 1px solid rgba(255, 140, 0, 0.3);
   color: var(--text);
   padding: 14px 20px;
   border-radius: 10px;

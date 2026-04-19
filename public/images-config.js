@@ -4,20 +4,26 @@
 const BACKGROUND_IMAGES = [
   {
     id: 101,
-    url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1920&h=1200&q=80',
-    description: 'Homem trabalhando com furadeira',
-    focalPoint: 'center 45%'
+    url: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=2560&h=1440&q=85',
+    description: 'Homem usando furadeira profissional',
+    focalPoint: 'center 40%'
   },
   {
     id: 102,
-    url: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1920&h=1200&q=80',
-    description: 'Profissional em canteiro de obras',
-    focalPoint: 'center 50%'
+    url: 'https://images.unsplash.com/photo-1530124566582-a45a7e3f2809?auto=format&fit=crop&w=2560&h=1440&q=85',
+    description: 'Profissional com ferramentas elétricas na oficina',
+    focalPoint: 'center 45%'
   },
   {
     id: 103,
-    url: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1920&h=1200&q=80',
-    description: 'Homem em oficina com ferramentas',
+    url: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&w=2560&h=1440&q=85',
+    description: 'Homem trabalhando com serra elétrica',
+    focalPoint: 'center 50%'
+  },
+  {
+    id: 104,
+    url: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=2560&h=1440&q=85',
+    description: 'Homem em oficina usando ferramentas manuais',
     focalPoint: 'center 45%'
   }
 ];
