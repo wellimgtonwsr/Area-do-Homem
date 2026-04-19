@@ -542,7 +542,7 @@ function initSlideshow() {
     const slide = document.createElement('div');
     slide.className = 'scene-slide';
     slide.id = `s${index}`;
-    slide.style.backgroundImage = `url('${escapeHtml(img.url)}')`;
+    slide.style.backgroundImage = `url("${img.url}")`;
     slide.style.backgroundPosition = img.focalPoint || 'center 50%';
     sceneImgs.appendChild(slide);
   });
