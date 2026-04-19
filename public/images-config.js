@@ -1,23 +1,23 @@
 // Configuração de Imagens de Fundo
-// Você pode adicionar URLs de Google Photos, Google Drive ou qualquer CDN
+// Imagens reais de homens trabalhando
 
 const BACKGROUND_IMAGES = [
   {
     id: 101,
-    url: 'https://share.google/NcSRlFnKGj9gMXHPq',
-    description: 'Imagem 1 - Google Drive',
+    url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1920&q=90',
+    description: 'Homem trabalhando com furadeira',
     focalPoint: 'center 45%'
   },
   {
     id: 102,
-    url: 'https://share.google/TXaUwGxUiEazYTT7H',
-    description: 'Imagem 2 - Google Drive',
+    url: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&q=90',
+    description: 'Profissional em canteiro de obras',
     focalPoint: 'center 50%'
   },
   {
     id: 103,
-    url: 'https://share.google/HvQFX6t1LMJpCkEOm',
-    description: 'Imagem 3 - Google Drive',
+    url: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=1920&q=90',
+    description: 'Homem em oficina com ferramentas',
     focalPoint: 'center 45%'
   }
 ];

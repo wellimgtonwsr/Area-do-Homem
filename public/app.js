@@ -81,7 +81,7 @@ function getSampleProducts() {
       store: 'Amazon',
       rating: 4.8,
       rcount: 2341,
-      img: '',
+      img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop',
       badge: 'hot',
       ts: Date.now()
     },
@@ -95,7 +95,7 @@ function getSampleProducts() {
       store: 'Nike',
       rating: 4.7,
       rcount: 1820,
-      img: '',
+      img: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400&h=300&fit=crop',
       badge: 'sale',
       ts: Date.now() - 1
     },
@@ -109,7 +109,7 @@ function getSampleProducts() {
       store: 'Sephora',
       rating: 4.9,
       rcount: 987,
-      img: '',
+      img: 'https://images.unsplash.com/photo-1548042666-f4ad2b004d67?w=400&h=300&fit=crop',
       badge: 'new',
       ts: Date.now() - 2
     },
@@ -123,7 +123,7 @@ function getSampleProducts() {
       store: 'Shopee',
       rating: 4.6,
       rcount: 3201,
-      img: '',
+      img: 'https://images.unsplash.com/photo-1616408732760-7e6a3e4b8d0f?w=400&h=300&fit=crop',
       badge: 'sale',
       ts: Date.now() - 3
     },
@@ -137,7 +137,7 @@ function getSampleProducts() {
       store: 'Mercado Livre',
       rating: 4.9,
       rcount: 5422,
-      img: '',
+      img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop',
       badge: 'hot',
       ts: Date.now() - 4
     },
@@ -151,7 +151,7 @@ function getSampleProducts() {
       store: 'Zara',
       rating: 4.5,
       rcount: 743,
-      img: '',
+      img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop',
       badge: '',
       ts: Date.now() - 5
     }
