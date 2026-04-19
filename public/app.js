@@ -2,7 +2,7 @@
 const STORAGE_KEY = 'sdh_products_v2';
 const EMOJI_MAP = {
   ferramentas: '🔧',
-  furadeiras: '⚙️',
+  makita: '🔨',
   chaves: '🔑',
   eletroportatil: '⚡',
   seguranca: '🦺',
@@ -76,7 +76,7 @@ function getSampleProducts() {
       link: 'https://www.mercadolivre.com.br/s/makita-furadeira',
       price: 189.90,
       oldPrice: 279.90,
-      category: 'furadeiras',
+      category: 'makita',
       store: 'Makita',
       rating: 4.9,
       rcount: 2341,
@@ -132,7 +132,7 @@ function getSampleProducts() {
       link: 'https://www.mercadolivre.com.br/s/furadeira-manual',
       price: 79.90,
       oldPrice: 129.90,
-      category: 'furadeiras',
+      category: 'makita',
       store: 'Profissional',
       rating: 4.6,
       rcount: 5422,
