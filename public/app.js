@@ -11,6 +11,152 @@ const EMOJI_MAP = {
   games: '🎮'
 };
 
+const DEFAULT_AFFILIATE_PRODUCTS = [
+  {
+    affiliateId: 'UQHU92-5JJ9',
+    name: 'Lavadora Lava Jato Portatil Pressao 2 Baterias + Maleta',
+    link: 'https://meli.la/2CzwH1u',
+    price: 100.72,
+    oldPrice: 229.90,
+    category: 'ferramentas',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.5,
+    rcount: 26827,
+    img: 'https://http2.mlstatic.com/D_Q_NP_2X_710675-MLB89102120983_082025-R.webp',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'UQHU92-SXLC',
+    name: 'Mini Compressor Digital Simake Bomba De Encher Pneus Portatil',
+    link: 'https://meli.la/23CEGYr',
+    price: 72.95,
+    oldPrice: 109.00,
+    category: 'ferramentas',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.6,
+    rcount: 1100,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_900674-MLA100087555981_122025-O.webp',
+    badge: 'sale'
+  },
+  {
+    affiliateId: 'UQHU92-2CAT',
+    name: 'Tramontina 43800005 Caixa Para Ferramentas Sanfonada Com 5 Gavetas',
+    link: 'https://meli.la/2V5zeWV',
+    price: 121.15,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.7,
+    rcount: 3400,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_943377-MLA96402113111_102025-O.webp',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'UQHU92-H14R',
+    name: 'Kit Chaves Ferramentas Jogo Fenda Philips Catraca Soquete Allen 46 Pecas',
+    link: 'https://meli.la/2HxtLzs',
+    price: 28.00,
+    oldPrice: 54.90,
+    category: 'chaves',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.7,
+    rcount: 2500,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_960372-MLA108577245214_032026-O.webp',
+    badge: 'sale'
+  },
+  {
+    affiliateId: 'MELI-1VUZRWF',
+    name: 'Mochila Masculina Impermeavel Reforcada Aco Escola Notebook',
+    link: 'https://meli.la/1VUZRwF',
+    price: 54.71,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.6,
+    rcount: 950,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_839933-MLB98920410204_112025-O.webp',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'SHOPEE-1GEPBNPSN0',
+    name: 'Produto Shopee (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/1gEpbnpsN0',
+    price: 0,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'SHOPEE-9FH78YBJS4',
+    name: 'Produto Shopee (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/9fH78Ybjs4',
+    price: 0,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'SHOPEE-8ASJLP7VPW',
+    name: 'Produto Shopee 7563977602 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/8ASJLp7VpW',
+    price: 0,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'SHOPEE-901QLNUGWS',
+    name: 'Produto Shopee 43902469890 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/901QLNUGWs',
+    price: 0,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'SHOPEE-1LBZDJEEAB',
+    name: 'Produto Shopee 20705549413 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/1LbzDJEeAb',
+    price: 0,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'SHOPEE-W2SDQTFDT',
+    name: 'Produto Shopee 18198763923 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/W2sDqtFdT',
+    price: 0,
+    oldPrice: 0,
+    category: 'ferramentas',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'new'
+  }
+];
+
 // ===== STATE =====
 let products = [];
 let editingId = null;
@@ -54,6 +200,7 @@ function loadData() {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     products = data ? JSON.parse(data) : getSampleProducts();
+    products = ensureAffiliateProducts(products);
   } catch (e) {
     console.error('Error loading data:', e);
     products = getSampleProducts();
@@ -69,176 +216,59 @@ function saveData() {
 }
 
 function getSampleProducts() {
-  return [
-    {
-      id: Date.now() + 1,
-      name: 'Makita Impacto 13mm 810W',
-      link: 'https://www.mercadolivre.com.br/s/makita-furadeira',
-      price: 189.90,
-      oldPrice: 279.90,
-      category: 'makita',
-      store: 'Makita',
-      rating: 4.9,
-      rcount: 2341,
-      img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop',
-      badge: 'hot',
-      ts: Date.now()
-    },
-    {
-      id: Date.now() + 2,
-      name: 'Jogo de Chaves Phillips 8 Peças Profissional',
-      link: 'https://www.mercadolivre.com.br/s/chaves-phillips',
-      price: 49.90,
-      oldPrice: 89.90,
-      category: 'chaves',
-      store: 'Makita',
-      rating: 4.8,
-      rcount: 1820,
-      img: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=400&h=300&fit=crop',
-      badge: 'sale',
-      ts: Date.now() - 1
-    },
-    {
-      id: Date.now() + 3,
-      name: 'Chave Inglesa Ajustável 300mm',
-      link: 'https://www.mercadolivre.com.br/s/chave-inglesa',
-      price: 34.90,
-      oldPrice: 59.90,
-      category: 'chaves',
-      store: 'Profissional',
-      rating: 4.7,
-      rcount: 987,
-      img: 'https://images.unsplash.com/photo-1547394765-185342c1da3f?w=400&h=300&fit=crop',
-      badge: 'sale',
-      ts: Date.now() - 2
-    },
-    {
-      id: Date.now() + 4,
-      name: 'Kit Ferramentas Profissional 100 Peças',
-      link: 'https://www.mercadolivre.com.br/s/kit-ferramentas',
-      price: 249.90,
-      oldPrice: 349.90,
-      category: 'ferramentas',
-      store: 'Stanley',
-      rating: 4.9,
-      rcount: 3201,
-      img: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=400&h=300&fit=crop',
-      badge: 'hot',
-      ts: Date.now() - 3
-    },
-    {
-      id: Date.now() + 5,
-      name: 'Makita Manual com Broca 10mm',
-      link: 'https://www.mercadolivre.com.br/s/furadeira-manual',
-      price: 79.90,
-      oldPrice: 129.90,
-      category: 'makita',
-      store: 'Profissional',
-      rating: 4.6,
-      rcount: 5422,
-      img: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop',
-      badge: '',
-      ts: Date.now() - 4
-    },
-    {
-      id: Date.now() + 6,
-      name: 'Level Profissional 60cm Magnético',
-      link: 'https://www.mercadolivre.com.br/s/level',
-      price: 89.90,
-      oldPrice: 139.90,
-      category: 'medidores',
-      store: 'Stanley',
-      rating: 4.8,
-      rcount: 743,
-      img: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop',
-      badge: 'sale',
-      ts: Date.now() - 5
-    },
-    {
-      id: Date.now() + 7,
-      name: 'Fita Métrica 7.5m Retrátil Premium',
-      link: 'https://www.mercadolivre.com.br/s/fita-metrica',
-      price: 29.90,
-      oldPrice: 49.90,
-      category: 'medidores',
-      store: 'Stanley',
-      rating: 4.7,
-      rcount: 1200,
-      img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=300&fit=crop',
-      badge: '',
-      ts: Date.now() - 6
-    },
-    {
-      id: Date.now() + 8,
-      name: 'Lanterna LED Recarregável 1000 Lumens',
-      link: 'https://www.mercadolivre.com.br/s/lanterna-led',
-      price: 119.90,
-      oldPrice: 179.90,
-      category: 'iluminacao',
-      store: 'Profissional',
-      rating: 4.9,
-      rcount: 2100,
-      img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop',
-      badge: 'new',
-      ts: Date.now() - 7
-    },
-    {
-      id: Date.now() + 9,
-      name: 'Colete de Segurança Refleti Profissional',
-      link: 'https://www.mercadolivre.com.br/s/colete-seguranca',
-      price: 59.90,
-      oldPrice: 99.90,
-      category: 'seguranca',
-      store: 'Proteção Pro',
-      rating: 4.6,
-      rcount: 850,
-      img: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=400&h=300&fit=crop',
-      badge: '',
-      ts: Date.now() - 8
-    },
-    {
-      id: Date.now() + 10,
-      name: 'Óculos de Proteção Segurança UV',
-      link: 'https://www.mercadolivre.com.br/s/oculos-protecao',
-      price: 34.90,
-      oldPrice: 64.90,
-      category: 'seguranca',
-      store: 'Proteção Pro',
-      rating: 4.7,
-      rcount: 1560,
-      img: 'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=300&fit=crop',
-      badge: 'sale',
-      ts: Date.now() - 9
-    },
-    {
-      id: Date.now() + 11,
-      name: 'PlayStation 5 Edição Standard',
-      link: 'https://www.mercadolivre.com.br/s/ps5',
-      price: 4299.90,
-      oldPrice: 4999.90,
-      category: 'games',
-      store: 'Sony',
-      rating: 4.9,
-      rcount: 5600,
-      img: 'https://images.unsplash.com/photo-1606841837239-c5a1a3a07af7?w=400&h=300&fit=crop',
-      badge: 'hot',
-      ts: Date.now() - 10
-    },
-    {
-      id: Date.now() + 12,
-      name: 'Xbox Series X 1TB',
-      link: 'https://www.mercadolivre.com.br/s/xbox-series',
-      price: 3999.90,
-      oldPrice: 4799.90,
-      category: 'games',
-      store: 'Microsoft',
-      rating: 4.8,
-      rcount: 3400,
-      img: 'https://images.unsplash.com/photo-1593305841991-05de59f1dd1d?w=400&h=300&fit=crop',
-      badge: 'sale',
-      ts: Date.now() - 11
+  const baseTs = Date.now();
+  return DEFAULT_AFFILIATE_PRODUCTS.map((p, i) => ({
+    id: baseTs + i + 1,
+    name: p.name,
+    link: p.link,
+    price: p.price,
+    oldPrice: p.oldPrice,
+    category: p.category,
+    store: p.store,
+    rating: p.rating,
+    rcount: p.rcount,
+    img: p.img,
+    badge: p.badge,
+    affiliateId: p.affiliateId,
+    ts: baseTs - i
+  }));
+}
+
+function ensureAffiliateProducts(list) {
+  const arr = Array.isArray(list) ? [...list] : [];
+
+  const getAffiliateId = (p) => {
+    const match = String(p.link || '').match(/UQHU92-[A-Z0-9]+/i);
+    return (p.affiliateId || (match ? match[0].toUpperCase() : '') || '').toUpperCase();
+  };
+
+  const baseTs = Date.now();
+  DEFAULT_AFFILIATE_PRODUCTS.forEach((p, i) => {
+    const idx = arr.findIndex(item => getAffiliateId(item) === p.affiliateId);
+    const normalized = {
+      id: baseTs + i + 100,
+      name: p.name,
+      link: p.link,
+      price: p.price,
+      oldPrice: p.oldPrice,
+      category: p.category,
+      store: p.store,
+      rating: p.rating,
+      rcount: p.rcount,
+      img: p.img,
+      badge: p.badge,
+      affiliateId: p.affiliateId,
+      ts: baseTs - i
+    };
+
+    if (idx > -1) {
+      arr[idx] = { ...arr[idx], ...normalized, id: arr[idx].id || normalized.id };
+    } else {
+      arr.unshift(normalized);
     }
-  ];
+  });
+
+  return arr;
 }
 
 // ===== FILTERING & SORTING =====
@@ -279,7 +309,8 @@ function getFiltered() {
 
 // ===== RENDERING =====
 function renderCard(product, index) {
-  const discount = product.oldPrice > 0 ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
+  const hasPrice = Number(product.price) > 0;
+  const discount = hasPrice && product.oldPrice > 0 ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
   const stars = getStars(product.rating || 4.5);
   const emoji = EMOJI_MAP[product.category] || '🛒';
 
@@ -297,8 +328,11 @@ function renderCard(product, index) {
     ? `<img src="${escapeHtml(product.img)}" class="card-img" alt="${escapeHtml(product.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`
     : '';
 
-  const priceOld = product.oldPrice > 0 ? `<span class="price-old">R$ ${formatPrice(product.oldPrice)}</span>` : '';
+  const priceOld = hasPrice && product.oldPrice > 0 ? `<span class="price-old">R$ ${formatPrice(product.oldPrice)}</span>` : '';
   const priceDiscount = discount > 0 ? `<span class="price-discount">-${discount}%</span>` : '';
+  const priceNew = hasPrice
+    ? `<span class="price-new">R$ ${formatPrice(product.price)}</span>`
+    : '<span class="price-new">Ver preco na loja</span>';
 
   const rating = product.rating || 4.5;
   const rcount = product.rcount || 0;
@@ -317,7 +351,7 @@ function renderCard(product, index) {
       </div>
       <div class="card-price-row">
         ${priceOld}
-        <span class="price-new">R$ ${formatPrice(product.price)}</span>
+        ${priceNew}
         ${priceDiscount}
       </div>
       <button class="card-btn" onclick="goToProduct('${escapeHtml(product.link)}')">

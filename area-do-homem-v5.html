@@ -740,6 +740,152 @@ let currentCat = 'todos';
 let currentSort = 'default';
 let searchQuery = '';
 
+const DEFAULT_AFFILIATE_PRODUCTS = [
+  {
+    affiliateId: 'UQHU92-5JJ9',
+    name: 'Lavadora Lava Jato Portatil Pressao 2 Baterias + Maleta',
+    link: 'https://meli.la/2CzwH1u',
+    price: 100.72,
+    oldPrice: 229.90,
+    category: 'automotivo',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.5,
+    rcount: 26827,
+    img: 'https://http2.mlstatic.com/D_Q_NP_2X_710675-MLB89102120983_082025-R.webp',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'UQHU92-SXLC',
+    name: 'Mini Compressor Digital Simake Bomba De Encher Pneus Portatil Para Carro Bicicleta Motocicletas Cor Preto Com Calibrador',
+    link: 'https://meli.la/23CEGYr',
+    price: 72.95,
+    oldPrice: 109.00,
+    category: 'automotivo',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.6,
+    rcount: 1100,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_900674-MLA100087555981_122025-O.webp',
+    badge: 'sale'
+  },
+  {
+    affiliateId: 'UQHU92-2CAT',
+    name: 'Tramontina 43800005 Caixa Para Ferramentas Sanfonada Com 5 Gavetas',
+    link: 'https://meli.la/2V5zeWV',
+    price: 121.15,
+    oldPrice: 0,
+    category: 'casa',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.7,
+    rcount: 3400,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_943377-MLA96402113111_102025-O.webp',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'UQHU92-H14R',
+    name: 'Kit Chaves Ferramentas Jogo Fenda Philips Catraca Soquete Allen 46 Pecas Com Maleta Completa',
+    link: 'https://meli.la/2HxtLzs',
+    price: 28.00,
+    oldPrice: 54.90,
+    category: 'automotivo',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.7,
+    rcount: 2500,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_960372-MLA108577245214_032026-O.webp',
+    badge: 'sale'
+  },
+  {
+    affiliateId: 'MELI-1VUZRWF',
+    name: 'Mochila Masculina Impermeavel Reforcada Aco Escola Notebook',
+    link: 'https://meli.la/1VUZRwF',
+    price: 54.71,
+    oldPrice: 0,
+    category: 'moda',
+    store: 'Mercado Livre - Loja Oficial',
+    rating: 4.6,
+    rcount: 950,
+    img: 'https://http2.mlstatic.com/D_NQ_NP_839933-MLB98920410204_112025-O.webp',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'SHOPEE-1GEPBNPSN0',
+    name: 'Produto Shopee (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/1gEpbnpsN0',
+    price: 0,
+    oldPrice: 0,
+    category: 'acessorios',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'SHOPEE-9FH78YBJS4',
+    name: 'Produto Shopee (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/9fH78Ybjs4',
+    price: 0,
+    oldPrice: 0,
+    category: 'acessorios',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'SHOPEE-8ASJLP7VPW',
+    name: 'Produto Shopee 7563977602 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/8ASJLp7VpW',
+    price: 0,
+    oldPrice: 0,
+    category: 'acessorios',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'SHOPEE-901QLNUGWS',
+    name: 'Produto Shopee 43902469890 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/901QLNUGWs',
+    price: 0,
+    oldPrice: 0,
+    category: 'acessorios',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'new'
+  },
+  {
+    affiliateId: 'SHOPEE-1LBZDJEEAB',
+    name: 'Produto Shopee 20705549413 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/1LbzDJEeAb',
+    price: 0,
+    oldPrice: 0,
+    category: 'acessorios',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'hot'
+  },
+  {
+    affiliateId: 'SHOPEE-W2SDQTFDT',
+    name: 'Produto Shopee 18198763923 (clique para ver oferta)',
+    link: 'https://s.shopee.com.br/W2sDqtFdT',
+    price: 0,
+    oldPrice: 0,
+    category: 'acessorios',
+    store: 'Shopee - Parceiro',
+    rating: 4.5,
+    rcount: 0,
+    img: '',
+    badge: 'new'
+  }
+];
+
 const EMOJI_MAP = {
   tecnologia:'💻', moda:'👔', esporte:'⚽', barba:'✂️',
   acessorios:'⌚', casa:'🏠', games:'🎮', automotivo:'🚗', saude:'💪'
@@ -750,20 +896,65 @@ function loadData() {
   try {
     const d = localStorage.getItem(STORAGE_KEY);
     products = d ? JSON.parse(d) : getSampleProducts();
+    products = ensureAffiliateProducts(products);
   } catch(e) { products = getSampleProducts(); }
 }
 function saveData() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); } catch(e){}
 }
 function getSampleProducts() {
-  return [
-    { id: Date.now()+1, name: 'Smartwatch Galaxy Watch 6 Pro', link: '#', price: 1299, oldPrice: 1799, category: 'tecnologia', store: 'Amazon', rating: 4.8, rcount: 2341, img: '', badge: 'hot', ts: Date.now() },
-    { id: Date.now()+2, name: 'Tênis Nike Air Max 2024 Masculino', link: '#', price: 459, oldPrice: 599, category: 'esporte', store: 'Nike', rating: 4.7, rcount: 1820, img: '', badge: 'sale', ts: Date.now()-1 },
-    { id: Date.now()+3, name: 'Perfume Masculino Boss Bottled 200ml', link: '#', price: 349, oldPrice: 0, category: 'acessorios', store: 'Sephora', rating: 4.9, rcount: 987, img: '', badge: 'new', ts: Date.now()-2 },
-    { id: Date.now()+4, name: 'Kit Barba Profissional Premium 8 Itens', link: '#', price: 189, oldPrice: 249, category: 'barba', store: 'Shopee', rating: 4.6, rcount: 3201, img: '', badge: 'sale', ts: Date.now()-3 },
-    { id: Date.now()+5, name: 'Fone Bluetooth Sony WH-1000XM5', link: '#', price: 1589, oldPrice: 2099, category: 'tecnologia', store: 'Mercado Livre', rating: 4.9, rcount: 5422, img: '', badge: 'hot', ts: Date.now()-4 },
-    { id: Date.now()+6, name: 'Camiseta Polo Ralph Lauren Premium', link: '#', price: 299, oldPrice: 0, category: 'moda', store: 'Zara', rating: 4.5, rcount: 743, img: '', badge: '', ts: Date.now()-5 },
-  ];
+  const baseTs = Date.now();
+  return DEFAULT_AFFILIATE_PRODUCTS.map((p, i) => ({
+    id: baseTs + i + 1,
+    name: p.name,
+    link: p.link,
+    price: p.price,
+    oldPrice: p.oldPrice,
+    category: p.category,
+    store: p.store,
+    rating: p.rating,
+    rcount: p.rcount,
+    img: p.img,
+    badge: p.badge,
+    affiliateId: p.affiliateId,
+    ts: baseTs - i
+  }));
+}
+
+function ensureAffiliateProducts(list) {
+  const arr = Array.isArray(list) ? [...list] : [];
+  const getAffiliateId = (p) => {
+    const match = String(p.link || '').match(/UQHU92-[A-Z0-9]+/i);
+    return (p.affiliateId || (match ? match[0].toUpperCase() : '') || '').toUpperCase();
+  };
+
+  const baseTs = Date.now();
+  DEFAULT_AFFILIATE_PRODUCTS.forEach((p, i) => {
+    const idx = arr.findIndex(item => getAffiliateId(item) === p.affiliateId);
+    const normalized = {
+      id: baseTs + i + 100,
+      name: p.name,
+      link: p.link,
+      price: p.price,
+      oldPrice: p.oldPrice,
+      category: p.category,
+      store: p.store,
+      rating: p.rating,
+      rcount: p.rcount,
+      img: p.img,
+      badge: p.badge,
+      affiliateId: p.affiliateId,
+      ts: baseTs - i
+    };
+
+    if (idx > -1) {
+      arr[idx] = { ...arr[idx], ...normalized, id: arr[idx].id || normalized.id };
+    } else {
+      arr.unshift(normalized);
+    }
+  });
+
+  return arr;
 }
 
 // ===== RENDER =====
@@ -799,7 +990,8 @@ function renderProducts() {
 }
 
 function renderCard(p, i) {
-  const disc = p.oldPrice > 0 ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
+  const hasPrice = Number(p.price) > 0;
+  const disc = hasPrice && p.oldPrice > 0 ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
   const stars = getStars(p.rating || 4.5);
   const emoji = EMOJI_MAP[p.category] || '🛒';
   const badgeHtml = p.badge === 'hot' ? '<span class="badge-hot">🔥 HOT</span>'
@@ -809,8 +1001,11 @@ function renderCard(p, i) {
   const img = p.img
     ? `<img src="${esc(p.img)}" class="card-img" alt="${esc(p.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`
     : '';
-  const priceOld = p.oldPrice > 0 ? `<span class="price-old">R$ ${fmtPrice(p.oldPrice)}</span>` : '';
+  const priceOld = hasPrice && p.oldPrice > 0 ? `<span class="price-old">R$ ${fmtPrice(p.oldPrice)}</span>` : '';
   const priceDsc = disc > 0 ? `<span class="price-discount">-${disc}%</span>` : '';
+  const priceNew = hasPrice
+    ? `<span class="price-new">R$ ${fmtPrice(p.price)}</span>`
+    : '<span class="price-new">Ver preco na loja</span>';
   const rating = p.rating || 4.5;
   const rcount = p.rcount || 0;
 
@@ -832,7 +1027,7 @@ function renderCard(p, i) {
       </div>
       <div class="card-price-row">
         ${priceOld}
-        <span class="price-new">R$ ${fmtPrice(p.price)}</span>
+        ${priceNew}
         ${priceDsc}
       </div>
       <button class="card-btn" onclick="goToProduct('${esc(p.link)}')">
