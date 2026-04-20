@@ -29,6 +29,10 @@ logs/
 dist/
 build/
 
+# Playwright / scraper
+.browser-profiles/
+tmp/
+
 # Variáveis locais
 old_files/
 *.bak
