@@ -79,80 +79,80 @@ const DEFAULT_AFFILIATE_PRODUCTS = [
   },
   {
     affiliateId: 'SHOPEE-1GEPBNPSN0',
-    name: 'Produto Shopee (clique para ver oferta)',
+    name: '40 Peças / 46 Peças Jogo De Chave Catraca Caixa De Ferramentas Completa Reversível Soquetes Maleta',
     link: 'https://s.shopee.com.br/1gEpbnpsN0',
     price: 0,
     oldPrice: 0,
     category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
+    rating: 4.77,
     rcount: 0,
-    img: '',
+    img: 'https://down-br.img.susercontent.com/file/br-11134207-81z1k-mfrvxdr9i96v11',
     badge: 'hot'
   },
   {
     affiliateId: 'SHOPEE-9FH78YBJS4',
-    name: 'Produto Shopee (clique para ver oferta)',
+    name: 'Lavadora de Alta Pressão Portátil Recarregável Para Carros E Jardins Linha Premium Pistola Lava Jato Profissional',
     link: 'https://s.shopee.com.br/9fH78Ybjs4',
     price: 0,
     oldPrice: 0,
-    category: 'ferramentas',
+    category: 'automotivo',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
+    rating: 4.74,
     rcount: 0,
-    img: '',
+    img: 'https://down-br.img.susercontent.com/file/br-11134207-7r98o-mawcsa5q87m7d9',
     badge: 'new'
   },
   {
     affiliateId: 'SHOPEE-8ASJLP7VPW',
-    name: 'Produto Shopee 7563977602 (clique para ver oferta)',
+    name: 'Kit de Ferramentas com 129 peças + Maleta - Fasterr',
     link: 'https://s.shopee.com.br/8ASJLp7VpW',
-    price: 0,
+    price: 78.80,
     oldPrice: 0,
     category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
-    rcount: 0,
-    img: '',
+    rating: 4.81,
+    rcount: 15664,
+    img: 'https://down-br.img.susercontent.com/file/br-11134207-7r98o-m54p3h2s0gc239',
     badge: 'hot'
   },
   {
     affiliateId: 'SHOPEE-901QLNUGWS',
-    name: 'Produto Shopee 43902469890 (clique para ver oferta)',
+    name: 'Kit Furadeira Parafusadeira 12V Com Acessórios + Maleta e Bateria + Jogo 142 Peças - Fasterr',
     link: 'https://s.shopee.com.br/901QLNUGWs',
-    price: 0,
+    price: 179.50,
     oldPrice: 0,
     category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
+    rating: 4.95,
     rcount: 0,
-    img: '',
+    img: 'https://down-br.img.susercontent.com/file/br-11134207-7r98o-majv3bzy2hvd35',
     badge: 'new'
   },
   {
     affiliateId: 'SHOPEE-1LBZDJEEAB',
-    name: 'Produto Shopee 20705549413 (clique para ver oferta)',
+    name: 'Pistola Elétrica Para Pintura Pulverizador de Tinta com Bico de Metal e Compressor 450w - TSSAPER',
     link: 'https://s.shopee.com.br/1LbzDJEeAb',
-    price: 0,
+    price: 125.83,
     oldPrice: 0,
     category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
+    rating: 4.85,
     rcount: 0,
-    img: '',
+    img: 'https://down-br.img.susercontent.com/file/br-11134207-7r98o-lzgqwrjdffad33',
     badge: 'hot'
   },
   {
     affiliateId: 'SHOPEE-W2SDQTFDT',
-    name: 'Produto Shopee 18198763923 (clique para ver oferta)',
+    name: 'Fone De Ouvido Headset Gamer com Fio Profissional Preto Led Rgb PC USB P2/P3 XBOX PS4',
     link: 'https://s.shopee.com.br/W2sDqtFdT',
-    price: 0,
+    price: 64.90,
     oldPrice: 0,
-    category: 'ferramentas',
+    category: 'tecnologia',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
+    rating: 4.82,
     rcount: 0,
-    img: '',
+    img: 'https://down-br.img.susercontent.com/file/br-11134207-81z1k-mevdd620xv5uca',
     badge: 'new'
   }
 ];
@@ -198,7 +198,8 @@ function getStars(rating) {
 // ===== STORAGE =====
 function loadData() {
   try {
-    const data = localStorage.getItem(STORAGE_KEY);
+    const data = 
+  localStorage.getItem(STORAGE_KEY);
     products = data ? JSON.parse(data) : getSampleProducts();
     products = ensureAffiliateProducts(products);
   } catch (e) {
