@@ -371,11 +371,15 @@ function renderProducts() {
 
   if (arr.length === 0) {
     grid.innerHTML = '';
-    emptyState.style.display = 'block';
+    if (emptyState) {
+      emptyState.style.display = 'block';
+    }
     return;
   }
 
-  emptyState.style.display = 'none';
+  if (emptyState) {
+    emptyState.style.display = 'none';
+  }
   grid.innerHTML = arr.map((p, i) => renderCard(p, i)).join('');
 }
 
