@@ -248,6 +248,59 @@ nav a:hover, nav a.active {
   flex-shrink: 0;
 }
 
+/* Social links - header */
+.header-social {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--dark3);
+  border: 1px solid rgba(255,140,0,0.15);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.social-link:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(255,140,0,0.08);
+}
+
+/* Social links - footer */
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.footer-social-link svg {
+  flex-shrink: 0;
+}
+
+.footer-social-link:hover {
+  color: var(--gold);
+}
+
 .btn-add-header:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(255, 140, 0, 0.4);
