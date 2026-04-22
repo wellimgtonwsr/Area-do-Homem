@@ -94,15 +94,17 @@ app.delete('/api/produtos/:id', async (req, res) => {
 
 // ── API: Criar pagamento PIX ──────────────────────────────────────────────────
 app.post('/api/pagamento/criar', async (req, res) => {
-  const { email } = req.body || {};
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ error: 'E-mail inválido.' });
+  let { email } = req.body || {};
+  // Se não vier email, gera um temporário
+  if (!email || !email.includes('@')) {
+    email = 'chat_' + Date.now() + '@areahomem.com.br';
   }
+  email = email.toLowerCase().trim();
   // Verificar se email já pagou
   const { data: existing } = await supabase
     .from('chat_access')
     .select('id')
-    .eq('email', email.toLowerCase())
+    .eq('email', email)
     .maybeSingle();
   if (existing) {
     return res.json({ already_paid: true, email });

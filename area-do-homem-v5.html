@@ -199,17 +199,6 @@
     pointer-events:none; z-index:3;
   }
   .hero-bg { display:none; }
-  /* two vertical accent lines */
-  .hero-line {
-    position: absolute;
-    width: 1px; height: 55%;
-    background: linear-gradient(to bottom, transparent, rgba(255,140,0,0.5), transparent);
-    animation: hero-line 5s ease-in-out infinite;
-    z-index: 2;
-  }
-  .hero-line:nth-child(2) { left: 18%; animation-delay: 0s; }
-  .hero-line:nth-child(3) { right: 18%; animation-delay: 2.5s; }
-  @keyframes hero-line { 0%,100%{opacity:0.2; transform:scaleY(0.7)} 50%{opacity:0.8; transform:scaleY(1)} }
   .hero-content { position: relative; z-index: 4; max-width: 780px; }
   .hero-badge {
     display: inline-block;
@@ -406,23 +395,7 @@
     cursor: pointer; letter-spacing: 0.5px; transition: all 0.2s;
   }
   .btn-save:hover { box-shadow: 0 4px 16px rgba(255,140,0,0.4); }
-  /* ===== EDIT/DEL OVERLAY ===== */
-  .card-actions {
-    position: absolute; bottom: 56px; right: 0; left: 0;
-    background: rgba(10,10,10,0.9);
-    display: none; align-items: center; justify-content: center; gap: 10px;
-    padding: 10px; border-top: 1px solid rgba(255,255,255,0.06);
-  }
-  .product-card:hover .card-actions { display: flex; }
-  .btn-edit, .btn-del {
-    padding: 6px 14px; border-radius: 6px; font-size: 11px;
-    font-weight: 700; cursor: pointer; border: none; font-family: 'Barlow', sans-serif;
-    transition: all 0.2s; letter-spacing: 0.5px; text-transform: uppercase;
-  }
-  .btn-edit { background: rgba(255,140,0,0.15); color: var(--gold); border: 1px solid rgba(255,140,0,0.3); }
-  .btn-edit:hover { background: rgba(255,140,0,0.25); }
-  .btn-del { background: rgba(229,57,53,0.12); color: #ef9a9a; border: 1px solid rgba(229,57,53,0.3); }
-  .btn-del:hover { background: rgba(229,57,53,0.25); }
+
   /* ===== TOAST ===== */
   .toast {
     position: fixed; bottom: 2rem; right: 2rem; z-index: 3000;
@@ -556,6 +529,21 @@
   }
   .chat-lock-overlay.hidden { display: none; }
   @keyframes lock-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  /* Login tabs */
+  .chat-login-tabs {
+    display: flex; width: 100%; gap: 0; border-radius: 10px; overflow: hidden;
+    border: 1px solid rgba(255,140,0,0.3); flex-shrink: 0; margin-bottom: 0.5rem;
+  }
+  .chat-tab {
+    flex: 1; padding: 9px; background: transparent; border: none;
+    color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: 'Barlow', sans-serif; transition: all 0.2s;
+  }
+  .chat-tab.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff;
+  }
+  .chat-tab:not(.active):hover { background: rgba(255,140,0,0.12); color: rgba(255,255,255,0.85); }
   .chat-lock-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 1px; color: #fff; }
   .chat-lock-desc { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.55; max-width: 260px; }
   .chat-lock-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem; color: var(--gold); letter-spacing: 2px; }
@@ -773,8 +761,6 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-line"></div>
-  <div class="hero-line"></div>
   <div class="hero-content">
     <div class="hero-badge">🔥 Curadoria Masculina Premium</div>
     <h1>Área<br><span>do Homem</span></h1>
@@ -822,14 +808,29 @@
     </div>
     <!-- Mensagens (borradas quando bloqueado) -->
     <div class="chat-messages-area" id="chatMessages"></div>
-    <!-- Overlay de cadeado -->
+    <!-- Tela de Login / Criar Conta -->
     <div class="chat-lock-overlay" id="chatLockOverlay">
-      <div style="font-size:2rem;animation:lock-bounce 2s ease-in-out infinite">🔒</div>
-      <div class="chat-lock-title">Chat Exclusivo</div>
-      <div class="chat-lock-desc">Conecte-se com homens de todo o Brasil. Troque dicas, experiências e recomendações.</div>
-      <div class="chat-lock-price">R$ 4,00 <span>/ acesso vitalício</span></div>
-      <button class="btn-pay-mp" onclick="openPayModal()">💳 Pagar com PIX — Mercado Pago</button>
-      <div style="font-size:11px;color:rgba(255,255,255,0.45)">Pagamento único • Acesso permanente</div>
+      <div class="chat-login-tabs">
+        <button class="chat-tab active" id="tabLogin" onclick="switchChatTab('login')">Entrar</button>
+        <button class="chat-tab" id="tabNew" onclick="switchChatTab('new')">Criar Conta</button>
+      </div>
+      <!-- Tab: Login -->
+      <div id="chatLoginForm">
+        <div class="chat-lock-title" style="font-size:1.1rem">Acesse com sua conta</div>
+        <input class="chat-nick-input" type="email" id="chatLoginEmail" placeholder="Seu e-mail cadastrado"
+               onkeydown="if(event.key==='Enter')loginChat()">
+        <button class="btn-enter-chat" onclick="loginChat()">Verificar Acesso →</button>
+        <div id="chatLoginMsg" style="font-size:12px;color:rgba(255,255,255,0.5)"></div>
+      </div>
+      <!-- Tab: Criar Conta -->
+      <div id="chatNewForm" style="display:none">
+        <div class="chat-lock-title" style="font-size:1.1rem">Primeiro Acesso</div>
+        <div class="chat-lock-desc">Acesso vitalício por apenas R$ 4,00 via PIX</div>
+        <input class="chat-nick-input" type="email" id="chatNewEmail" placeholder="Seu e-mail"
+               onkeydown="if(event.key==='Enter')openPayModalWithEmail()">
+        <button class="btn-pay-mp" onclick="openPayModalWithEmail()">💳 Pagar com PIX — R$ 4,00</button>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Pagamento único • Acesso permanente</div>
+      </div>
     </div>
     <!-- Input desbloqueado -->
     <div class="chat-input-area" id="chatInputArea" style="display:none">
@@ -838,10 +839,10 @@
       <button class="chat-send-btn" onclick="sendChatMsg()" aria-label="Enviar">↑</button>
     </div>
     <!-- Input bloqueado -->
-    <div class="chat-locked-input" id="chatLockedInput" onclick="openPayModal()">
+    <div class="chat-locked-input" id="chatLockedInput" onclick="switchChatTab('new')">
       <span class="chat-locked-icon">🔒</span>
-      <span class="chat-locked-txt">Pague R$ 4,00 para participar</span>
-      <button class="chat-locked-cta">Desbloquear →</button>
+      <span class="chat-locked-txt">Entre ou crie sua conta para participar</span>
+      <button class="chat-locked-cta">Acessar →</button>
     </div>
   </div>
 </div>
@@ -855,25 +856,16 @@
       <button class="pay-modal-close" onclick="closePayModal()">✕</button>
     </div>
     <div class="pay-modal-body">
-      <!-- Step 1: email -->
+      <!-- Step 1: QR (email vem da tela de criar conta) -->
       <div class="pay-step active" id="payStep1">
-        <div class="pay-step-title">Seu e-mail para o PIX</div>
-        <p style="font-size:13px;color:var(--text-muted)">Informe o e-mail cadastrado no Mercado Pago para gerar o QR code.</p>
-        <input class="pay-input" type="email" id="payEmail" placeholder="seu@email.com"
-               onkeydown="if(event.key==='Enter')requestPIX()">
-        <button class="btn-pay-mp" onclick="requestPIX()">Gerar QR Code PIX →</button>
-        <p class="pay-note">🔒 Pagamento seguro via Mercado Pago</p>
-      </div>
-      <!-- Step 2: QR -->
-      <div class="pay-step" id="payStep2">
-        <div class="pay-step-title">Escaneie o QR Code</div>
+        <div class="pay-step-title">Escaneie o QR Code PIX</div>
         <div class="qr-wrap"><img id="qrImg" src="" alt="QR PIX"></div>
         <button class="qr-copy-btn" id="qrCopyBtn" onclick="copyPIX()">📋 Copiar código PIX</button>
         <div class="pay-timer">Expira em <strong id="payCountdown">10:00</strong></div>
-        <div class="pay-status" id="payStatusMsg">Aguardando pagamento...</div>
+        <div class="pay-status" id="payStatusMsg">Gerando QR Code...</div>
       </div>
-      <!-- Step 3: sucesso -->
-      <div class="pay-step" id="payStep3">
+      <!-- Step 2: sucesso -->
+      <div class="pay-step" id="payStep2">
         <div class="pay-success-icon">✅</div>
         <div class="pay-success-title">Pagamento Confirmado!</div>
         <div class="pay-success-desc">Bem-vindo ao Chat do Homem. Acesso liberado para sempre.</div>
@@ -1327,7 +1319,7 @@ function renderCard(p, i) {
     : p.badge === 'new' ? '<span class="badge-new">✨ NOVO</span>' : '';
   const storeChip = p.store ? `<span class="store-chip">${esc(p.store)}</span>` : '';
   const img = p.img
-    ? `<img src="${esc(p.img)}" class="card-img" alt="${esc(p.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`
+    ? `<img src="${esc(p.img)}" class="card-img" alt="${esc(p.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`
     : '';
   const priceOld = hasPrice && p.oldPrice > 0 ? `<span class="price-old">R$ ${fmtPrice(p.oldPrice)}</span>` : '';
   const priceDsc = disc > 0 ? `<span class="price-discount">-${disc}%</span>` : '';
@@ -1342,10 +1334,7 @@ function renderCard(p, i) {
     <div class="card-img-wrap">
       ${img}<div class="card-img-placeholder" ${img?'style="display:none"':''}>${emoji}</div>
     </div>
-    <div class="card-actions">
-      <button class="btn-edit" onclick="editProduct(${p.id})">✏️ Editar</button>
-      <button class="btn-del" onclick="delProduct(${p.id})">🗑️ Remover</button>
-    </div>
+
     <div class="card-body">
       <div class="card-store">${esc(p.store || 'Loja Parceira')}</div>
       <div class="card-title">${esc(p.name)}</div>
@@ -1472,13 +1461,7 @@ function saveProduct() {
   saveData(); renderProducts(); closeModal();
 }
 
-function editProduct(id) { openModal(id); }
-function delProduct(id) {
-  if (!confirm('Remover este produto?')) return;
-  products = products.filter(p => p.id !== id);
-  saveData(); renderProducts();
-  showToast('🗑️', 'Produto removido.');
-}
+
 
 // ===== SECURITY =====
 function sanitizeUrl(url) {
@@ -1799,6 +1782,7 @@ document.addEventListener('keydown', e => {
 // ===== CHAT =====
 let chatOpen = false, chatUnlocked = !!(localStorage.getItem('chat_unlocked')), chatUsername = localStorage.getItem('chat_nick') || '', chatUnread = 0;
 let _payInterval = null, _payCountdown = null, _currentPayId = null, _pixCode = '';
+let _chatEmail = localStorage.getItem('chat_email') || '';
 
 function _updateChatBadge(n) {
   const b = document.getElementById('chatBadge');
@@ -1841,6 +1825,147 @@ function enterChat() {
   chatUsername = nick;
   localStorage.setItem('chat_nick', nick);
   showChatScreen('messages');
+}
+
+// ===== NEW LOGIN FUNCTIONS =====
+function switchChatTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('tabLogin').classList.toggle('active', isLogin);
+  document.getElementById('tabNew').classList.toggle('active', !isLogin);
+  document.getElementById('chatLoginForm').style.display = isLogin ? 'contents' : 'none';
+  document.getElementById('chatNewForm').style.display = isLogin ? 'none' : 'contents';
+}
+
+async function loginChat() {
+  const email = (document.getElementById('chatLoginEmail').value || '').trim();
+  const msgEl = document.getElementById('chatLoginMsg');
+  if (!email || !email.includes('@')) {
+    if (msgEl) msgEl.textContent = 'Informe um e-mail válido.';
+    return;
+  }
+  if (msgEl) msgEl.textContent = 'Verificando...';
+  try {
+    const res = await fetch('/api/chat/acesso/' + encodeURIComponent(email));
+    const data = await res.json();
+    if (data.has_access) {
+      localStorage.setItem('chat_unlocked', '1');
+      localStorage.setItem('chat_email', email);
+      _chatEmail = email;
+      chatUnlocked = true;
+      showChatScreen('username');
+    } else {
+      if (msgEl) msgEl.textContent = 'E-mail não encontrado. Crie sua conta.';
+      // Pre-fill the register tab with the typed email
+      document.getElementById('chatNewEmail').value = email;
+      setTimeout(() => switchChatTab('new'), 1000);
+    }
+  } catch(e) {
+    if (msgEl) msgEl.textContent = 'Erro ao verificar. Tente novamente.';
+  }
+}
+
+function openPayModalWithEmail() {
+  const email = (document.getElementById('chatNewEmail').value || '').trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('chatNewEmail').focus();
+    return;
+  }
+  _chatEmail = email;
+  openPayModal(email);
+}
+
+// ===== PAYMENT MODAL =====
+function openPayModal(email) {
+  const overlay = document.getElementById('payModalOverlay');
+  overlay.classList.add('open');
+  ['payStep1','payStep2'].forEach(s => document.getElementById(s).classList.remove('active'));
+  document.getElementById('payStep1').classList.add('active');
+  // Automatically generate QR code
+  requestPIX(email || _chatEmail);
+}
+
+function closePayModal() {
+  document.getElementById('payModalOverlay').classList.remove('open');
+  if (_payInterval) { clearInterval(_payInterval); _payInterval = null; }
+  if (_payCountdown) { clearInterval(_payCountdown); _payCountdown = null; }
+}
+
+function copyPIX() {
+  if (!_pixCode) return;
+  navigator.clipboard.writeText(_pixCode).catch(() => {});
+  const btn = document.getElementById('qrCopyBtn');
+  if (btn) { btn.textContent = '✅ Copiado!'; setTimeout(() => btn.textContent = '📋 Copiar código PIX', 2000); }
+}
+
+async function requestPIX(email) {
+  const useEmail = email || _chatEmail || ('chat_' + Date.now() + '@areahomem.com.br');
+  const statusEl = document.getElementById('payStatusMsg');
+  if (statusEl) statusEl.textContent = 'Gerando QR Code...';
+  try {
+    const res = await fetch('/api/pagamento/criar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: useEmail, descricao: 'Chat Global do Homem - Acesso Vitalício', valor: 4.00 })
+    });
+    const data = await res.json();
+    if (data.already_paid) {
+      // Already paid — unlock directly
+      localStorage.setItem('chat_unlocked', '1');
+      localStorage.setItem('chat_email', useEmail);
+      _chatEmail = useEmail;
+      chatUnlocked = true;
+      closePayModal();
+      showChatScreen('username');
+      return;
+    }
+    if (!res.ok) throw new Error(data.erro || data.error || 'Erro ao gerar PIX');
+    _currentPayId = data.id;
+    _pixCode = data.qr_code || '';
+    document.getElementById('qrImg').src = data.qr_code_base64
+      ? 'data:image/png;base64,' + data.qr_code_base64
+      : 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(_pixCode);
+    document.getElementById('qrCopyBtn').textContent = '📋 Copiar código PIX';
+    if (statusEl) statusEl.textContent = 'Aguardando pagamento...';
+    _startCountdown(600);
+    _startPolling();
+  } catch(e) {
+    if (statusEl) statusEl.textContent = 'Erro: ' + e.message;
+  }
+}
+
+function _startCountdown(secs) {
+  let s = secs;
+  const el = document.getElementById('payCountdown');
+  if (_payCountdown) clearInterval(_payCountdown);
+  _payCountdown = setInterval(() => {
+    s--;
+    if (el) el.textContent = Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;
+    if (s <= 0) { clearInterval(_payCountdown); closePayModal(); }
+  }, 1000);
+}
+
+function _startPolling() {
+  if (_payInterval) clearInterval(_payInterval);
+  let attempts = 0;
+  _payInterval = setInterval(async () => {
+    if (!_currentPayId || ++attempts > 60) { clearInterval(_payInterval); return; }
+    try {
+      const res = await fetch('/api/pagamento/status/' + _currentPayId);
+      const data = await res.json();
+      const status = data.status;
+      const msg = document.getElementById('payStatusMsg');
+      if (status === 'approved') {
+        clearInterval(_payInterval); clearInterval(_payCountdown);
+        localStorage.setItem('chat_unlocked', '1');
+        localStorage.setItem('chat_email', _chatEmail);
+        chatUnlocked = true;
+        ['payStep1','payStep2'].forEach(s => document.getElementById(s).classList.remove('active'));
+        document.getElementById('payStep2').classList.add('active');
+      } else if (msg) {
+        msg.textContent = status === 'pending' ? 'Aguardando pagamento...' : 'Status: ' + status;
+      }
+    } catch(e) {}
+  }, 5000);
 }
 
 const PREVIEW_MSGS = [
@@ -1898,88 +2023,6 @@ function sendChatMsg() {
   </div>`;
   inp.value = '';
   box.scrollTop = box.scrollHeight;
-}
-
-// ===== PAYMENT MODAL =====
-function openPayModal() {
-  document.getElementById('payModalOverlay').classList.add('open');
-  ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
-  document.getElementById('payStep1').classList.add('active');
-}
-function closePayModal() {
-  document.getElementById('payModalOverlay').classList.remove('open');
-  if (_payInterval) { clearInterval(_payInterval); _payInterval = null; }
-  if (_payCountdown) { clearInterval(_payCountdown); _payCountdown = null; }
-}
-function copyPIX() {
-  if (!_pixCode) return;
-  navigator.clipboard.writeText(_pixCode).catch(() => {});
-  const btn = document.getElementById('qrCopyBtn');
-  if (btn) { btn.textContent = '✅ Copiado!'; setTimeout(() => btn.textContent = '📋 Copiar código PIX', 2000); }
-}
-
-async function requestPIX() {
-  const email = document.getElementById('payEmail').value.trim();
-  if (!email || !email.includes('@')) { alert('Informe um e-mail válido'); return; }
-  const btn = document.querySelector('#payStep1 .btn-pay-mp');
-  if (btn) { btn.disabled = true; btn.textContent = 'Gerando QR...'; }
-  try {
-    const res = await fetch('/api/pagamento/criar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, descricao: 'Chat Global do Homem - Acesso Vitalício', valor: 4.00 })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.erro || 'Erro ao gerar PIX');
-    _currentPayId = data.id;
-    _pixCode = data.qr_code || '';
-    document.getElementById('qrImg').src = data.qr_code_base64
-      ? 'data:image/png;base64,' + data.qr_code_base64
-      : 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(_pixCode);
-    document.getElementById('qrCopyBtn').textContent = '📋 Copiar código PIX';
-    ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
-    document.getElementById('payStep2').classList.add('active');
-    _startCountdown(600);
-    _startPolling();
-  } catch(e) {
-    alert('Erro: ' + e.message);
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Gerar QR Code PIX →'; }
-  }
-}
-
-function _startCountdown(secs) {
-  let s = secs;
-  const el = document.getElementById('payCountdown');
-  if (_payCountdown) clearInterval(_payCountdown);
-  _payCountdown = setInterval(() => {
-    s--;
-    if (el) el.textContent = Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;
-    if (s <= 0) { clearInterval(_payCountdown); closePayModal(); }
-  }, 1000);
-}
-
-function _startPolling() {
-  if (_payInterval) clearInterval(_payInterval);
-  let attempts = 0;
-  _payInterval = setInterval(async () => {
-    if (!_currentPayId || ++attempts > 60) { clearInterval(_payInterval); return; }
-    try {
-      const res = await fetch('/api/pagamento/status/' + _currentPayId);
-      const data = await res.json();
-      const status = data.status;
-      const msg = document.getElementById('payStatusMsg');
-      if (status === 'approved') {
-        clearInterval(_payInterval); clearInterval(_payCountdown);
-        localStorage.setItem('chat_unlocked', '1');
-        chatUnlocked = true;
-        ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
-        document.getElementById('payStep3').classList.add('active');
-      } else if (msg) {
-        msg.textContent = status === 'pending' ? 'Aguardando pagamento...' : 'Status: ' + status;
-      }
-    } catch(e) {}
-  }, 5000);
 }
 
 // Contador online simulado
