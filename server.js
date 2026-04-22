@@ -3,6 +3,7 @@ const express = require('express');
 const path    = require('path');
 const crypto  = require('crypto');
 const { MercadoPagoConfig, Payment } = require('mercadopago');
+const { createClient } = require('@supabase/supabase-js');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,12 @@ const mpClient = new MercadoPagoConfig({
   options: { timeout: 15000 }
 });
 const mpPayment = new Payment(mpClient);
+
+// ── Supabase client (service_role — backend only) ────────────────────────────
+const supabase = createClient(
+  process.env.SUPABASE_URL  || '',
+  process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || ''
+);
 
 // ── Middlewares ──────────────────────────────────────────────────────────────
 app.use(express.json());
@@ -28,13 +35,77 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin-images.html'));
 });
 
+// ── API: Produtos (Supabase) ──────────────────────────────────────────────────
+app.get('/api/produtos', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    res.json(data || []);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/produtos', async (req, res) => {
+  const p = req.body;
+  if (!p || !p.name || !p.link || !p.price) {
+    return res.status(400).json({ error: 'Campos obrigatórios: name, link, price' });
+  }
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .upsert({
+        id:        p.id || crypto.randomUUID(),
+        name:      p.name,
+        link:      p.link,
+        price:     parseFloat(p.price),
+        old_price: p.oldPrice ? parseFloat(p.oldPrice) : null,
+        category:  p.category || 'tecnologia',
+        store:     p.store || null,
+        rating:    p.rating ? parseFloat(p.rating) : null,
+        rcount:    p.rcount ? parseInt(p.rcount) : null,
+        img:       p.img || null,
+        badge:     p.badge || null,
+      })
+      .select()
+      .single();
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/produtos/:id', async (req, res) => {
+  try {
+    const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', req.params.id);
+    if (error) throw error;
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── API: Criar pagamento PIX ──────────────────────────────────────────────────
-// POST /api/pagamento/criar
-// Body: { email: "usuario@email.com" }
 app.post('/api/pagamento/criar', async (req, res) => {
   const { email } = req.body || {};
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'E-mail inválido.' });
+  }
+  // Verificar se email já pagou
+  const { data: existing } = await supabase
+    .from('chat_access')
+    .select('id')
+    .eq('email', email.toLowerCase())
+    .maybeSingle();
+  if (existing) {
+    return res.json({ already_paid: true, email });
   }
   if (!process.env.MP_ACCESS_TOKEN) {
     return res.status(503).json({ error: 'MP_ACCESS_TOKEN não configurado no servidor.' });
@@ -56,10 +127,11 @@ app.post('/api/pagamento/criar', async (req, res) => {
 
     const tx = (payment.point_of_interaction || {}).transaction_data || {};
     res.json({
-      id:            payment.id,
-      status:        payment.status,
-      qr_code:       tx.qr_code       || null,
-      qr_code_base64: tx.qr_code_base64 || null
+      id:             payment.id,
+      status:         payment.status,
+      qr_code:        tx.qr_code        || null,
+      qr_code_base64: tx.qr_code_base64 || null,
+      email
     });
   } catch (err) {
     console.error('[MP] Erro ao criar pagamento:', err.message || err);
@@ -69,7 +141,6 @@ app.post('/api/pagamento/criar', async (req, res) => {
 });
 
 // ── API: Consultar status do pagamento ────────────────────────────────────────
-// GET /api/pagamento/status/:id
 app.get('/api/pagamento/status/:id', async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (!id || isNaN(id)) return res.status(400).json({ error: 'ID inválido.' });
@@ -78,6 +149,13 @@ app.get('/api/pagamento/status/:id', async (req, res) => {
   }
   try {
     const payment = await mpPayment.get({ id });
+    // Se aprovado, salvar acesso no Supabase
+    if (payment.status === 'approved' && payment.payer?.email) {
+      await supabase.from('chat_access').upsert({
+        email:      payment.payer.email.toLowerCase(),
+        payment_id: String(payment.id)
+      }, { onConflict: 'email' });
+    }
     res.json({ id: payment.id, status: payment.status });
   } catch (err) {
     console.error('[MP] Erro ao consultar status:', err.message || err);
@@ -85,14 +163,36 @@ app.get('/api/pagamento/status/:id', async (req, res) => {
   }
 });
 
+// ── API: Verificar acesso ao chat por email ───────────────────────────────────
+app.get('/api/chat/acesso/:email', async (req, res) => {
+  const email = decodeURIComponent(req.params.email).toLowerCase();
+  if (!email || !email.includes('@')) return res.status(400).json({ error: 'Email inválido' });
+  const { data } = await supabase
+    .from('chat_access')
+    .select('id, paid_at')
+    .eq('email', email)
+    .maybeSingle();
+  res.json({ has_access: !!data, paid_at: data?.paid_at || null });
+});
+
 // ── API: Webhook Mercado Pago ─────────────────────────────────────────────────
-// Configure a URL: https://SEU-DOMINIO/api/pagamento/webhook
-// No painel do MP: https://www.mercadopago.com.br/developers/pt/docs/your-integrations/notifications/webhooks
-app.post('/api/pagamento/webhook', (req, res) => {
+app.post('/api/pagamento/webhook', async (req, res) => {
   const topic  = req.query.topic || req.body?.type || '';
   const dataId = req.query.id || req.body?.data?.id || '';
   console.log(`[Webhook] topic=${topic} id=${dataId}`);
-  // Responde 200 imediatamente para o MP não reenviar
+  // Tentar processar pagamento aprovado via webhook
+  if ((topic === 'payment' || req.body?.type === 'payment') && dataId && process.env.MP_ACCESS_TOKEN) {
+    try {
+      const payment = await mpPayment.get({ id: parseInt(dataId, 10) });
+      if (payment.status === 'approved' && payment.payer?.email) {
+        await supabase.from('chat_access').upsert({
+          email:      payment.payer.email.toLowerCase(),
+          payment_id: String(payment.id)
+        }, { onConflict: 'email' });
+        console.log(`[Webhook] Acesso liberado para ${payment.payer.email}`);
+      }
+    } catch(e) { console.error('[Webhook] Erro:', e.message); }
+  }
   res.sendStatus(200);
 });
 
@@ -104,8 +204,9 @@ app.use((req, res) => {
 // ── Start ─────────────────────────────────────────────────────────────────────
 app.listen(PORT, '0.0.0.0', () => {
   const token = process.env.MP_ACCESS_TOKEN;
+  const supa  = process.env.SUPABASE_URL;
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
   console.log(`💳 Mercado Pago: ${token ? (token.startsWith('TEST') ? '✅ modo TESTE' : '✅ produção') : '⚠️  MP_ACCESS_TOKEN não definido!'}`);
-  console.log(`💬 Chat PIX: http://localhost:${PORT}/api/pagamento/criar`);
+  console.log(`🗄️  Supabase: ${supa ? '✅ ' + supa : '⚠️  SUPABASE_URL não definido!'}`);
   console.log(`🛑 Para parar: Ctrl+C`);
 });

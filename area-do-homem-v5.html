@@ -14,29 +14,30 @@
     --gold: #FF8C00;
     --gold-light: #FFB84D;
     --gold-dark: #E67E00;
-    --dark: #0a0a0a;
-    --dark2: #111111;
-    --dark3: #1a1a1a;
-    --dark4: #222222;
-    --card-bg: #141414;
-    --text: #f0f0f0;
-    --text-muted: #888;
+    --dark: #ffffff;
+    --dark2: #f8f8f8;
+    --dark3: #f0f0f0;
+    --dark4: #e8e8e8;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #666666;
     --red: #E53935;
     --green: #2E7D32;
     --blue: #1565C0;
     --radius: 10px;
-    --shadow: 0 4px 24px rgba(0,0,0,0.6);
+    --shadow: 0 4px 24px rgba(0,0,0,0.12);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     font-family: 'Barlow', sans-serif;
-    background: #04080f;
+    background: #ffffff;
     color: var(--text);
     overflow-x: hidden;
   }
   /* ===== PARALLAX HERO BG ===== */
-  #scene {
+  #scene { display: none; }
+  #scene-old {
     position: fixed; inset: 0; z-index: 0;
     overflow: hidden; pointer-events: none;
   }
@@ -98,11 +99,11 @@
     50%      { opacity:1;   transform: scaleX(1); }
   }
   /* Canvas com nodes/circuit por cima */
-  #bgCanvas { position: fixed; top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1; }
+  #bgCanvas { display: none; }
   /* ===== HEADER ===== */
   header {
     position: sticky; top: 0; z-index: 1000;
-    background: rgba(10,10,10,0.95);
+    background: rgba(255,255,255,0.97);
     border-bottom: 1px solid rgba(255,140,0,0.2);
     backdrop-filter: blur(12px);
     padding: 0 2rem;
@@ -194,7 +195,7 @@
   /* Subtle bottom fade so products section integrates */
   .hero::after {
     content:''; position:absolute; bottom:0; left:0; right:0; height:220px;
-    background: linear-gradient(to bottom, transparent, var(--dark));
+    background: linear-gradient(to bottom, transparent, #ffffff);
     pointer-events:none; z-index:3;
   }
   .hero-bg { display:none; }
@@ -225,7 +226,7 @@
     margin-bottom: 1rem;
     animation: fadeInUp 0.7s ease 0.1s both;
   }
-  .hero h1 { text-shadow: 0 2px 40px rgba(0,0,0,0.8), 0 0 80px rgba(255,140,0,0.15); }
+  .hero h1 { text-shadow: none; }
   .hero h1 span { color: var(--gold); }
   .hero p {
     color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem;
@@ -234,7 +235,7 @@
   }
   .hero-stats {
     display: flex; gap: 2rem; justify-content: center;
-    animation: fadeInUp 0.7s ease 0.3s both; background: rgba(0,0,0,0.35); backdrop-filter: blur(12px); border: 1px solid rgba(255,140,0,0.15); border-radius: 16px; padding: 1.2rem 2rem;
+    animation: fadeInUp 0.7s ease 0.3s both; background: rgba(255,140,0,0.06); border: 1px solid rgba(255,140,0,0.2); border-radius: 16px; padding: 1.2rem 2rem;
   }
   .hero-stat { text-align: center; }
   .hero-stat strong { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; color: var(--gold); display: block; text-shadow: 0 0 20px rgba(255,140,0,0.6); }
