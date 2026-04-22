@@ -559,12 +559,84 @@
   .scroll-top:hover { background: rgba(255,140,0,0.12); transform: translateY(-2px); }
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .header-inner { flex-wrap: wrap; height: auto; padding: 10px 0; gap: 10px; }
+    /* Header */
+    .header-inner { flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px; }
     nav { display: none; }
     .header-search { max-width: 100%; order: 3; flex: 1 1 100%; }
-    .form-grid { grid-template-columns: 1fr; }
+    .header-social { display: none; }
+    /* Hero */
+    .hero { min-height: 80vh; padding: 5rem 1.5rem 3.5rem; }
+    .hero h1 { font-size: clamp(2.8rem, 13vw, 5.5rem); letter-spacing: 2px; }
+    .hero p { font-size: 0.92rem; }
+    .hero-stats { flex-wrap: wrap; gap: 1rem; padding: 0.9rem 1.2rem; }
+    .hero-stat strong { font-size: 1.6rem; }
+    /* Sections */
+    .categories-section { padding: 2rem 1rem 0.5rem; }
+    .products-section { padding: 1.5rem 1rem 3rem; }
+    .section-title { font-size: 2rem; }
+    /* Products — 2 colunas no tablet */
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .card-img-wrap { height: 170px; }
+    /* Footer */
+    .footer-top { flex-direction: column; gap: 1.5rem; }
     .footer-links { gap: 1.5rem; }
-    .hero-stats { gap: 1.2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    /* Form */
+    .form-grid { grid-template-columns: 1fr; }
+    /* Toast */
+    .toast { right: 1rem; left: 1rem; bottom: 1rem; max-width: none; }
+  }
+  @media (max-width: 480px) {
+    /* Header compacto */
+    .header-inner { padding: 8px 12px; gap: 6px; }
+    .btn-login-header { padding: 7px 11px; font-size: 11px; gap: 5px; }
+    .logo-text span:first-child { font-size: 18px; }
+    .logo-icon { width: 36px; height: 36px; font-size: 18px; }
+    /* Hero bem menor */
+    .hero { min-height: auto; padding: 4.5rem 1rem 2.5rem; }
+    .hero h1 { font-size: clamp(2.4rem, 14vw, 3.8rem); line-height: 1; }
+    .hero-badge { font-size: 10px; letter-spacing: 1px; padding: 5px 12px; margin-bottom: 1rem; }
+    .hero p { font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .hero-stats { gap: 0.6rem; padding: 0.75rem 0.9rem; }
+    .hero-stat strong { font-size: 1.35rem; }
+    .hero-stat small { font-size: 9px; letter-spacing: 0.5px; }
+    /* Titles */
+    .section-title { font-size: 1.7rem; }
+    /* Sections padding */
+    .categories-section { padding: 1.5rem 0.75rem 0.5rem; }
+    .products-section { padding: 1rem 0.75rem 2.5rem; }
+    /* Categories: scroll horizontal */
+    .cats-grid { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 8px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .cats-grid::-webkit-scrollbar { display: none; }
+    .cat-btn { flex-shrink: 0; padding: 8px 14px; font-size: 12px; }
+    /* Products — 2 colunas compactas */
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .card-img-wrap { height: 145px; }
+    .card-body { padding: 0.65rem; }
+    .card-title { font-size: 12px; }
+    .card-price { font-size: 15px; }
+    .card-store { font-size: 9px; }
+    .badge-hot, .badge-sale, .badge-new { font-size: 9px; padding: 2px 7px; top: 8px; left: 8px; }
+    .store-chip { font-size: 9px; padding: 2px 6px; top: 8px; right: 8px; }
+    /* Filters */
+    .filters-bar { gap: 8px; }
+    .sort-select { font-size: 12px; padding: 7px 10px; }
+    .filter-count { font-size: 12px; padding: 5px 10px; }
+    /* Chat */
+    .chat-window { max-height: 90vh; border-radius: 16px; }
+    .btn-chat-hero { padding: 11px 20px; font-size: 0.95rem; }
+    /* Login modal */
+    .login-modal { border-radius: 16px; }
+    .login-modal-body { padding: 1rem; }
+    .login-modal-header { padding: 1rem 1.25rem; }
+    /* Pay modal */
+    .pay-modal-body { padding: 1rem; }
+    .qr-wrap img { width: 180px; height: 180px; }
+    /* Scroll top */
+    .scroll-top { bottom: 1rem; left: 1rem; width: 38px; height: 38px; }
+    /* Footer */
+    footer { padding: 2rem 1rem; }
+    .footer-links { flex-direction: column; gap: 1.2rem; }
   }
   @keyframes fadeInDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeInUp { from{opacity:0;transform:translateY(15px)} to{opacity:1;transform:translateY(0)} }
@@ -786,10 +858,7 @@
   .pay-success-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 1px; color: var(--gold); text-align: center; }
   .pay-success-desc { font-size: 13px; color: var(--text-muted); text-align: center; line-height: 1.5; }
 
-  @media (max-width: 500px) {
-    .chat-window { max-height: 88vh; }
-    .btn-chat-hero { padding: 11px 22px; font-size: 1rem; }
-  }
+
 </style>
 </head>
 <body>
