@@ -74,8 +74,87 @@
         <small>Avaliação Média</small>
       </div>
     </div>
+    <button class="btn-chat-hero" onclick="openChat()">
+      💬 Chat do Homem
+      <div class="chat-hero-unread" id="chatBadge"></div>
+    </button>
   </div>
 </section>
+
+<!-- CHAT OVERLAY -->
+<div class="chat-overlay" id="chatOverlay" onclick="if(event.target===this)closeChat()">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-icon">💬</div>
+      <div class="chat-header-info">
+        <div class="chat-header-title">Chat Global do Homem</div>
+        <div class="chat-header-sub"><span class="online-dot"></span><span id="chatOnline">—</span> online agora</div>
+      </div>
+      <button class="chat-close-btn" onclick="closeChat()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="chat-username-screen" id="chatUsernameScreen" style="display:none">
+      <div style="font-size:2.5rem">👤</div>
+      <h3>Qual o seu apelido?</h3>
+      <p>Como você quer ser chamado no chat</p>
+      <input class="chat-nick-input" type="text" id="chatNickInput" placeholder="Ex: João, Dev, Barba" maxlength="20"
+             onkeydown="if(event.key==='Enter')enterChat()">
+      <button class="btn-enter-chat" onclick="enterChat()">Entrar no Chat →</button>
+    </div>
+    <div class="chat-messages-area" id="chatMessages"></div>
+    <div class="chat-lock-overlay" id="chatLockOverlay">
+      <div style="font-size:2rem;animation:lock-bounce 2s ease-in-out infinite">🔒</div>
+      <div class="chat-lock-title">Chat Exclusivo</div>
+      <div class="chat-lock-desc">Conecte-se com homens de todo o Brasil. Troque dicas, experiências e recomendações.</div>
+      <div class="chat-lock-price">R$ 4,00 <span>/ acesso vitalício</span></div>
+      <button class="btn-pay-mp" onclick="openPayModal()">💳 Pagar com PIX — Mercado Pago</button>
+      <div style="font-size:11px;color:rgba(255,255,255,0.45)">Pagamento único • Acesso permanente</div>
+    </div>
+    <div class="chat-input-area" id="chatInputArea" style="display:none">
+      <input class="chat-text-input" type="text" id="chatTextInput" placeholder="Digite uma mensagem..." maxlength="300"
+             onkeydown="if(event.key==='Enter')sendChatMsg()">
+      <button class="chat-send-btn" onclick="sendChatMsg()" aria-label="Enviar">↑</button>
+    </div>
+    <div class="chat-locked-input" id="chatLockedInput" onclick="openPayModal()">
+      <span class="chat-locked-icon">🔒</span>
+      <span class="chat-locked-txt">Pague R$ 4,00 para participar</span>
+      <button class="chat-locked-cta">Desbloquear →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="pay-modal-overlay" id="payModalOverlay" onclick="if(event.target===this)closePayModal()">
+  <div class="pay-modal">
+    <div class="pay-modal-header">
+      <div style="font-size:20px">💳</div>
+      <h3>Acesso ao Chat — R$ 4,00</h3>
+      <button class="pay-modal-close" onclick="closePayModal()">✕</button>
+    </div>
+    <div class="pay-modal-body">
+      <div class="pay-step active" id="payStep1">
+        <div class="pay-step-title">Seu e-mail para o PIX</div>
+        <p style="font-size:13px;color:var(--text-muted)">Informe o e-mail cadastrado no Mercado Pago para gerar o QR code.</p>
+        <input class="pay-input" type="email" id="payEmail" placeholder="seu@email.com"
+               onkeydown="if(event.key==='Enter')requestPIX()">
+        <button class="btn-pay-mp" onclick="requestPIX()">Gerar QR Code PIX →</button>
+        <p class="pay-note">🔒 Pagamento seguro via Mercado Pago</p>
+      </div>
+      <div class="pay-step" id="payStep2">
+        <div class="pay-step-title">Escaneie o QR Code</div>
+        <div class="qr-wrap"><img id="qrImg" src="" alt="QR PIX"></div>
+        <button class="qr-copy-btn" id="qrCopyBtn" onclick="copyPIX()">📋 Copiar código PIX</button>
+        <div class="pay-timer">Expira em <strong id="payCountdown">10:00</strong></div>
+        <div class="pay-status" id="payStatusMsg">Aguardando pagamento...</div>
+      </div>
+      <div class="pay-step" id="payStep3">
+        <div class="pay-success-icon">✅</div>
+        <div class="pay-success-title">Pagamento Confirmado!</div>
+        <div class="pay-success-desc">Bem-vindo ao Chat do Homem. Acesso liberado para sempre.</div>
+        <button class="btn-enter-chat" onclick="closePayModal();showChatScreen('username')">Entrar no Chat →</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="categories-section">
   <div class="section-header">
@@ -171,5 +250,199 @@
 
 <script src="images-config.js"></script>
 <script src="app.js"></script>
+<script>
+// ===== CHAT =====
+let chatOpen = false, chatUnlocked = !!(localStorage.getItem('chat_unlocked')), chatUsername = localStorage.getItem('chat_nick') || '', chatUnread = 0;
+let _payInterval = null, _payCountdown = null, _currentPayId = null, _pixCode = '';
+
+function _updateChatBadge(n) {
+  const b = document.getElementById('chatBadge');
+  if (!b) return;
+  b.textContent = n > 9 ? '9+' : n;
+  b.classList.toggle('show', n > 0);
+}
+
+function openChat() {
+  document.getElementById('chatOverlay').classList.add('open');
+  chatOpen = true; chatUnread = 0; _updateChatBadge(0);
+  _renderPreviewMessages();
+  if (!chatUnlocked)      showChatScreen('locked');
+  else if (!chatUsername) showChatScreen('username');
+  else                    showChatScreen('messages');
+}
+
+function closeChat() {
+  const el = document.getElementById('chatOverlay');
+  if (el) el.classList.remove('open');
+  chatOpen = false;
+}
+
+function showChatScreen(screen) {
+  const locked   = screen === 'locked';
+  const username = screen === 'username';
+  const messages = screen === 'messages';
+  document.getElementById('chatUsernameScreen').style.display = username ? 'flex' : 'none';
+  document.getElementById('chatMessages').style.display       = username ? 'none' : 'flex';
+  document.getElementById('chatLockOverlay').style.display    = locked   ? 'flex' : 'none';
+  document.getElementById('chatLockedInput').style.display    = locked   ? 'flex' : 'none';
+  document.getElementById('chatInputArea').style.display      = messages ? 'flex' : 'none';
+  document.getElementById('chatMessages').style.flexDirection = 'column';
+  if (messages) _appendWelcomeMsg();
+}
+
+function enterChat() {
+  const nick = document.getElementById('chatNickInput').value.trim();
+  if (!nick) return;
+  chatUsername = nick;
+  localStorage.setItem('chat_nick', nick);
+  showChatScreen('messages');
+}
+
+const PREVIEW_MSGS = [
+  { user: 'Marcos', text: '●●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Rafael', text: '●●●●●●●●●●●●●●●' },
+  { user: 'Bruno',  text: '●●●●●●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Felipe', text: '●●●●●●●●●●●' },
+  { user: 'Diego',  text: '●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Lucas',  text: '●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Thiago', text: '●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Carlos', text: '●●●●●●●●●●●●●●' },
+];
+
+function _renderPreviewMessages() {
+  const box = document.getElementById('chatMessages');
+  if (!box || chatUnlocked) return;
+  const now = new Date();
+  box.innerHTML = PREVIEW_MSGS.map((m, i) => {
+    const t  = new Date(now - (PREVIEW_MSGS.length - i) * 90000);
+    const hh = String(t.getHours()).padStart(2, '0');
+    const mm = String(t.getMinutes()).padStart(2, '0');
+    return `<div class="chat-msg preview">
+      <div class="chat-msg-avatar">${m.user.charAt(0)}</div>
+      <div class="chat-msg-content">
+        <div class="chat-msg-name">${m.user}</div>
+        <div class="chat-msg-text">${m.text}</div>
+        <div class="chat-msg-time">${hh}:${mm}</div>
+      </div>
+    </div>`;
+  }).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+function _appendWelcomeMsg() {
+  const box = document.getElementById('chatMessages');
+  if (!box) return;
+  box.innerHTML = `<div class="chat-system-msg">🎉 Bem-vindo ao Chat do Homem, ${chatUsername}!</div>`;
+  box.scrollTop = box.scrollHeight;
+}
+
+function sendChatMsg() {
+  const inp = document.getElementById('chatTextInput');
+  const msg = inp ? inp.value.trim() : '';
+  if (!msg || !chatUsername) return;
+  const box = document.getElementById('chatMessages');
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2,'0'), mm = String(now.getMinutes()).padStart(2,'0');
+  box.innerHTML += `<div class="chat-msg own">
+    <div class="chat-msg-avatar">${chatUsername.charAt(0).toUpperCase()}</div>
+    <div class="chat-msg-content">
+      <div class="chat-msg-name">${chatUsername}</div>
+      <div class="chat-msg-text">${msg.replace(/</g,'&lt;')}</div>
+      <div class="chat-msg-time">${hh}:${mm}</div>
+    </div>
+  </div>`;
+  inp.value = '';
+  box.scrollTop = box.scrollHeight;
+}
+
+function openPayModal() {
+  document.getElementById('payModalOverlay').classList.add('open');
+  ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
+  document.getElementById('payStep1').classList.add('active');
+}
+function closePayModal() {
+  document.getElementById('payModalOverlay').classList.remove('open');
+  if (_payInterval) { clearInterval(_payInterval); _payInterval = null; }
+  if (_payCountdown) { clearInterval(_payCountdown); _payCountdown = null; }
+}
+function copyPIX() {
+  if (!_pixCode) return;
+  navigator.clipboard.writeText(_pixCode).catch(() => {});
+  const btn = document.getElementById('qrCopyBtn');
+  if (btn) { btn.textContent = '✅ Copiado!'; setTimeout(() => btn.textContent = '📋 Copiar código PIX', 2000); }
+}
+
+async function requestPIX() {
+  const email = document.getElementById('payEmail').value.trim();
+  if (!email || !email.includes('@')) { alert('Informe um e-mail válido'); return; }
+  const btn = document.querySelector('#payStep1 .btn-pay-mp');
+  if (btn) { btn.disabled = true; btn.textContent = 'Gerando QR...'; }
+  try {
+    const res = await fetch('/api/pagamento/criar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, descricao: 'Chat Global do Homem - Acesso Vitalício', valor: 4.00 })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.erro || 'Erro ao gerar PIX');
+    _currentPayId = data.id;
+    _pixCode = data.qr_code || '';
+    document.getElementById('qrImg').src = data.qr_code_base64
+      ? 'data:image/png;base64,' + data.qr_code_base64
+      : 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(_pixCode);
+    document.getElementById('qrCopyBtn').textContent = '📋 Copiar código PIX';
+    ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
+    document.getElementById('payStep2').classList.add('active');
+    _startCountdown(600);
+    _startPolling();
+  } catch(e) {
+    alert('Erro: ' + e.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Gerar QR Code PIX →'; }
+  }
+}
+
+function _startCountdown(secs) {
+  let s = secs;
+  const el = document.getElementById('payCountdown');
+  if (_payCountdown) clearInterval(_payCountdown);
+  _payCountdown = setInterval(() => {
+    s--;
+    if (el) el.textContent = Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;
+    if (s <= 0) { clearInterval(_payCountdown); closePayModal(); }
+  }, 1000);
+}
+
+function _startPolling() {
+  if (_payInterval) clearInterval(_payInterval);
+  let attempts = 0;
+  _payInterval = setInterval(async () => {
+    if (!_currentPayId || ++attempts > 60) { clearInterval(_payInterval); return; }
+    try {
+      const res = await fetch('/api/pagamento/status/' + _currentPayId);
+      const data = await res.json();
+      if (data.status === 'approved') {
+        clearInterval(_payInterval); clearInterval(_payCountdown);
+        localStorage.setItem('chat_unlocked', '1');
+        chatUnlocked = true;
+        ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
+        document.getElementById('payStep3').classList.add('active');
+      } else {
+        const msg = document.getElementById('payStatusMsg');
+        if (msg) msg.textContent = data.status === 'pending' ? 'Aguardando pagamento...' : 'Status: ' + data.status;
+      }
+    } catch(e) {}
+  }, 5000);
+}
+
+const _onlineEl = document.getElementById('chatOnline');
+if (_onlineEl) {
+  _onlineEl.textContent = Math.floor(Math.random() * 80) + 40;
+  setInterval(() => {
+    const cur = parseInt(_onlineEl.textContent) || 60;
+    _onlineEl.textContent = Math.max(20, cur + Math.floor(Math.random() * 7) - 3);
+  }, 15000);
+}
+</script>
 </body>
 </html>
