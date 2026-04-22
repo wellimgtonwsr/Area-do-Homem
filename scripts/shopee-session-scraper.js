@@ -7,12 +7,55 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const PROFILE_DIR = path.join(ROOT_DIR, '.browser-profiles', 'shopee');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'tmp');
 const DEFAULT_LINKS = [
-  'https://s.shopee.com.br/8ASJLp7VpW',
-  'https://s.shopee.com.br/901QLNUGWs',
-  'https://s.shopee.com.br/1LbzDJEeAb',
-  'https://s.shopee.com.br/W2sDqtFdT',
-  'https://s.shopee.com.br/1gEpbnpsN0',
-  'https://s.shopee.com.br/9fH78Ybjs4'
+  'https://s.shopee.com.br/qflbspHlR',
+  'https://s.shopee.com.br/20rj04fETP',
+  'https://s.shopee.com.br/7KtFLty7eG',
+  'https://s.shopee.com.br/6fdYYh93WL',
+  'https://s.shopee.com.br/7KtFLwKYCw',
+  'https://s.shopee.com.br/AUqH7ngofi',
+  'https://s.shopee.com.br/4LFdmUlxEH',
+  'https://s.shopee.com.br/AUqH7sHd5r',
+  'https://s.shopee.com.br/qflc8EdvT',
+  'https://s.shopee.com.br/LjV1EBk7I',
+  'https://s.shopee.com.br/6AhHyCmqzp',
+  'https://s.shopee.com.br/9paaKyZFwo',
+  'https://s.shopee.com.br/8KlmYGHCot',
+  'https://s.shopee.com.br/5q4RZgZfUu',
+  'https://s.shopee.com.br/6AhHyOem7f',
+  'https://s.shopee.com.br/5VRbBDRjXk',
+  'https://s.shopee.com.br/9fHA8wgI6F',
+  'https://s.shopee.com.br/7VCfYzjKck',
+  'https://s.shopee.com.br/5fl1NeTR5f',
+  'https://s.shopee.com.br/5L8Az6kky0',
+  'https://s.shopee.com.br/6VK8NIRu8v',
+  'https://s.shopee.com.br/5fl1NmcqyN',
+  'https://s.shopee.com.br/40cnOlLMwh',
+  'https://s.shopee.com.br/5AokmvTit3',
+  'https://s.shopee.com.br/5L8AzFpqrc',
+  'https://s.shopee.com.br/5fl1NuIdrR',
+  'https://s.shopee.com.br/30kGD1Zx4f',
+  'https://s.shopee.com.br/7KtFN5vrkj',
+  'https://s.shopee.com.br/AUqH8xQNix',
+  'https://s.shopee.com.br/gMLQuJd7A',
+  'https://s.shopee.com.br/7ppVy6eGrZ',
+  'https://s.shopee.com.br/1VvSQUf1cC',
+  'https://s.shopee.com.br/2qQq0xixnE',
+  'https://s.shopee.com.br/1BIc1wapRV',
+  'https://s.shopee.com.br/qfldMFMMy',
+  'https://s.shopee.com.br/7fW5lyzgx1',
+  'https://s.shopee.com.br/8ASMMz5jjI',
+  'https://s.shopee.com.br/7fW5m66pej',
+  'https://s.shopee.com.br/4qBuOvFdqq',
+  'https://s.shopee.com.br/3B3gPsMkeQ',
+  'https://s.shopee.com.br/5L8Azs8WyB',
+  'https://s.shopee.com.br/7VCfZs4HJT',
+  'https://s.shopee.com.br/6AhHzXT8zY',
+  'https://s.shopee.com.br/9AKtZ5ttU6',
+  'https://s.shopee.com.br/BQ4qe0ZV9',
+  'https://s.shopee.com.br/4LFdoJt6a6',
+  'https://s.shopee.com.br/9KeJlZcr1S',
+  'https://s.shopee.com.br/6pwyn1JWXk',
+  'https://s.shopee.com.br/60NrnYr2zU'
 ];
 
 function ensureDir(dirPath) {
@@ -38,12 +81,11 @@ async function launchPersistentBrowser() {
 
   return chromium.launchPersistentContext(PROFILE_DIR, {
     headless: false,
-    viewport: { width: 1440, height: 960 },
+    viewport: null,
     locale: 'pt-BR',
     timezoneId: 'America/Sao_Paulo',
     args: [
-      '--disable-blink-features=AutomationControlled',
-      '--start-maximized'
+      '--disable-blink-features=AutomationControlled'
     ]
   });
 }
