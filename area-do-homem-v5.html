@@ -168,6 +168,108 @@
     transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
   }
   .btn-add-header:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,140,0,0.4); }
+  /* ===== LOGIN BUTTON ===== */
+  .btn-login-header {
+    display: flex; align-items: center; gap: 7px;
+    background: transparent; border: 1px solid rgba(255,140,0,0.5);
+    color: var(--gold); padding: 9px 16px; border-radius: 8px;
+    font-weight: 700; cursor: pointer; font-size: 12px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+    font-family: 'Barlow', sans-serif;
+  }
+  .btn-login-header:hover { background: rgba(255,140,0,0.1); box-shadow: 0 0 0 1px var(--gold); }
+  .btn-login-header.logged { background: rgba(255,140,0,0.12); }
+  .btn-login-header .login-avatar {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #fff; font-weight: 700;
+  }
+  /* ===== LOGIN MODAL ===== */
+  .login-modal-overlay {
+    position: fixed; inset: 0; z-index: 2100;
+    background: rgba(0,0,0,0.88); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center; padding: 1rem;
+  }
+  .login-modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+  .login-modal {
+    width: 400px; max-width: calc(100vw - 2rem);
+    background: var(--dark2); border: 1px solid rgba(255,140,0,0.25);
+    border-radius: 20px; overflow: hidden; animation: slideUp 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+  }
+  .login-modal-header {
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    border-bottom: 1px solid rgba(255,140,0,0.2);
+    padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 12px;
+  }
+  .login-modal-logo {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .login-modal-header h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem;
+    letter-spacing: 1px; color: #fff; flex: 1;
+  }
+  .login-modal-close {
+    background: none; border: none; color: rgba(255,255,255,0.5);
+    font-size: 20px; cursor: pointer; line-height: 1; padding: 2px 6px;
+  }
+  .login-modal-close:hover { color: #fff; }
+  .login-modal-tabs {
+    display: flex; border-bottom: 1px solid rgba(255,140,0,0.15);
+  }
+  .login-tab {
+    flex: 1; padding: 12px; background: transparent; border: none;
+    color: var(--text-muted); font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: 'Barlow', sans-serif;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .login-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .login-tab:hover:not(.active) { color: var(--text); }
+  .login-modal-body { padding: 1.5rem; }
+  .login-form { display: flex; flex-direction: column; gap: 14px; }
+  .login-form label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .login-input {
+    width: 100%; padding: 11px 14px; background: var(--dark3);
+    border: 1px solid rgba(255,140,0,0.2); border-radius: 10px;
+    color: var(--text); font-size: 14px; font-family: 'Barlow', sans-serif; outline: none;
+    transition: border-color 0.2s;
+  }
+  .login-input:focus { border-color: var(--gold); }
+  .login-input::placeholder { color: var(--text-muted); }
+  .login-msg { font-size: 12px; padding: 8px 12px; border-radius: 8px; display: none; }
+  .login-msg.error { background: rgba(229,57,53,0.12); color: #ef9a9a; border: 1px solid rgba(229,57,53,0.2); display: block; }
+  .login-msg.success { background: rgba(46,125,50,0.12); color: #a5d6a7; border: 1px solid rgba(46,125,50,0.2); display: block; }
+  .login-msg.info { background: rgba(255,140,0,0.08); color: var(--gold); border: 1px solid rgba(255,140,0,0.2); display: block; }
+  /* Terms checkbox */
+  .terms-check-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px; color: var(--text-muted); line-height: 1.4;
+  }
+  .terms-check-row input[type="checkbox"] {
+    width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0;
+    accent-color: var(--gold); cursor: pointer;
+  }
+  .terms-link {
+    color: var(--gold); cursor: pointer; text-decoration: underline;
+    background: none; border: none; font-family: inherit; font-size: inherit;
+    padding: 0;
+  }
+  /* Terms box */
+  .terms-box {
+    display: none; background: var(--dark3); border: 1px solid rgba(255,140,0,0.15);
+    border-radius: 10px; padding: 1rem; max-height: 220px; overflow-y: auto;
+    font-size: 12px; color: var(--text-muted); line-height: 1.6;
+  }
+  .terms-box.open { display: block; }
+  .terms-box h4 { font-size: 13px; color: var(--gold); margin: 10px 0 4px; }
+  .terms-box p { margin-bottom: 6px; }
+  .terms-box::-webkit-scrollbar { width: 3px; }
+  .terms-box::-webkit-scrollbar-thumb { background: rgba(255,140,0,0.3); }
   .header-social { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
   .social-link {
     display: flex; align-items: center; justify-content: center;
@@ -737,7 +839,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
       </a>
     </div>
-    <button class="btn-add-header" onclick="openModal()">+ Adicionar Produto</button>
+    <button class="btn-login-header" id="btnLoginHeader" onclick="openLoginModal()">
+      <span>👤</span><span id="loginHeaderLabel">Entrar</span>
+    </button>
   </div>
 </header>
 
@@ -869,7 +973,87 @@
         <div class="pay-success-icon">✅</div>
         <div class="pay-success-title">Pagamento Confirmado!</div>
         <div class="pay-success-desc">Bem-vindo ao Chat do Homem. Acesso liberado para sempre.</div>
-        <button class="btn-enter-chat" onclick="closePayModal();showChatScreen('username')">Entrar no Chat →</button>
+        <button class="btn-enter-chat" onclick="closePayModal();_updateHeaderLogin();showChatScreen(chatUsername?'messages':'username')">Entrar no Chat →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal-overlay" id="loginModalOverlay" onclick="if(event.target===this)closeLoginModal()">
+  <div class="login-modal">
+    <div class="login-modal-header">
+      <div class="login-modal-logo">⚡</div>
+      <h3>Área do Homem</h3>
+      <button class="login-modal-close" onclick="closeLoginModal()">✕</button>
+    </div>
+    <div class="login-modal-tabs">
+      <button class="login-tab active" id="ltabLogin" onclick="switchLoginTab('login')">Entrar</button>
+      <button class="login-tab" id="ltabNew" onclick="switchLoginTab('new')">Criar Conta</button>
+    </div>
+    <div class="login-modal-body">
+      <!-- Tab: Entrar -->
+      <div id="lformLogin" class="login-form">
+        <div>
+          <label>Seu e-mail cadastrado</label>
+          <input class="login-input" type="email" id="lEmailLogin" placeholder="voce@email.com"
+                 onkeydown="if(event.key==='Enter')loginUser()">
+        </div>
+        <div id="lMsgLogin" class="login-msg"></div>
+        <button class="btn-enter-chat" style="width:100%" onclick="loginUser()">Verificar Acesso →</button>
+        <p style="font-size:12px;color:var(--text-muted);text-align:center">
+          Não tem conta? <button class="terms-link" onclick="switchLoginTab('new')">Criar conta →</button>
+        </p>
+      </div>
+      <!-- Tab: Criar Conta -->
+      <div id="lformNew" class="login-form" style="display:none">
+        <div>
+          <label>Como quer ser chamado?</label>
+          <input class="login-input" type="text" id="lNickNew" placeholder="Ex: João, Dev, Barba" maxlength="20">
+        </div>
+        <div>
+          <label>Seu e-mail</label>
+          <input class="login-input" type="email" id="lEmailNew" placeholder="voce@email.com">
+        </div>
+        <div class="terms-check-row">
+          <input type="checkbox" id="lTermsCheck">
+          <label for="lTermsCheck">
+            Li e aceito os <button class="terms-link" onclick="toggleTerms()">Termos de Uso</button> do Área do Homem
+          </label>
+        </div>
+        <div class="terms-box" id="termsBox">
+          <h4>Termos de Uso — Área do Homem</h4>
+          <p><strong>Última atualização:</strong> Abril de 2026</p>
+
+          <h4>1. Sobre o Site</h4>
+          <p>A Área do Homem é um site de curadoria de produtos masculinos com links de afiliados. Ao clicar nos links e realizar compras, podemos receber comissão sem custo adicional ao usuário. Não somos revendedores diretos dos produtos.</p>
+
+          <h4>2. Chat Global do Homem</h4>
+          <p>O Chat do Homem é um serviço de comunidade pago com acesso vitalício mediante pagamento único de R$ 4,00 via PIX. Após a confirmação do pagamento, o acesso é liberado de forma permanente. Não há reembolso após o acesso ser concedido.</p>
+
+          <h4>3. Cadastro e Conta</h4>
+          <p>Ao se cadastrar, você fornece um e-mail válido que será usado para identificar sua conta e verificar o acesso ao chat. Seu apelido é público no chat. Não compartilhamos seus dados com terceiros.</p>
+
+          <h4>4. Responsabilidade</h4>
+          <p>Os preços, disponibilidade e qualidade dos produtos são de responsabilidade exclusiva das lojas parceiras (Mercado Livre, Shopee, Amazon). A Área do Homem não se responsabiliza por atrasos, defeitos ou cancelamentos de pedidos realizados em lojas externas.</p>
+
+          <h4>5. Conduta no Chat</h4>
+          <p>É proibido no chat: conteúdo ofensivo, discriminatório, spam, divulgação de links externos ou conteúdo adulto. Contas com comportamento inadequado podem ser removidas sem reembolso.</p>
+
+          <h4>6. Links de Afiliados</h4>
+          <p>Este site participa dos programas de afiliados do Mercado Livre, Shopee e outras lojas. Os links identificados levam diretamente às lojas parceiras. A decisão de compra é sempre do usuário.</p>
+
+          <h4>7. Privacidade</h4>
+          <p>Coletamos apenas e-mail e apelido para funcionamento do serviço. Não vendemos dados pessoais. Para dúvidas: contato via Instagram @area_do_hoomem.</p>
+
+          <h4>8. Alterações</h4>
+          <p>Estes termos podem ser atualizados a qualquer momento. O uso contínuo do site implica aceitação das atualizações.</p>
+        </div>
+        <div id="lMsgNew" class="login-msg"></div>
+        <button class="btn-pay-mp" style="width:100%" onclick="createAccountAndPay()">
+          💳 Criar Conta e Pagar R$ 4,00 PIX →
+        </button>
+        <p style="font-size:11px;color:var(--text-muted);text-align:center">Pagamento único • Acesso permanente ao chat</p>
       </div>
     </div>
   </div>
@@ -1128,81 +1312,81 @@ const DEFAULT_AFFILIATE_PRODUCTS = [
   },
   {
     affiliateId: 'SHOPEE-1GEPBNPSN0',
-    name: 'Produto Shopee (clique para ver oferta)',
+    name: '40 Peças Jogo De Chave Catraca Caixa De Ferramentas Completa Reversível Soquetes Maleta',
     link: 'https://s.shopee.com.br/1gEpbnpsN0',
-    price: 0,
-    oldPrice: 0,
-    category: 'acessorios',
+    price: 69.90,
+    oldPrice: 129.90,
+    category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
-    rcount: 0,
-    img: '',
+    rating: 4.77,
+    rcount: 3200,
+    img: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=600&h=600&q=80',
     badge: 'hot'
   },
   {
     affiliateId: 'SHOPEE-9FH78YBJS4',
-    name: 'Produto Shopee (clique para ver oferta)',
+    name: 'Lavadora de Alta Pressão Portátil Recarregável Para Carros e Jardins Pistola Lava Jato Profissional',
     link: 'https://s.shopee.com.br/9fH78Ybjs4',
-    price: 0,
-    oldPrice: 0,
-    category: 'acessorios',
+    price: 89.90,
+    oldPrice: 159.90,
+    category: 'automotivo',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
-    rcount: 0,
-    img: '',
-    badge: 'new'
+    rating: 4.74,
+    rcount: 1850,
+    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&h=600&q=80',
+    badge: 'sale'
   },
   {
     affiliateId: 'SHOPEE-8ASJLP7VPW',
-    name: 'Produto Shopee 7563977602 (clique para ver oferta)',
+    name: 'Kit de Ferramentas com 129 peças + Maleta Completa — Fasterr',
     link: 'https://s.shopee.com.br/8ASJLp7VpW',
-    price: 0,
-    oldPrice: 0,
-    category: 'acessorios',
+    price: 78.80,
+    oldPrice: 139.90,
+    category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
-    rcount: 0,
-    img: '',
+    rating: 4.81,
+    rcount: 15664,
+    img: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&w=600&h=600&q=80',
     badge: 'hot'
   },
   {
     affiliateId: 'SHOPEE-901QLNUGWS',
-    name: 'Produto Shopee 43902469890 (clique para ver oferta)',
+    name: 'Kit Furadeira Parafusadeira 12V Com Acessórios + Maleta e Bateria + Jogo 142 Peças — Fasterr',
     link: 'https://s.shopee.com.br/901QLNUGWs',
-    price: 0,
-    oldPrice: 0,
-    category: 'acessorios',
+    price: 179.50,
+    oldPrice: 299.90,
+    category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
-    rcount: 0,
-    img: '',
+    rating: 4.95,
+    rcount: 4200,
+    img: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&h=600&q=80',
     badge: 'new'
   },
   {
     affiliateId: 'SHOPEE-1LBZDJEEAB',
-    name: 'Produto Shopee 20705549413 (clique para ver oferta)',
+    name: 'Pistola Elétrica Para Pintura Pulverizador de Tinta com Bico de Metal e Compressor 450w — TSSAPER',
     link: 'https://s.shopee.com.br/1LbzDJEeAb',
-    price: 0,
-    oldPrice: 0,
-    category: 'acessorios',
+    price: 125.83,
+    oldPrice: 219.90,
+    category: 'ferramentas',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
-    rcount: 0,
-    img: '',
+    rating: 4.85,
+    rcount: 2100,
+    img: 'https://images.unsplash.com/photo-1530124566582-a45a7e3f2809?auto=format&fit=crop&w=600&h=600&q=80',
     badge: 'hot'
   },
   {
     affiliateId: 'SHOPEE-W2SDQTFDT',
-    name: 'Produto Shopee 18198763923 (clique para ver oferta)',
+    name: 'Fone De Ouvido Headset Gamer com Fio Profissional Preto Led RGB PC USB P2/P3 XBOX PS4',
     link: 'https://s.shopee.com.br/W2sDqtFdT',
-    price: 0,
-    oldPrice: 0,
-    category: 'acessorios',
+    price: 64.90,
+    oldPrice: 119.90,
+    category: 'games',
     store: 'Shopee - Parceiro',
-    rating: 4.5,
-    rcount: 0,
-    img: '',
-    badge: 'new'
+    rating: 4.82,
+    rcount: 5900,
+    img: 'https://images.unsplash.com/photo-1599669454699-248893623440?auto=format&fit=crop&w=600&h=600&q=80',
+    badge: 'sale'
   }
 ];
 
@@ -1776,8 +1960,127 @@ window.addEventListener('scroll', () => {
 
 // ===== KEYBOARD =====
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeChat(); closePayModal(); }
+  if (e.key === 'Escape') { closeModal(); closeChat(); closePayModal(); closeLoginModal(); }
 });
+
+// ===== LOGIN MODAL =====
+function openLoginModal() {
+  // If already logged in, open chat directly
+  if (chatUnlocked && chatUsername) { openChat(); return; }
+  document.getElementById('loginModalOverlay').classList.add('open');
+  // Pre-fill with saved email if available
+  if (_chatEmail) {
+    document.getElementById('lEmailLogin').value = _chatEmail;
+    document.getElementById('lEmailNew').value = _chatEmail;
+  }
+  if (chatUsername) {
+    document.getElementById('lNickNew').value = chatUsername;
+  }
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModalOverlay').classList.remove('open');
+}
+
+function switchLoginTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('ltabLogin').classList.toggle('active', isLogin);
+  document.getElementById('ltabNew').classList.toggle('active', !isLogin);
+  document.getElementById('lformLogin').style.display = isLogin ? 'flex' : 'none';
+  document.getElementById('lformNew').style.display = isLogin ? 'none' : 'flex';
+}
+
+function toggleTerms() {
+  const box = document.getElementById('termsBox');
+  box.classList.toggle('open');
+}
+
+async function loginUser() {
+  const email = (document.getElementById('lEmailLogin').value || '').trim();
+  const msgEl = document.getElementById('lMsgLogin');
+  msgEl.className = 'login-msg';
+  if (!email || !email.includes('@')) {
+    msgEl.textContent = 'Informe um e-mail válido.';
+    msgEl.className = 'login-msg error';
+    return;
+  }
+  msgEl.textContent = 'Verificando...';
+  msgEl.className = 'login-msg info';
+  try {
+    const res = await fetch('/api/chat/acesso/' + encodeURIComponent(email));
+    const data = await res.json();
+    if (data.has_access) {
+      localStorage.setItem('chat_unlocked', '1');
+      localStorage.setItem('chat_email', email);
+      _chatEmail = email;
+      chatUnlocked = true;
+      msgEl.textContent = '✅ Acesso verificado!';
+      msgEl.className = 'login-msg success';
+      _updateHeaderLogin();
+      setTimeout(() => {
+        closeLoginModal();
+        openChat();
+      }, 800);
+    } else {
+      msgEl.textContent = 'E-mail não encontrado. Crie uma conta.';
+      msgEl.className = 'login-msg error';
+      document.getElementById('lEmailNew').value = email;
+      setTimeout(() => switchLoginTab('new'), 1200);
+    }
+  } catch(e) {
+    msgEl.textContent = 'Erro ao verificar. Tente novamente.';
+    msgEl.className = 'login-msg error';
+  }
+}
+
+function createAccountAndPay() {
+  const email = (document.getElementById('lEmailNew').value || '').trim();
+  const nick  = (document.getElementById('lNickNew').value || '').trim();
+  const terms = document.getElementById('lTermsCheck').checked;
+  const msgEl = document.getElementById('lMsgNew');
+  msgEl.className = 'login-msg';
+
+  if (!nick) {
+    msgEl.textContent = 'Informe como quer ser chamado.';
+    msgEl.className = 'login-msg error';
+    return;
+  }
+  if (!email || !email.includes('@')) {
+    msgEl.textContent = 'Informe um e-mail válido.';
+    msgEl.className = 'login-msg error';
+    return;
+  }
+  if (!terms) {
+    msgEl.textContent = 'Você precisa aceitar os Termos de Uso.';
+    msgEl.className = 'login-msg error';
+    toggleTerms();
+    return;
+  }
+
+  // Save nick for later use
+  localStorage.setItem('chat_nick_pending', nick);
+  _chatEmail = email;
+
+  closeLoginModal();
+  openPayModal(email);
+}
+
+function _updateHeaderLogin() {
+  const btn   = document.getElementById('btnLoginHeader');
+  const label = document.getElementById('loginHeaderLabel');
+  if (!btn || !label) return;
+  if (chatUnlocked && chatUsername) {
+    label.textContent = chatUsername;
+    btn.classList.add('logged');
+    btn.title = 'Abrir Chat do Homem';
+    // Replace icon with avatar letter
+    const icon = btn.querySelector('span:first-child');
+    if (icon) icon.textContent = chatUsername.charAt(0).toUpperCase();
+  } else if (chatUnlocked) {
+    label.textContent = 'Minha Conta';
+    btn.classList.add('logged');
+  }
+}
 
 // ===== CHAT =====
 let chatOpen = false, chatUnlocked = !!(localStorage.getItem('chat_unlocked')), chatUsername = localStorage.getItem('chat_nick') || '', chatUnread = 0;
@@ -1958,7 +2261,15 @@ function _startPolling() {
         clearInterval(_payInterval); clearInterval(_payCountdown);
         localStorage.setItem('chat_unlocked', '1');
         localStorage.setItem('chat_email', _chatEmail);
+        // Apply pending nick from create account flow
+        const pendingNick = localStorage.getItem('chat_nick_pending');
+        if (pendingNick && !chatUsername) {
+          chatUsername = pendingNick;
+          localStorage.setItem('chat_nick', pendingNick);
+          localStorage.removeItem('chat_nick_pending');
+        }
         chatUnlocked = true;
+        _updateHeaderLogin();
         ['payStep1','payStep2'].forEach(s => document.getElementById(s).classList.remove('active'));
         document.getElementById('payStep2').classList.add('active');
       } else if (msg) {
@@ -2040,6 +2351,7 @@ loadData();
 renderProducts();
 initParallax();
 initParticles();
+_updateHeaderLogin();
 </script>
 </body>
 </html>
