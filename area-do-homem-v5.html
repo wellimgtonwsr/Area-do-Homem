@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -11,9 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #1976D2;
-    --gold-light: #42A5F5;
-    --gold-dark: #0D47A1;
+    --gold: #FF8C00;
+    --gold-light: #FFB84D;
+    --gold-dark: #E67E00;
     --dark: #0a0a0a;
     --dark2: #111111;
     --dark3: #1a1a1a;
@@ -88,9 +88,9 @@
     position: absolute; left: 0; right: 0;
     height: 1px; top: 42%;
     background: linear-gradient(90deg,
-      transparent 0%, rgba(25,118,210,0.0) 15%,
-      rgba(25,118,210,0.35) 40%, rgba(100,180,255,0.55) 50%,
-      rgba(25,118,210,0.35) 60%, rgba(25,118,210,0.0) 85%, transparent 100%);
+      transparent 0%, rgba(255,140,0,0.0) 15%,
+      rgba(255,140,0,0.35) 40%, rgba(255,184,77,0.55) 50%,
+      rgba(255,140,0,0.35) 60%, rgba(255,140,0,0.0) 85%, transparent 100%);
     animation: lightpulse 6s ease-in-out infinite;
   }
   @keyframes lightpulse {
@@ -103,7 +103,7 @@
   header {
     position: sticky; top: 0; z-index: 1000;
     background: rgba(10,10,10,0.95);
-    border-bottom: 1px solid rgba(25,118,210,0.2);
+    border-bottom: 1px solid rgba(255,140,0,0.2);
     backdrop-filter: blur(12px);
     padding: 0 2rem;
   }
@@ -125,8 +125,8 @@
     animation: pulse-logo 3s ease-in-out infinite;
   }
   @keyframes pulse-logo {
-    0%,100%{box-shadow:0 0 0 0 rgba(25,118,210,0.4)}
-    50%{box-shadow:0 0 0 8px rgba(25,118,210,0)}
+    0%,100%{box-shadow:0 0 0 0 rgba(255,140,0,0.4)}
+    50%{box-shadow:0 0 0 8px rgba(255,140,0,0)}
   }
   .logo-text { display:flex;flex-direction:column;line-height:1; }
   .logo-text span:first-child {
@@ -141,14 +141,14 @@
     font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
     transition: all 0.2s;
   }
-  nav a:hover, nav a.active { color: var(--gold); background: rgba(25,118,210,0.08); }
+  nav a:hover, nav a.active { color: var(--gold); background: rgba(255,140,0,0.08); }
   .header-search {
     flex: 1; max-width: 340px;
     position: relative;
   }
   .header-search input {
     width: 100%; padding: 9px 40px 9px 14px;
-    background: var(--dark3); border: 1px solid rgba(25,118,210,0.15);
+    background: var(--dark3); border: 1px solid rgba(255,140,0,0.15);
     border-radius: 8px; color: var(--text); font-size: 13px;
     font-family: 'Barlow', sans-serif;
     transition: border-color 0.2s;
@@ -166,7 +166,22 @@
     font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase;
     transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
   }
-  .btn-add-header:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(25,118,210,0.4); }
+  .btn-add-header:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,140,0,0.4); }
+  .header-social { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .social-link {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--dark3); border: 1px solid rgba(255,140,0,0.15);
+    color: var(--text-muted); text-decoration: none; transition: all 0.2s;
+  }
+  .social-link svg { width: 18px; height: 18px; }
+  .social-link:hover { color: var(--gold); border-color: var(--gold); background: rgba(255,140,0,0.08); }
+  .footer-social-link {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text-muted); text-decoration: none;
+    font-size: 14px; padding: 4px 0; transition: color 0.2s;
+  }
+  .footer-social-link:hover { color: var(--gold); }
   /* ===== HERO ===== */
   .hero {
     position: relative; z-index: 1;
@@ -187,7 +202,7 @@
   .hero-line {
     position: absolute;
     width: 1px; height: 55%;
-    background: linear-gradient(to bottom, transparent, rgba(25,118,210,0.5), transparent);
+    background: linear-gradient(to bottom, transparent, rgba(255,140,0,0.5), transparent);
     animation: hero-line 5s ease-in-out infinite;
     z-index: 2;
   }
@@ -197,7 +212,7 @@
   .hero-content { position: relative; z-index: 4; max-width: 780px; }
   .hero-badge {
     display: inline-block;
-    background: rgba(25,118,210,0.18); border: 1px solid rgba(25,118,210,0.55); backdrop-filter: blur(8px);
+    background: rgba(255,140,0,0.18); border: 1px solid rgba(255,140,0,0.55); backdrop-filter: blur(8px);
     color: var(--gold); padding: 6px 16px; border-radius: 20px;
     font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
     margin-bottom: 1.5rem;
@@ -210,7 +225,7 @@
     margin-bottom: 1rem;
     animation: fadeInUp 0.7s ease 0.1s both;
   }
-  .hero h1 { text-shadow: 0 2px 40px rgba(0,0,0,0.8), 0 0 80px rgba(25,118,210,0.15); }
+  .hero h1 { text-shadow: 0 2px 40px rgba(0,0,0,0.8), 0 0 80px rgba(255,140,0,0.15); }
   .hero h1 span { color: var(--gold); }
   .hero p {
     color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem;
@@ -219,10 +234,10 @@
   }
   .hero-stats {
     display: flex; gap: 2rem; justify-content: center;
-    animation: fadeInUp 0.7s ease 0.3s both; background: rgba(0,0,0,0.35); backdrop-filter: blur(12px); border: 1px solid rgba(25,118,210,0.15); border-radius: 16px; padding: 1.2rem 2rem;
+    animation: fadeInUp 0.7s ease 0.3s both; background: rgba(0,0,0,0.35); backdrop-filter: blur(12px); border: 1px solid rgba(255,140,0,0.15); border-radius: 16px; padding: 1.2rem 2rem;
   }
   .hero-stat { text-align: center; }
-  .hero-stat strong { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; color: var(--gold); display: block; text-shadow: 0 0 20px rgba(25,118,210,0.6); }
+  .hero-stat strong { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; color: var(--gold); display: block; text-shadow: 0 0 20px rgba(255,140,0,0.6); }
   .hero-stat small { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
   /* ===== TICKER ===== */
   .ticker {
@@ -255,14 +270,14 @@
     display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
   }
   .cat-btn {
-    background: var(--dark3); border: 1px solid rgba(25,118,210,0.15);
+    background: var(--dark3); border: 1px solid rgba(255,140,0,0.15);
     color: var(--text-muted); padding: 10px 20px; border-radius: 8px;
     cursor: pointer; font-size: 13px; font-weight: 500;
     font-family: 'Barlow', sans-serif;
     transition: all 0.25s; display: flex; align-items: center; gap: 8px;
   }
   .cat-btn:hover, .cat-btn.active {
-    background: rgba(25,118,210,0.12); border-color: var(--gold);
+    background: rgba(255,140,0,0.12); border-color: var(--gold);
     color: var(--gold); transform: translateY(-2px);
   }
   /* ===== PRODUCTS ===== */
@@ -281,8 +296,8 @@
   @keyframes cardIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   .product-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(25,118,210,0.4);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(25,118,210,0.1);
+    border-color: rgba(255,140,0,0.4);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,140,0,0.1);
   }
   .product-card:hover .card-img { transform: scale(1.04); }
   .badge-hot, .badge-sale, .badge-new {
@@ -326,7 +341,7 @@
     border-radius: 8px; cursor: pointer; transition: all 0.25s;
     display: flex; align-items: center; justify-content: center; gap: 6px;
   }
-  .card-btn:hover { box-shadow: 0 4px 20px rgba(25,118,210,0.5); transform: scale(1.01); }
+  .card-btn:hover { box-shadow: 0 4px 20px rgba(255,140,0,0.5); transform: scale(1.01); }
   .card-btn:active { transform: scale(0.98); }
   /* ===== EMPTY STATE ===== */
   .empty-state { text-align: center; padding: 4rem; color: var(--text-muted); display: none; }
@@ -340,7 +355,7 @@
   .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
   @keyframes fadeIn { from{opacity:0} to{opacity:1} }
   .modal {
-    background: var(--dark2); border: 1px solid rgba(25,118,210,0.2);
+    background: var(--dark2); border: 1px solid rgba(255,140,0,0.2);
     border-radius: 16px; width: 100%; max-width: 560px;
     max-height: 90vh; overflow-y: auto;
     animation: slideUp 0.3s ease;
@@ -389,7 +404,7 @@
     font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 13px;
     cursor: pointer; letter-spacing: 0.5px; transition: all 0.2s;
   }
-  .btn-save:hover { box-shadow: 0 4px 16px rgba(25,118,210,0.4); }
+  .btn-save:hover { box-shadow: 0 4px 16px rgba(255,140,0,0.4); }
   /* ===== EDIT/DEL OVERLAY ===== */
   .card-actions {
     position: absolute; bottom: 56px; right: 0; left: 0;
@@ -403,14 +418,14 @@
     font-weight: 700; cursor: pointer; border: none; font-family: 'Barlow', sans-serif;
     transition: all 0.2s; letter-spacing: 0.5px; text-transform: uppercase;
   }
-  .btn-edit { background: rgba(25,118,210,0.15); color: var(--gold); border: 1px solid rgba(25,118,210,0.3); }
-  .btn-edit:hover { background: rgba(25,118,210,0.25); }
+  .btn-edit { background: rgba(255,140,0,0.15); color: var(--gold); border: 1px solid rgba(255,140,0,0.3); }
+  .btn-edit:hover { background: rgba(255,140,0,0.25); }
   .btn-del { background: rgba(229,57,53,0.12); color: #ef9a9a; border: 1px solid rgba(229,57,53,0.3); }
   .btn-del:hover { background: rgba(229,57,53,0.25); }
   /* ===== TOAST ===== */
   .toast {
     position: fixed; bottom: 2rem; right: 2rem; z-index: 3000;
-    background: var(--dark2); border: 1px solid rgba(25,118,210,0.3);
+    background: var(--dark2); border: 1px solid rgba(255,140,0,0.3);
     color: var(--text); padding: 14px 20px; border-radius: 10px;
     font-size: 14px; max-width: 320px;
     display: none; align-items: center; gap: 10px;
@@ -459,13 +474,13 @@
   /* ===== SCROLL TOP ===== */
   .scroll-top {
     position: fixed; bottom: 2rem; left: 2rem; z-index: 500;
-    background: var(--dark3); border: 1px solid rgba(25,118,210,0.3);
+    background: var(--dark3); border: 1px solid rgba(255,140,0,0.3);
     color: var(--gold); width: 42px; height: 42px; border-radius: 10px;
     cursor: pointer; display: none; align-items: center; justify-content: center;
     font-size: 18px; transition: all 0.2s;
   }
   .scroll-top.visible { display: flex; }
-  .scroll-top:hover { background: rgba(25,118,210,0.12); transform: translateY(-2px); }
+  .scroll-top:hover { background: rgba(255,140,0,0.12); transform: translateY(-2px); }
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
     .header-inner { flex-wrap: wrap; height: auto; padding: 10px 0; gap: 10px; }
@@ -477,6 +492,213 @@
   }
   @keyframes fadeInDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeInUp { from{opacity:0;transform:translateY(15px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ===== BOTÃO CHAT HERO ===== */
+  .btn-chat-hero {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 1.75rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff; border: none; padding: 13px 30px; border-radius: 12px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 2px;
+    cursor: pointer; transition: all 0.25s; position: relative;
+    box-shadow: 0 4px 20px rgba(255,140,0,0.4);
+    animation: chat-hero-pulse 3s ease-in-out infinite;
+  }
+  .btn-chat-hero:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,140,0,0.65); }
+  @keyframes chat-hero-pulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(255,140,0,0.4); }
+    50% { box-shadow: 0 4px 28px rgba(255,140,0,0.7), 0 0 0 7px rgba(255,140,0,0.1); }
+  }
+  .chat-hero-unread {
+    position: absolute; top: -7px; right: -7px;
+    background: #E53935; color: #fff; border-radius: 50%;
+    width: 20px; height: 20px; font-size: 11px; font-weight: 700;
+    display: none; align-items: center; justify-content: center;
+    border: 2px solid #04080f;
+  }
+  .chat-hero-unread.show { display: flex; }
+
+  /* ===== CHAT OVERLAY ===== */
+  .chat-overlay {
+    position: fixed; inset: 0; z-index: 950;
+    background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center;
+    padding: 1rem; pointer-events: none;
+  }
+  .chat-overlay.open { display: flex; pointer-events: all; }
+  .chat-window {
+    width: 430px; max-height: 640px; max-width: calc(100vw - 2rem);
+    background: var(--dark2); border: 1px solid rgba(255,140,0,0.3);
+    border-radius: 20px; box-shadow: 0 24px 80px rgba(0,0,0,0.95);
+    display: flex; flex-direction: column; overflow: hidden;
+    animation: slideUpChat 0.3s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+  }
+  @keyframes slideUpChat { from{transform:translateY(24px);opacity:0} to{transform:none;opacity:1} }
+  .chat-header {
+    background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+    padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  }
+  .chat-header-icon { font-size: 20px; }
+  .chat-header-info { flex: 1; }
+  .chat-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 1px; color: #fff; }
+  .chat-header-sub { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 1px; }
+  .chat-close-btn { background: none; border: none; color: rgba(255,255,255,0.7); font-size: 18px; cursor: pointer; padding: 4px; line-height: 1; }
+  .chat-close-btn:hover { color: #fff; }
+  .online-dot { width: 7px; height: 7px; background: #4CAF50; border-radius: 50%; display: inline-block; animation: blink-dot 2s infinite; margin-right: 3px; vertical-align: middle; }
+  @keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  /* Lock overlay */
+  .chat-lock-overlay {
+    position: absolute; bottom: 52px; left: 0; right: 0; z-index: 5;
+    background: linear-gradient(to top, rgba(10,10,10,0.99) 50%, rgba(10,10,10,0.5) 100%);
+    padding: 2.5rem 1.5rem 1.25rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.65rem; text-align: center;
+  }
+  .chat-lock-overlay.hidden { display: none; }
+  @keyframes lock-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  .chat-lock-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 1px; color: #fff; }
+  .chat-lock-desc { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.55; max-width: 260px; }
+  .chat-lock-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem; color: var(--gold); letter-spacing: 2px; }
+  .chat-lock-price span { font-size: 0.75rem; color: rgba(255,255,255,0.55); font-family: 'Barlow', sans-serif; font-weight: 400; }
+  /* Preview: mensagens borradas enquanto bloqueado */
+  .chat-msg.preview .chat-msg-text { filter: blur(5px); user-select: none; pointer-events: none; }
+  /* Input bloqueado */
+  .chat-locked-input {
+    padding: 0.75rem 1rem; border-top: 1px solid rgba(255,140,0,0.15);
+    flex-shrink: 0; cursor: pointer; display: flex; align-items: center; gap: 10px;
+    background: var(--dark3); transition: background 0.2s; z-index: 10;
+  }
+  .chat-locked-input:hover { background: rgba(255,140,0,0.1); }
+  .chat-locked-txt { flex: 1; font-size: 13px; color: var(--text-muted); }
+  .chat-locked-icon { font-size: 18px; flex-shrink: 0; }
+  .chat-locked-cta { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #fff; border: none; padding: 6px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; font-family: 'Barlow', sans-serif; white-space: nowrap; pointer-events: none; }
+  .btn-pay-mp {
+    background: linear-gradient(135deg, #009FD4, #007AB5);
+    color: #fff; border: none; padding: 12px 24px; border-radius: 10px;
+    font-weight: 700; font-size: 14px; cursor: pointer; width: 100%;
+    transition: all 0.2s; letter-spacing: 0.5px; font-family: 'Barlow', sans-serif;
+  }
+  .btn-pay-mp:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,159,212,0.45); }
+  .btn-pay-mp:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  /* Username screen */
+  .chat-username-screen {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 1.75rem 1.5rem; text-align: center; gap: 0.75rem;
+  }
+  .chat-username-screen h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 1px; }
+  .chat-username-screen p { font-size: 13px; color: var(--text-muted); }
+  .chat-nick-input {
+    width: 100%; padding: 10px 14px; background: var(--dark3);
+    border: 1px solid rgba(255,140,0,0.3); border-radius: 10px;
+    color: var(--text); font-size: 14px; font-family: 'Barlow', sans-serif;
+    outline: none; text-align: center; transition: border-color 0.2s;
+  }
+  .chat-nick-input:focus { border-color: var(--gold); }
+  .btn-enter-chat {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #fff; border: none; padding: 11px 24px; border-radius: 10px;
+    font-weight: 700; font-size: 14px; cursor: pointer; width: 100%;
+    transition: all 0.2s; font-family: 'Barlow', sans-serif;
+  }
+  .btn-enter-chat:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,140,0,0.4); }
+  /* Messages */
+  .chat-messages-area {
+    flex: 1; overflow-y: auto; padding: 0.85rem 1rem;
+    display: flex; flex-direction: column; gap: 0.45rem; scroll-behavior: smooth;
+  }
+  .chat-messages-area::-webkit-scrollbar { width: 3px; }
+  .chat-messages-area::-webkit-scrollbar-thumb { background: rgba(255,140,0,0.3); border-radius: 2px; }
+  .chat-msg { display: flex; gap: 8px; align-items: flex-start; animation: fadeInMsg 0.2s ease-out; }
+  @keyframes fadeInMsg { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+  .chat-msg-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0; color: #fff;
+  }
+  .chat-msg-content { flex: 1; min-width: 0; }
+  .chat-msg-name { font-size: 11px; color: var(--gold); font-weight: 700; margin-bottom: 2px; }
+  .chat-msg-text {
+    background: var(--dark3); border-radius: 0 8px 8px 8px;
+    padding: 6px 11px; font-size: 13px; color: var(--text); word-break: break-word; line-height: 1.45;
+  }
+  .chat-msg.own { flex-direction: row-reverse; }
+  .chat-msg.own .chat-msg-name { text-align: right; color: #90CAF9; }
+  .chat-msg.own .chat-msg-text { background: rgba(255,140,0,0.22); border-radius: 8px 0 8px 8px; }
+  .chat-msg-time { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+  .chat-system-msg { text-align: center; font-size: 11px; color: var(--text-muted); padding: 3px 0; font-style: italic; }
+  /* Input */
+  .chat-input-area {
+    padding: 0.7rem 0.85rem; border-top: 1px solid rgba(255,140,0,0.15);
+    display: flex; gap: 8px; align-items: center; flex-shrink: 0;
+  }
+  .chat-text-input {
+    flex: 1; background: var(--dark3); border: 1px solid rgba(255,140,0,0.2);
+    border-radius: 20px; padding: 8px 14px; color: var(--text); font-size: 13px;
+    font-family: 'Barlow', sans-serif; outline: none; transition: border-color 0.2s;
+  }
+  .chat-text-input:focus { border-color: var(--gold); }
+  .chat-send-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border: none; cursor: pointer; color: #fff; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.2s;
+  }
+  .chat-send-btn:hover { transform: scale(1.1); }
+
+  /* ===== PAYMENT MODAL ===== */
+  .pay-modal-overlay {
+    position: fixed; inset: 0; z-index: 1100;
+    background: rgba(0,0,0,0.88); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center; padding: 1rem;
+  }
+  .pay-modal-overlay.open { display: flex; }
+  .pay-modal {
+    width: 420px; max-width: calc(100vw - 2rem);
+    background: var(--dark2); border: 1px solid rgba(255,140,0,0.3);
+    border-radius: 20px; overflow: hidden; animation: slideUpChat 0.3s ease;
+    box-shadow: 0 16px 64px rgba(0,0,0,0.9);
+  }
+  .pay-modal-header {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    padding: 1rem 1.25rem; display: flex; align-items: center; gap: 10px;
+  }
+  .pay-modal-header h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 1px; color: #fff; flex: 1; }
+  .pay-modal-close { background: none; border: none; color: rgba(255,255,255,0.7); font-size: 18px; cursor: pointer; }
+  .pay-modal-close:hover { color: #fff; }
+  .pay-modal-body { padding: 1.5rem; }
+  /* Steps */
+  .pay-step { display: none; flex-direction: column; gap: 1rem; }
+  .pay-step.active { display: flex; }
+  .pay-step-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 1px; color: var(--gold); }
+  .pay-input {
+    width: 100%; padding: 10px 14px; background: var(--dark3);
+    border: 1px solid rgba(255,140,0,0.2); border-radius: 8px;
+    color: var(--text); font-size: 14px; font-family: 'Barlow', sans-serif; outline: none;
+  }
+  .pay-input:focus { border-color: var(--gold); }
+  .pay-note { font-size: 11px; color: var(--text-muted); text-align: center; }
+  /* QR code */
+  .qr-wrap { text-align: center; }
+  .qr-wrap img { width: 220px; height: 220px; border-radius: 12px; background: #fff; padding: 8px; display: inline-block; }
+  .qr-copy-btn {
+    width: 100%; padding: 10px; background: var(--dark3); border: 1px solid rgba(255,140,0,0.2);
+    color: var(--text); border-radius: 8px; cursor: pointer; font-family: 'Barlow', sans-serif;
+    font-size: 12px; transition: all 0.2s; word-break: break-all; text-align: left;
+  }
+  .qr-copy-btn:hover { border-color: var(--gold); }
+  .pay-timer { text-align: center; font-size: 13px; color: var(--text-muted); }
+  .pay-timer strong { color: var(--gold); font-size: 1.1rem; }
+  .pay-status { text-align: center; font-size: 13px; color: var(--text-muted); }
+  /* Success */
+  .pay-success-icon { font-size: 3rem; text-align: center; }
+  .pay-success-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 1px; color: var(--gold); text-align: center; }
+  .pay-success-desc { font-size: 13px; color: var(--text-muted); text-align: center; line-height: 1.5; }
+
+  @media (max-width: 500px) {
+    .chat-window { max-height: 88vh; }
+    .btn-chat-hero { padding: 11px 22px; font-size: 1rem; }
+  }
 </style>
 </head>
 <body>
@@ -484,12 +706,11 @@
 <div id="scene">
   <div id="scene-imgs">
     <!-- Imagens reais: mecânico consertando moto, troca de óleo em carro, mecânico na garagem, homem com ferramentas, chave de boca dramática -->
-    <div class="scene-slide" id="s0" style="background-image:url('https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=1920&q=90&fit=crop')"></div>
-    <div class="scene-slide" id="s1" style="background-image:url('https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=1920&q=90&fit=crop')"></div>
-    <div class="scene-slide" id="s2" style="background-image:url('https://images.unsplash.com/photo-1581092162384-8987c1d64718?w=1920&q=90&fit=crop')"></div>
-    <div class="scene-slide" id="s3" style="background-image:url('https://images.unsplash.com/photo-1565043666747-69f6646db940?w=1920&q=90&fit=crop')"></div>
-    <div class="scene-slide" id="s4" style="background-image:url('https://images.unsplash.com/photo-1504222490345-c075b7eda9de?w=1920&q=90&fit=crop')"></div>
-    <div class="scene-slide" id="s5" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=90&fit=crop')"></div>
+    <!-- Imagens de fundo: homens com ferramentas, oficina profissional -->
+    <div class="scene-slide" id="s0" style="background-image:url('https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1920&h=1080&q=85')"></div>
+    <div class="scene-slide" id="s1" style="background-image:url('https://images.unsplash.com/photo-1530124566582-a45a7e3f2809?auto=format&fit=crop&w=1920&h=1080&q=85')"></div>
+    <div class="scene-slide" id="s2" style="background-image:url('https://images.unsplash.com/photo-1572981779307-38b8cabb2407?auto=format&fit=crop&w=1920&h=1080&q=85')"></div>
+    <div class="scene-slide" id="s3" style="background-image:url('https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1920&h=1080&q=85')"></div>
   </div>
   <div id="scene-vignette"></div>
   <div id="scene-tint"></div>
@@ -517,7 +738,15 @@
     </nav>
     <div class="header-search">
       <input type="text" id="searchInput" placeholder="Buscar produtos..." oninput="handleSearch()">
-      <button>🔍</button>
+      <button aria-label="Buscar">🔍</button>
+    </div>
+    <div class="header-social">
+      <a href="https://www.instagram.com/area_do_hoomem?igsh=MTBsNTR6Z3NvYTVpMA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.facebook.com/share/18Xk9f6roP/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
     </div>
     <button class="btn-add-header" onclick="openModal()">+ Adicionar Produto</button>
   </div>
@@ -563,8 +792,95 @@
         <small>Avaliação Média</small>
       </div>
     </div>
+    <button class="btn-chat-hero" onclick="openChat()">
+      💬 Chat do Homem
+      <div class="chat-hero-unread" id="chatBadge"></div>
+    </button>
   </div>
 </section>
+
+<!-- CHAT OVERLAY -->
+<div class="chat-overlay" id="chatOverlay" onclick="if(event.target===this)closeChat()">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-icon">💬</div>
+      <div class="chat-header-info">
+        <div class="chat-header-title">Chat Global do Homem</div>
+        <div class="chat-header-sub"><span class="online-dot"></span><span id="chatOnline">—</span> online agora</div>
+      </div>
+      <button class="chat-close-btn" onclick="closeChat()" aria-label="Fechar">✕</button>
+    </div>
+    <!-- Tela de apelido (após pagar) -->
+    <div class="chat-username-screen" id="chatUsernameScreen" style="display:none">
+      <div style="font-size:2.5rem">👤</div>
+      <h3>Qual o seu apelido?</h3>
+      <p>Como você quer ser chamado no chat</p>
+      <input class="chat-nick-input" type="text" id="chatNickInput" placeholder="Ex: João, Dev, Barba" maxlength="20"
+             onkeydown="if(event.key==='Enter')enterChat()">
+      <button class="btn-enter-chat" onclick="enterChat()">Entrar no Chat →</button>
+    </div>
+    <!-- Mensagens (borradas quando bloqueado) -->
+    <div class="chat-messages-area" id="chatMessages"></div>
+    <!-- Overlay de cadeado -->
+    <div class="chat-lock-overlay" id="chatLockOverlay">
+      <div style="font-size:2rem;animation:lock-bounce 2s ease-in-out infinite">🔒</div>
+      <div class="chat-lock-title">Chat Exclusivo</div>
+      <div class="chat-lock-desc">Conecte-se com homens de todo o Brasil. Troque dicas, experiências e recomendações.</div>
+      <div class="chat-lock-price">R$ 4,00 <span>/ acesso vitalício</span></div>
+      <button class="btn-pay-mp" onclick="openPayModal()">💳 Pagar com PIX — Mercado Pago</button>
+      <div style="font-size:11px;color:rgba(255,255,255,0.45)">Pagamento único • Acesso permanente</div>
+    </div>
+    <!-- Input desbloqueado -->
+    <div class="chat-input-area" id="chatInputArea" style="display:none">
+      <input class="chat-text-input" type="text" id="chatTextInput" placeholder="Digite uma mensagem..." maxlength="300"
+             onkeydown="if(event.key==='Enter')sendChatMsg()">
+      <button class="chat-send-btn" onclick="sendChatMsg()" aria-label="Enviar">↑</button>
+    </div>
+    <!-- Input bloqueado -->
+    <div class="chat-locked-input" id="chatLockedInput" onclick="openPayModal()">
+      <span class="chat-locked-icon">🔒</span>
+      <span class="chat-locked-txt">Pague R$ 4,00 para participar</span>
+      <button class="chat-locked-cta">Desbloquear →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="pay-modal-overlay" id="payModalOverlay" onclick="if(event.target===this)closePayModal()">
+  <div class="pay-modal">
+    <div class="pay-modal-header">
+      <div style="font-size:20px">💳</div>
+      <h3>Acesso ao Chat — R$ 4,00</h3>
+      <button class="pay-modal-close" onclick="closePayModal()">✕</button>
+    </div>
+    <div class="pay-modal-body">
+      <!-- Step 1: email -->
+      <div class="pay-step active" id="payStep1">
+        <div class="pay-step-title">Seu e-mail para o PIX</div>
+        <p style="font-size:13px;color:var(--text-muted)">Informe o e-mail cadastrado no Mercado Pago para gerar o QR code.</p>
+        <input class="pay-input" type="email" id="payEmail" placeholder="seu@email.com"
+               onkeydown="if(event.key==='Enter')requestPIX()">
+        <button class="btn-pay-mp" onclick="requestPIX()">Gerar QR Code PIX →</button>
+        <p class="pay-note">🔒 Pagamento seguro via Mercado Pago</p>
+      </div>
+      <!-- Step 2: QR -->
+      <div class="pay-step" id="payStep2">
+        <div class="pay-step-title">Escaneie o QR Code</div>
+        <div class="qr-wrap"><img id="qrImg" src="" alt="QR PIX"></div>
+        <button class="qr-copy-btn" id="qrCopyBtn" onclick="copyPIX()">📋 Copiar código PIX</button>
+        <div class="pay-timer">Expira em <strong id="payCountdown">10:00</strong></div>
+        <div class="pay-status" id="payStatusMsg">Aguardando pagamento...</div>
+      </div>
+      <!-- Step 3: sucesso -->
+      <div class="pay-step" id="payStep3">
+        <div class="pay-success-icon">✅</div>
+        <div class="pay-success-title">Pagamento Confirmado!</div>
+        <div class="pay-success-desc">Bem-vindo ao Chat do Homem. Acesso liberado para sempre.</div>
+        <button class="btn-enter-chat" onclick="closePayModal();showChatScreen('username')">Entrar no Chat →</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- CATEGORIES -->
 <section class="categories-section">
@@ -635,6 +951,17 @@
           <a href="#">Parceiros</a>
           <a href="#">Política de Privacidade</a>
           <a href="#">Termos de Uso</a>
+        </div>
+        <div class="footer-col">
+          <h4>Redes Sociais</h4>
+          <a href="https://www.instagram.com/area_do_hoomem?igsh=MTBsNTR6Z3NvYTVpMA%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" class="footer-social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.facebook.com/share/18Xk9f6roP/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="footer-social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
         </div>
       </div>
     </div>
@@ -1465,8 +1792,204 @@ window.addEventListener('scroll', () => {
 
 // ===== KEYBOARD =====
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape') { closeModal(); closeChat(); closePayModal(); }
 });
+
+// ===== CHAT =====
+let chatOpen = false, chatUnlocked = !!(localStorage.getItem('chat_unlocked')), chatUsername = localStorage.getItem('chat_nick') || '', chatUnread = 0;
+let _payInterval = null, _payCountdown = null, _currentPayId = null, _pixCode = '';
+
+function _updateChatBadge(n) {
+  const b = document.getElementById('chatBadge');
+  if (!b) return;
+  b.textContent = n > 9 ? '9+' : n;
+  b.classList.toggle('show', n > 0);
+}
+
+function openChat() {
+  document.getElementById('chatOverlay').classList.add('open');
+  chatOpen = true; chatUnread = 0; _updateChatBadge(0);
+  _renderPreviewMessages();
+  if (!chatUnlocked)      showChatScreen('locked');
+  else if (!chatUsername) showChatScreen('username');
+  else                    showChatScreen('messages');
+}
+
+function closeChat() {
+  const el = document.getElementById('chatOverlay');
+  if (el) el.classList.remove('open');
+  chatOpen = false;
+}
+
+function showChatScreen(screen) {
+  const locked   = screen === 'locked';
+  const username = screen === 'username';
+  const messages = screen === 'messages';
+  document.getElementById('chatUsernameScreen').style.display = username ? 'flex' : 'none';
+  document.getElementById('chatMessages').style.display       = username ? 'none' : 'flex';
+  document.getElementById('chatLockOverlay').style.display    = locked   ? 'flex' : 'none';
+  document.getElementById('chatLockedInput').style.display    = locked   ? 'flex' : 'none';
+  document.getElementById('chatInputArea').style.display      = messages ? 'flex' : 'none';
+  document.getElementById('chatMessages').style.flexDirection = 'column';
+  if (messages) _appendWelcomeMsg();
+}
+
+function enterChat() {
+  const nick = document.getElementById('chatNickInput').value.trim();
+  if (!nick) return;
+  chatUsername = nick;
+  localStorage.setItem('chat_nick', nick);
+  showChatScreen('messages');
+}
+
+const PREVIEW_MSGS = [
+  { user: 'Marcos', text: '●●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Rafael', text: '●●●●●●●●●●●●●●●' },
+  { user: 'Bruno',  text: '●●●●●●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Felipe', text: '●●●●●●●●●●●' },
+  { user: 'Diego',  text: '●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Lucas',  text: '●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Thiago', text: '●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●' },
+  { user: 'Carlos', text: '●●●●●●●●●●●●●●' },
+];
+
+function _renderPreviewMessages() {
+  const box = document.getElementById('chatMessages');
+  if (!box || chatUnlocked) return;
+  const now = new Date();
+  box.innerHTML = PREVIEW_MSGS.map((m, i) => {
+    const t  = new Date(now - (PREVIEW_MSGS.length - i) * 90000);
+    const hh = String(t.getHours()).padStart(2, '0');
+    const mm = String(t.getMinutes()).padStart(2, '0');
+    return `<div class="chat-msg preview">
+      <div class="chat-msg-avatar">${m.user.charAt(0)}</div>
+      <div class="chat-msg-content">
+        <div class="chat-msg-name">${m.user}</div>
+        <div class="chat-msg-text">${m.text}</div>
+        <div class="chat-msg-time">${hh}:${mm}</div>
+      </div>
+    </div>`;
+  }).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+function _appendWelcomeMsg() {
+  const box = document.getElementById('chatMessages');
+  if (!box) return;
+  box.innerHTML = `<div class="chat-system-msg">🎉 Bem-vindo ao Chat do Homem, ${chatUsername}!</div>`;
+  box.scrollTop = box.scrollHeight;
+}
+
+function sendChatMsg() {
+  const inp = document.getElementById('chatTextInput');
+  const msg = inp ? inp.value.trim() : '';
+  if (!msg || !chatUsername) return;
+  const box = document.getElementById('chatMessages');
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2,'0'), mm = String(now.getMinutes()).padStart(2,'0');
+  box.innerHTML += `<div class="chat-msg own">
+    <div class="chat-msg-avatar">${chatUsername.charAt(0).toUpperCase()}</div>
+    <div class="chat-msg-content">
+      <div class="chat-msg-name">${chatUsername}</div>
+      <div class="chat-msg-text">${msg.replace(/</g,'&lt;')}</div>
+      <div class="chat-msg-time">${hh}:${mm}</div>
+    </div>
+  </div>`;
+  inp.value = '';
+  box.scrollTop = box.scrollHeight;
+}
+
+// ===== PAYMENT MODAL =====
+function openPayModal() {
+  document.getElementById('payModalOverlay').classList.add('open');
+  ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
+  document.getElementById('payStep1').classList.add('active');
+}
+function closePayModal() {
+  document.getElementById('payModalOverlay').classList.remove('open');
+  if (_payInterval) { clearInterval(_payInterval); _payInterval = null; }
+  if (_payCountdown) { clearInterval(_payCountdown); _payCountdown = null; }
+}
+function copyPIX() {
+  if (!_pixCode) return;
+  navigator.clipboard.writeText(_pixCode).catch(() => {});
+  const btn = document.getElementById('qrCopyBtn');
+  if (btn) { btn.textContent = '✅ Copiado!'; setTimeout(() => btn.textContent = '📋 Copiar código PIX', 2000); }
+}
+
+async function requestPIX() {
+  const email = document.getElementById('payEmail').value.trim();
+  if (!email || !email.includes('@')) { alert('Informe um e-mail válido'); return; }
+  const btn = document.querySelector('#payStep1 .btn-pay-mp');
+  if (btn) { btn.disabled = true; btn.textContent = 'Gerando QR...'; }
+  try {
+    const res = await fetch('/api/pagamento/criar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, descricao: 'Chat Global do Homem - Acesso Vitalício', valor: 4.00 })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.erro || 'Erro ao gerar PIX');
+    _currentPayId = data.id;
+    _pixCode = data.qr_code || '';
+    document.getElementById('qrImg').src = data.qr_code_base64
+      ? 'data:image/png;base64,' + data.qr_code_base64
+      : 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(_pixCode);
+    document.getElementById('qrCopyBtn').textContent = '📋 Copiar código PIX';
+    ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
+    document.getElementById('payStep2').classList.add('active');
+    _startCountdown(600);
+    _startPolling();
+  } catch(e) {
+    alert('Erro: ' + e.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Gerar QR Code PIX →'; }
+  }
+}
+
+function _startCountdown(secs) {
+  let s = secs;
+  const el = document.getElementById('payCountdown');
+  if (_payCountdown) clearInterval(_payCountdown);
+  _payCountdown = setInterval(() => {
+    s--;
+    if (el) el.textContent = Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;
+    if (s <= 0) { clearInterval(_payCountdown); closePayModal(); }
+  }, 1000);
+}
+
+function _startPolling() {
+  if (_payInterval) clearInterval(_payInterval);
+  let attempts = 0;
+  _payInterval = setInterval(async () => {
+    if (!_currentPayId || ++attempts > 60) { clearInterval(_payInterval); return; }
+    try {
+      const res = await fetch('/api/pagamento/status/' + _currentPayId);
+      const data = await res.json();
+      const status = data.status;
+      const msg = document.getElementById('payStatusMsg');
+      if (status === 'approved') {
+        clearInterval(_payInterval); clearInterval(_payCountdown);
+        localStorage.setItem('chat_unlocked', '1');
+        chatUnlocked = true;
+        ['payStep1','payStep2','payStep3'].forEach(s => document.getElementById(s).classList.remove('active'));
+        document.getElementById('payStep3').classList.add('active');
+      } else if (msg) {
+        msg.textContent = status === 'pending' ? 'Aguardando pagamento...' : 'Status: ' + status;
+      }
+    } catch(e) {}
+  }, 5000);
+}
+
+// Contador online simulado
+const _onlineEl = document.getElementById('chatOnline');
+if (_onlineEl) {
+  _onlineEl.textContent = Math.floor(Math.random() * 80) + 40;
+  setInterval(() => {
+    const cur = parseInt(_onlineEl.textContent) || 60;
+    _onlineEl.textContent = Math.max(20, cur + Math.floor(Math.random() * 7) - 3);
+  }, 15000);
+}
 
 // ===== INIT =====
 loadData();
