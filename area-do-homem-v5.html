@@ -622,8 +622,14 @@
     .filters-bar { gap: 8px; }
     .sort-select { font-size: 12px; padding: 7px 10px; }
     .filter-count { font-size: 12px; padding: 5px 10px; }
-    /* Chat */
-    .chat-window { max-height: 90vh; border-radius: 16px; }
+    /* Chat — bottom sheet em mobile */
+    .chat-overlay { align-items: flex-end !important; padding: 0 !important; }
+    .chat-window {
+      width: 100% !important; max-width: 100% !important;
+      border-radius: 22px 22px 0 0 !important;
+      height: 82svh; max-height: 82svh;
+    }
+    .chat-close-btn { min-width: 44px; min-height: 44px; display: inline-flex !important; align-items: center; justify-content: center; font-size: 20px !important; }
     .btn-chat-hero { padding: 11px 20px; font-size: 0.95rem; }
     /* Login modal */
     .login-modal { border-radius: 16px; }
@@ -5100,6 +5106,7 @@ function _appendWelcomeMsg() {
 let _chatLastId = 0;
 let _chatPollInterval = null;
 let _chatUid = 'u_' + Math.random().toString(36).slice(2);
+let _fetchingMsgs = false;
 
 async function sendChatMsg() {
   const inp = document.getElementById('chatTextInput');
@@ -5117,16 +5124,17 @@ async function sendChatMsg() {
 }
 
 async function _loadChatMsgs() {
-  if (!chatUnlocked) return;
+  if (!chatUnlocked || _fetchingMsgs) return;
+  _fetchingMsgs = true;
   try {
     const res = await fetch(API_BASE + '/api/chat/mensagens');
     const msgs = await res.json();
-    if (!Array.isArray(msgs) || msgs.length === 0) return;
+    if (!Array.isArray(msgs) || msgs.length === 0) { _fetchingMsgs = false; return; }
     const box = document.getElementById('chatMessages');
-    if (!box) return;
+    if (!box) { _fetchingMsgs = false; return; }
     // Só re-renderiza se tiver mensagem nova
-    const lastId = msgs[msgs.length - 1].id;
-    if (lastId === _chatLastId) return;
+    const lastId = String(msgs[msgs.length - 1].id);
+    if (lastId === _chatLastId) { _fetchingMsgs = false; return; }
     _chatLastId = lastId;
     const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
     box.innerHTML = msgs.map(m => {
@@ -5145,6 +5153,7 @@ async function _loadChatMsgs() {
     }).join('');
     if (atBottom) box.scrollTop = box.scrollHeight;
   } catch(e) { console.warn('Erro ao carregar msgs', e); }
+  finally { _fetchingMsgs = false; }
 }
 
 function _startChatPoll() {
@@ -5175,6 +5184,9 @@ function _appendWelcomeMsg() {
   _origAppendWelcome();
   _startChatPoll();
 }
+// Re-pinga quando aba volca ao foco (browsers throttle timers em background)
+document.addEventListener('visibilitychange', () => { if (!document.hidden && chatUnlocked) _pingOnline(); });
+window.addEventListener('focus', () => { if (chatUnlocked) _pingOnline(); });
 
 // ===== INIT =====
 loadData();

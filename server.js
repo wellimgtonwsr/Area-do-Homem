@@ -206,8 +206,8 @@ const _onlinMap = new Map();
 app.post('/api/chat/ping', (req, res) => {
   const uid = req.body?.uid || req.ip;
   _onlinMap.set(uid, Date.now());
-  // limpar inativos > 30s
-  const cutoff = Date.now() - 30000;
+  // limpar inativos > 50s (ping a cada 20s; 50s = margem para throttle de aba em background)
+  const cutoff = Date.now() - 50000;
   for (const [k, v] of _onlinMap) if (v < cutoff) _onlinMap.delete(k);
   res.json({ online: _onlinMap.size });
 });
