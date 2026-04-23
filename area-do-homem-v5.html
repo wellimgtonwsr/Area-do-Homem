@@ -5097,33 +5097,83 @@ function _appendWelcomeMsg() {
   box.scrollTop = box.scrollHeight;
 }
 
-function sendChatMsg() {
+let _chatLastId = 0;
+let _chatPollInterval = null;
+let _chatUid = 'u_' + Math.random().toString(36).slice(2);
+
+async function sendChatMsg() {
   const inp = document.getElementById('chatTextInput');
   const msg = inp ? inp.value.trim() : '';
-  if (!msg || !chatUsername) return;
-  const box = document.getElementById('chatMessages');
-  const now = new Date();
-  const hh = String(now.getHours()).padStart(2,'0'), mm = String(now.getMinutes()).padStart(2,'0');
-  box.innerHTML += `<div class="chat-msg own">
-    <div class="chat-msg-avatar">${chatUsername.charAt(0).toUpperCase()}</div>
-    <div class="chat-msg-content">
-      <div class="chat-msg-name">${chatUsername}</div>
-      <div class="chat-msg-text">${msg.replace(/</g,'&lt;')}</div>
-      <div class="chat-msg-time">${hh}:${mm}</div>
-    </div>
-  </div>`;
+  if (!msg || !chatUsername || !_chatEmail) return;
   inp.value = '';
-  box.scrollTop = box.scrollHeight;
+  try {
+    await fetch(API_BASE + '/api/chat/mensagem', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _chatEmail, username: chatUsername, text: msg })
+    });
+    await _loadChatMsgs();
+  } catch(e) { console.warn('Erro ao enviar msg', e); }
 }
 
-// Contador online simulado
-const _onlineEl = document.getElementById('chatOnline');
-if (_onlineEl) {
-  _onlineEl.textContent = Math.floor(Math.random() * 80) + 40;
-  setInterval(() => {
-    const cur = parseInt(_onlineEl.textContent) || 60;
-    _onlineEl.textContent = Math.max(20, cur + Math.floor(Math.random() * 7) - 3);
-  }, 15000);
+async function _loadChatMsgs() {
+  if (!chatUnlocked) return;
+  try {
+    const res = await fetch(API_BASE + '/api/chat/mensagens');
+    const msgs = await res.json();
+    if (!Array.isArray(msgs) || msgs.length === 0) return;
+    const box = document.getElementById('chatMessages');
+    if (!box) return;
+    // Só re-renderiza se tiver mensagem nova
+    const lastId = msgs[msgs.length - 1].id;
+    if (lastId === _chatLastId) return;
+    _chatLastId = lastId;
+    const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
+    box.innerHTML = msgs.map(m => {
+      const t = new Date(m.created_at);
+      const hh = String(t.getHours()).padStart(2,'0');
+      const mm2 = String(t.getMinutes()).padStart(2,'0');
+      const isOwn = m.username === chatUsername;
+      return `<div class="chat-msg${isOwn ? ' own' : ''}">
+        <div class="chat-msg-avatar">${(m.username||'?').charAt(0).toUpperCase()}</div>
+        <div class="chat-msg-content">
+          <div class="chat-msg-name">${(m.username||'?').replace(/</g,'&lt;')}</div>
+          <div class="chat-msg-text">${(m.text||'').replace(/</g,'&lt;')}</div>
+          <div class="chat-msg-time">${hh}:${mm2}</div>
+        </div>
+      </div>`;
+    }).join('');
+    if (atBottom) box.scrollTop = box.scrollHeight;
+  } catch(e) { console.warn('Erro ao carregar msgs', e); }
+}
+
+function _startChatPoll() {
+  if (_chatPollInterval) return;
+  _loadChatMsgs();
+  _chatPollInterval = setInterval(_loadChatMsgs, 4000);
+  // ping online
+  _pingOnline();
+  setInterval(_pingOnline, 20000);
+}
+
+async function _pingOnline() {
+  try {
+    const res = await fetch(API_BASE + '/api/chat/ping', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid: _chatUid })
+    });
+    const data = await res.json();
+    const el = document.getElementById('chatOnline');
+    if (el && data.online) el.textContent = data.online;
+  } catch(e) {}
+}
+
+// Inicia poll quando chat for desbloqueado
+const _origAppendWelcome = _appendWelcomeMsg;
+function _appendWelcomeMsg() {
+  _origAppendWelcome();
+  _startChatPoll();
 }
 
 // ===== INIT =====

@@ -181,6 +181,37 @@ app.get('/api/pagamento/status/:id', async (req, res) => {
   }
 });
 
+// ── API: Enviar mensagem ao chat ──────────────────────────────────────────────
+app.post('/api/chat/mensagem', async (req, res) => {
+  const { email, username, text } = req.body || {};
+  if (!email || !text || !username) return res.status(400).json({ error: 'Dados inválidos' });
+  if (!supabase) return res.status(503).json({ error: 'Chat indisponível' });
+  // Verificar acesso
+  const { data: acesso } = await supabase.from('chat_access').select('id').eq('email', email.toLowerCase()).maybeSingle();
+  if (!acesso) return res.status(403).json({ error: 'Sem acesso' });
+  const { data, error } = await supabase.from('chat_messages').insert({ username, text: text.slice(0, 300) }).select().single();
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+// ── API: Buscar mensagens do chat ─────────────────────────────────────────────
+app.get('/api/chat/mensagens', async (req, res) => {
+  if (!supabase) return res.json([]);
+  const { data } = await supabase.from('chat_messages').select('*').order('created_at', { ascending: false }).limit(50);
+  res.json((data || []).reverse());
+});
+
+// ── API: Online count ─────────────────────────────────────────────────────────
+const _onlinMap = new Map();
+app.post('/api/chat/ping', (req, res) => {
+  const uid = req.body?.uid || req.ip;
+  _onlinMap.set(uid, Date.now());
+  // limpar inativos > 30s
+  const cutoff = Date.now() - 30000;
+  for (const [k, v] of _onlinMap) if (v < cutoff) _onlinMap.delete(k);
+  res.json({ online: _onlinMap.size });
+});
+
 // ── API: Verificar acesso ao chat por email ───────────────────────────────────
 app.get('/api/chat/acesso/:email', async (req, res) => {
   const email = decodeURIComponent(req.params.email).toLowerCase();
