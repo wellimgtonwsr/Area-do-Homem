@@ -1,14 +1,20 @@
 // ===== CONFIGURATION =====
 const STORAGE_KEY = 'sdh_products_v2';
+const MARKUP = 1.10; // 10% markup sobre o preço do afiliado
 const EMOJI_MAP = {
   ferramentas: '🔧',
-  makita: '🔨',
-  chaves: '🔑',
-  eletroportatil: '⚡',
-  seguranca: '🦺',
-  medidores: '📏',
-  iluminacao: '💡',
-  games: '🎮'
+  tecnologia:  '💻',
+  automotivo:  '🚗',
+  moda:        '👕',
+  esporte:     '🏆',
+  barba:       '✂️',
+  saude:       '💪',
+  games:       '🎮',
+  casa:        '🏠',
+  acessorios:  '⌚',
+  // legados (mantidos para compatibilidade)
+  makita: '🔨', chaves: '🔑', eletroportatil: '⚡',
+  seguranca: '🦺', medidores: '📏', iluminacao: '💡'
 };
 
 const DEFAULT_AFFILIATE_PRODUCTS = [
@@ -778,7 +784,8 @@ const DEFAULT_AFFILIATE_PRODUCTS = [
     rcount: 32816,
     img: 'https://down-br.img.susercontent.com/file/br-11134207-7r98o-ly2etot268iad9',
     badge: 'sale'
-  },
+  }
+,
   {
     affiliateId: 'ML-1HGBN4N',
     name: 'Creatina Monohidratada 250g Growth Supplements - Sem Sabor Em Pó',
@@ -2863,10 +2870,14 @@ const DEFAULT_AFFILIATE_PRODUCTS = [
 
 // ===== STATE =====
 let products = [];
+let productsMap = {}; // id -> product lookup for cart
 let editingId = null;
 let currentCat = 'todos';
 let currentSort = 'default';
 let searchQuery = '';
+
+// ===== CART STATE =====
+let cart = JSON.parse(localStorage.getItem('cart_v1') || '[]');
 
 // ===== UTILITY FUNCTIONS =====
 function escapeHtml(str) {
@@ -2910,6 +2921,12 @@ function loadData() {
     console.error('Error loading data:', e);
     products = getSampleProducts();
   }
+  // Build map for fast cart lookups
+  productsMap = {};
+  products.forEach(p => {
+    productsMap[String(p.id)] = p;
+    if (p.affiliateId) productsMap[String(p.affiliateId)] = p;
+  });
 }
 
 function saveData() {
@@ -3015,6 +3032,7 @@ function getFiltered() {
 // ===== RENDERING =====
 function renderCard(product, index) {
   const hasPrice = Number(product.price) > 0;
+  const markupPrice = hasPrice ? Math.ceil(product.price * MARKUP * 100) / 100 : 0;
   const discount = hasPrice && product.oldPrice > 0 ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
   const stars = getStars(product.rating || 4.5);
   const emoji = EMOJI_MAP[product.category] || '🛒';
@@ -3036,11 +3054,23 @@ function renderCard(product, index) {
   const priceOld = hasPrice && product.oldPrice > 0 ? `<span class="price-old">R$ ${formatPrice(product.oldPrice)}</span>` : '';
   const priceDiscount = discount > 0 ? `<span class="price-discount">-${discount}%</span>` : '';
   const priceNew = hasPrice
-    ? `<span class="price-new">R$ ${formatPrice(product.price)}</span>`
-    : '<span class="price-new">Ver preco na loja</span>';
+    ? `<span class="price-new">R$ ${formatPrice(markupPrice)}</span>`
+    : '<span class="price-new">Ver preço na loja</span>';
 
   const rating = product.rating || 4.5;
   const rcount = product.rcount || 0;
+  const pid = escapeHtml(product.id || product.affiliateId || '');
+
+  const buyBtn = hasPrice
+    ? `<button class="card-btn card-btn-buy" onclick="cartAdd('${pid}')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Comprar
+      </button>`
+    : `<button class="card-btn" onclick="goToProduct('${escapeHtml(product.link)}')">Ver na Loja <span>→</span></button>`;
+
+  const seeBtn = hasPrice
+    ? `<a class="card-btn-link" href="${escapeHtml(product.link)}" target="_blank" rel="noopener noreferrer">Ver na loja →</a>`
+    : '';
 
   return `<div class="product-card" style="animation-delay:${index * 0.05}s" data-id="${product.id}">
     ${badgeHtml}${storeChip}
@@ -3059,9 +3089,10 @@ function renderCard(product, index) {
         ${priceNew}
         ${priceDiscount}
       </div>
-      <button class="card-btn" onclick="goToProduct('${escapeHtml(product.link)}')">
-        Ver Oferta <span>→</span>
-      </button>
+      <div class="card-actions-row">
+        ${buyBtn}
+        ${seeBtn}
+      </div>
     </div>
   </div>`;
 }
@@ -3594,6 +3625,8 @@ window.addEventListener('scroll', () => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeModal();
+    closeCart();
+    closeCheckout();
   }
 });
 
@@ -3603,4 +3636,280 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   initParallax();
   initParticles();
+  updateCartBadge();
 });
+
+// ===================================================
+// ===== CARRINHO (CART) =============================
+// ===================================================
+
+function cartSave() {
+  localStorage.setItem('cart_v1', JSON.stringify(cart));
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((s, i) => s + (i.qty || 1), 0);
+  const badge = document.getElementById('cartCountBadge');
+  if (!badge) return;
+  badge.textContent = total > 9 ? '9+' : total;
+  badge.classList.toggle('show', total > 0);
+}
+
+function cartAdd(pid) {
+  const product = productsMap[String(pid)];
+  if (!product || !product.price || product.price <= 0) {
+    showToast('\u26a0\ufe0f', 'Produto sem pre\u00e7o definido.');
+    return;
+  }
+  const markupPrice = Math.ceil(product.price * MARKUP * 100) / 100;
+  const idx = cart.findIndex(i => i.id === String(pid));
+  if (idx >= 0) {
+    cart[idx].qty = (cart[idx].qty || 1) + 1;
+  } else {
+    cart.push({
+      id: String(pid),
+      name: product.name,
+      link: product.link,
+      affiliatePrice: product.price,
+      price: markupPrice,
+      img: product.img || '',
+      store: product.store || '',
+      qty: 1
+    });
+  }
+  cartSave();
+  updateCartBadge();
+  showToast('\u2705', 'Adicionado ao carrinho!');
+}
+
+function cartQty(idx, delta) {
+  const newQty = (cart[idx].qty || 1) + delta;
+  if (newQty <= 0) {
+    cartRemove(idx);
+    return;
+  }
+  cart[idx].qty = newQty;
+  cartSave();
+  updateCartBadge();
+  renderCartItems();
+}
+
+function cartRemove(idx) {
+  cart.splice(idx, 1);
+  cartSave();
+  updateCartBadge();
+  renderCartItems();
+}
+
+function renderCartItems() {
+  const list = document.getElementById('cartItemsList');
+  const totalEl = document.getElementById('cartTotal');
+  if (!list) return;
+
+  if (cart.length === 0) {
+    list.innerHTML = '<div class="cart-empty"><div style="font-size:3.5rem;margin-bottom:1rem">\ud83d\uded2</div><p>Seu carrinho est\u00e1 vazio</p><p style="font-size:13px;color:var(--text-muted)">Adicione produtos para come\u00e7ar</p></div>';
+    if (totalEl) totalEl.textContent = 'R$ 0,00';
+    return;
+  }
+
+  list.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-img">
+        ${item.img ? `<img src="${escapeHtml(item.img)}" alt="" onerror="this.style.display='none'">` : '<span style="font-size:2rem">\ud83d\udce6</span>'}
+      </div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${escapeHtml(item.name)}</div>
+        <div class="cart-item-store">${escapeHtml(item.store)}</div>
+        <div class="cart-item-price">R$ ${formatPrice(item.price)} cada</div>
+        <div class="cart-item-qty">
+          <button onclick="cartQty(${idx}, -1)" aria-label="Diminuir">\u2212</button>
+          <span>${item.qty}</span>
+          <button onclick="cartQty(${idx}, 1)" aria-label="Aumentar">+</button>
+        </div>
+      </div>
+      <div class="cart-item-subtotal">
+        <span>R$ ${formatPrice(item.price * item.qty)}</span>
+        <button class="cart-item-remove" onclick="cartRemove(${idx})" aria-label="Remover">\u2715</button>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  if (totalEl) totalEl.textContent = `R$ ${formatPrice(total)}`;
+}
+
+function openCart() {
+  renderCartItems();
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  const el = document.getElementById('cartOverlay');
+  if (el) el.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ===================================================
+// ===== CHECKOUT ====================================
+// ===================================================
+
+let _orderPayId = null;
+let _orderPollInterval = null;
+
+function openCheckout() {
+  if (cart.length === 0) { showToast('\u26a0\ufe0f', 'Carrinho vazio!'); return; }
+  closeCart();
+  renderCheckoutSummary();
+  document.getElementById('checkoutStep1').style.display = 'block';
+  document.getElementById('checkoutStep2').style.display = 'none';
+  document.getElementById('checkoutStep3').style.display = 'none';
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCheckout() {
+  const el = document.getElementById('checkoutOverlay');
+  if (el) el.classList.remove('open');
+  document.body.style.overflow = '';
+  if (_orderPollInterval) { clearInterval(_orderPollInterval); _orderPollInterval = null; }
+}
+
+function renderCheckoutSummary() {
+  const el = document.getElementById('checkoutSummary');
+  if (!el) return;
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  el.innerHTML = cart.map(i => `
+    <div class="checkout-summary-item">
+      <span>${escapeHtml(i.name)} \u00d7${i.qty}</span>
+      <strong>R$ ${formatPrice(i.price * i.qty)}</strong>
+    </div>
+  `).join('') + `
+    <div class="checkout-summary-total">
+      <span>Total</span>
+      <span>R$ ${formatPrice(total)}</span>
+    </div>`;
+}
+
+async function checkoutSubmit() {
+  const get = id => document.getElementById(id)?.value.trim() || '';
+  const required = [
+    { id: 'co-name',         label: 'Nome completo' },
+    { id: 'co-email',        label: 'E-mail' },
+    { id: 'co-phone',        label: 'Telefone/WhatsApp' },
+    { id: 'co-cep',          label: 'CEP' },
+    { id: 'co-street',       label: 'Rua' },
+    { id: 'co-number',       label: 'N\u00famero' },
+    { id: 'co-neighborhood', label: 'Bairro' },
+    { id: 'co-city',         label: 'Cidade' },
+    { id: 'co-state',        label: 'Estado' }
+  ];
+
+  for (const f of required) {
+    if (!get(f.id)) {
+      document.getElementById(f.id)?.focus();
+      showToast('\u26a0\ufe0f', `Preencha: ${f.label}`);
+      return;
+    }
+  }
+
+  const email = get('co-email');
+  if (!email.includes('@') || !email.includes('.')) {
+    showToast('\u26a0\ufe0f', 'E-mail inv\u00e1lido.');
+    return;
+  }
+
+  const btn = document.getElementById('checkoutSubmitBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Gerando PIX...'; }
+
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const payload = {
+    items: cart,
+    total: Math.round(total * 100) / 100,
+    customer: {
+      name:         get('co-name'),
+      email:        email,
+      phone:        get('co-phone'),
+      cep:          get('co-cep'),
+      street:       get('co-street'),
+      number:       get('co-number'),
+      complement:   get('co-complement'),
+      neighborhood: get('co-neighborhood'),
+      city:         get('co-city'),
+      state:        get('co-state')
+    }
+  };
+
+  try {
+    const res = await fetch('/api/pedido/criar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Erro ao gerar pagamento');
+
+    _orderPayId = data.payment_id;
+
+    document.getElementById('checkoutStep1').style.display = 'none';
+    document.getElementById('checkoutStep2').style.display = 'block';
+
+    if (data.qr_code_base64) {
+      document.getElementById('orderQrImg').src = 'data:image/png;base64,' + data.qr_code_base64;
+    }
+    const copyBtn = document.getElementById('orderQrCopyBtn');
+    if (copyBtn) {
+      copyBtn.setAttribute('data-pix', data.qr_code || '');
+    }
+
+    const totalPix = document.getElementById('orderPixTotal');
+    if (totalPix) totalPix.textContent = `R$ ${formatPrice(total)}`;
+
+    _orderPollInterval = setInterval(checkoutPollStatus, 4000);
+
+  } catch (e) {
+    showToast('\u274c', e.message);
+    if (btn) { btn.disabled = false; btn.textContent = 'Gerar PIX e Pagar'; }
+  }
+}
+
+async function checkoutPollStatus() {
+  if (!_orderPayId) return;
+  try {
+    const res = await fetch('/api/pedido/status/' + _orderPayId);
+    const data = await res.json();
+    if (data.status === 'approved') {
+      clearInterval(_orderPollInterval);
+      _orderPollInterval = null;
+      document.getElementById('checkoutStep2').style.display = 'none';
+      document.getElementById('checkoutStep3').style.display = 'flex';
+      cart = [];
+      cartSave();
+      updateCartBadge();
+    }
+  } catch (e) { /* ignore poll errors */ }
+}
+
+function copyOrderPix() {
+  const btn = document.getElementById('orderQrCopyBtn');
+  const code = btn?.getAttribute('data-pix') || '';
+  if (!code) return;
+  navigator.clipboard.writeText(code).then(() => showToast('\u2705', 'C\u00f3digo PIX copiado!'));
+}
+
+function lookupCep() {
+  const cep = (document.getElementById('co-cep')?.value || '').replace(/\D/g, '');
+  if (cep.length !== 8) return;
+  fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    .then(r => r.json())
+    .then(d => {
+      if (d.erro) return;
+      if (d.logradouro) document.getElementById('co-street').value = d.logradouro;
+      if (d.bairro)     document.getElementById('co-neighborhood').value = d.bairro;
+      if (d.localidade) document.getElementById('co-city').value = d.localidade;
+      if (d.uf)         document.getElementById('co-state').value = d.uf;
+      document.getElementById('co-number')?.focus();
+    })
+    .catch(() => {});
+}
+

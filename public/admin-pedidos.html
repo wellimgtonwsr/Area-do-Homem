@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Pedidos | Área do Homem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #FF8C00;
+      --gold-dark: #E67E00;
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #5f6b77;
+      --border: rgba(15,23,42,0.1);
+      --radius: 10px;
+      --red: #E53935;
+      --green: #2E7D32;
+      --blue: #1565C0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* LOGIN */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .login-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .login-card h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 0.25rem;
+    }
+    .login-card p { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+    .login-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: 'Barlow', sans-serif;
+      color: var(--text);
+      outline: none;
+      margin-bottom: 12px;
+    }
+    .login-input:focus { border-color: var(--gold); }
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Barlow', sans-serif;
+      cursor: pointer;
+    }
+    .login-err { font-size: 13px; color: var(--red); margin-top: 8px; display: none; }
+
+    /* MAIN */
+    .main { display: none; }
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-refresh {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-family: 'Barlow', sans-serif;
+      cursor: pointer;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+    .btn-refresh:hover { border-color: var(--gold); color: var(--gold); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+    /* STATS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .stat-card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .stat-card .value { font-size: 1.8rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+    .stat-card .value.gold { color: var(--gold); }
+    .stat-card .value.green { color: var(--green); }
+
+    /* FILTERS */
+    .filters-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+    .filter-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .filter-btn.active { background: rgba(255,140,0,0.1); border-color: var(--gold); color: var(--gold); }
+
+    /* ORDERS TABLE */
+    .orders-table-wrap { overflow-x: auto; }
+    .orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .orders-table th {
+      background: var(--bg);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .orders-table td {
+      padding: 14px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .orders-table tr:last-child td { border-bottom: none; }
+    .orders-table tr:hover td { background: #fafbfc; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-pending_payment { background: rgba(245,158,11,0.12); color: #d97706; }
+    .status-paid           { background: rgba(46,125,50,0.12); color: var(--green); }
+    .status-fulfilling     { background: rgba(21,101,192,0.12); color: var(--blue); }
+    .status-shipped        { background: rgba(255,140,0,0.12); color: var(--gold-dark); }
+    .status-delivered      { background: rgba(46,125,50,0.2); color: var(--green); }
+    .status-cancelled      { background: rgba(229,57,53,0.1); color: var(--red); }
+
+    .order-items-list { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+    .order-customer { font-weight: 600; color: var(--text); }
+    .order-address  { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+    .affiliate-links { display: flex; flex-direction: column; gap: 4px; }
+    .affiliate-link {
+      font-size: 11px;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .affiliate-link:hover { text-decoration: underline; }
+
+    .status-select {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-family: 'Barlow', sans-serif;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+    .status-select:focus { border-color: var(--gold); }
+
+    .total-value { font-weight: 700; color: var(--gold); }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+    }
+    .empty-state div { font-size: 3rem; margin-bottom: 1rem; }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      header { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div style="font-size:2.5rem;margin-bottom:0.5rem">⚡</div>
+    <h1>Admin Pedidos</h1>
+    <p>Área do Homem — Painel de Pedidos</p>
+    <input class="login-input" type="password" id="tokenInput" placeholder="Token de acesso"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Entrar →</button>
+    <div class="login-err" id="loginErr">Token incorreto.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainApp">
+  <header>
+    <span class="header-brand">⚡ Admin Pedidos</span>
+    <div class="header-actions">
+      <span id="lastUpdate" style="font-size:12px;color:var(--muted)"></span>
+      <button class="btn-refresh" onclick="loadOrders()">↺ Atualizar</button>
+      <button class="btn-refresh" onclick="logout()" style="color:var(--red)">Sair</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="label">Total Pedidos</div><div class="value gold" id="statTotal">—</div></div>
+      <div class="stat-card"><div class="label">Aguardando Pgto</div><div class="value" id="statPending">—</div></div>
+      <div class="stat-card"><div class="label">Pago — A Enviar</div><div class="value green" id="statPaid">—</div></div>
+      <div class="stat-card"><div class="label">Receita Total</div><div class="value gold" id="statRevenue">—</div></div>
+    </div>
+
+    <div class="filters-bar">
+      <span style="font-size:12px;color:var(--muted);font-weight:600;">Filtrar:</span>
+      <button class="filter-btn active" onclick="setFilter('all', this)">Todos</button>
+      <button class="filter-btn" onclick="setFilter('pending_payment', this)">Aguardando Pgto</button>
+      <button class="filter-btn" onclick="setFilter('paid', this)">Pago</button>
+      <button class="filter-btn" onclick="setFilter('fulfilling', this)">Em Separação</button>
+      <button class="filter-btn" onclick="setFilter('shipped', this)">Enviado</button>
+      <button class="filter-btn" onclick="setFilter('delivered', this)">Entregue</button>
+    </div>
+
+    <div class="orders-table-wrap">
+      <table class="orders-table" id="ordersTable">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Cliente</th>
+            <th>Produtos</th>
+            <th>Links Afiliado</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody">
+          <tr><td colspan="6" class="loading">Carregando pedidos...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+let adminToken = '';
+let allOrders = [];
+let currentFilter = 'all';
+
+function doLogin() {
+  const t = document.getElementById('tokenInput').value.trim();
+  if (!t) return;
+  adminToken = t;
+  loadOrders();
+}
+
+function logout() {
+  adminToken = '';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('tokenInput').value = '';
+}
+
+async function loadOrders() {
+  try {
+    const res = await fetch('/api/admin/pedidos', {
+      headers: { 'x-admin-token': adminToken }
+    });
+    if (res.status === 401) {
+      document.getElementById('loginErr').style.display = 'block';
+      return;
+    }
+    document.getElementById('loginErr').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    document.getElementById('mainApp').querySelector('.main') // handled by id
+
+    allOrders = await res.json();
+    renderStats();
+    renderOrders();
+    document.getElementById('lastUpdate').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR');
+  } catch (e) {
+    alert('Erro ao carregar pedidos: ' + e.message);
+  }
+}
+
+function renderStats() {
+  document.getElementById('statTotal').textContent = allOrders.length;
+  document.getElementById('statPending').textContent = allOrders.filter(o => o.status === 'pending_payment').length;
+  document.getElementById('statPaid').textContent = allOrders.filter(o => o.status === 'paid').length;
+  const revenue = allOrders.filter(o => ['paid','fulfilling','shipped','delivered'].includes(o.status))
+    .reduce((s, o) => s + (o.total || 0), 0);
+  document.getElementById('statRevenue').textContent = 'R$ ' + revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOrders();
+}
+
+function renderOrders() {
+  const body = document.getElementById('ordersBody');
+  const filtered = currentFilter === 'all' ? allOrders : allOrders.filter(o => o.status === currentFilter);
+
+  if (filtered.length === 0) {
+    body.innerHTML = `<tr><td colspan="6" class="empty-state"><div>📦</div><p>Nenhum pedido encontrado.</p></td></tr>`;
+    return;
+  }
+
+  body.innerHTML = filtered.map(order => {
+    const dt = new Date(order.created_at).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit' });
+    const c = order.customer || {};
+    const items = Array.isArray(order.items) ? order.items : [];
+
+    const itemsHtml = items.map(i => `<div>• ${escHtml(i.name)} ×${i.qty || 1} — R$ ${fmt(i.price * (i.qty || 1))}</div>`).join('');
+    const linksHtml = items.map(i => `<a class="affiliate-link" href="${escHtml(i.link)}" target="_blank" rel="noopener noreferrer">🔗 ${escHtml((i.name||'').slice(0,30))}...</a>`).join('');
+
+    const addr = [c.street, c.number, c.complement, c.neighborhood, c.city, c.state, c.cep].filter(Boolean).join(', ');
+
+    const statusMap = {
+      pending_payment: 'Aguardando Pgto',
+      paid:            'Pago — Comprar!',
+      fulfilling:      'Em Separação',
+      shipped:         'Enviado',
+      delivered:       'Entregue',
+      cancelled:       'Cancelado'
+    };
+
+    return `<tr>
+      <td style="white-space:nowrap;color:var(--muted)">${dt}</td>
+      <td>
+        <div class="order-customer">${escHtml(c.name || '—')}</div>
+        <div class="order-address">${escHtml(c.email || '')}${c.phone ? '<br>📱 ' + escHtml(c.phone) : ''}</div>
+        <div class="order-address" style="margin-top:4px">📍 ${escHtml(addr)}</div>
+      </td>
+      <td><div class="order-items-list">${itemsHtml}</div></td>
+      <td><div class="affiliate-links">${linksHtml}</div></td>
+      <td><span class="total-value">R$ ${fmt(order.total || 0)}</span></td>
+      <td>
+        <span class="status-badge status-${order.status}">${statusMap[order.status] || order.status}</span>
+        <br>
+        <select class="status-select" style="margin-top:8px" onchange="updateStatus('${order.id}', this.value, this)">
+          <option value="">Alterar...</option>
+          <option value="pending_payment">Aguardando Pgto</option>
+          <option value="paid">Pago</option>
+          <option value="fulfilling">Em Separação</option>
+          <option value="shipped">Enviado</option>
+          <option value="delivered">Entregue</option>
+          <option value="cancelled">Cancelar</option>
+        </select>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+async function updateStatus(orderId, status, selectEl) {
+  if (!status) return;
+  try {
+    const res = await fetch(`/api/admin/pedidos/${orderId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': adminToken },
+      body: JSON.stringify({ status })
+    });
+    if (!res.ok) throw new Error('Erro ao atualizar');
+    const idx = allOrders.findIndex(o => o.id === orderId);
+    if (idx >= 0) allOrders[idx].status = status;
+    renderStats();
+    renderOrders();
+  } catch (e) {
+    alert('Erro: ' + e.message);
+    selectEl.value = '';
+  }
+}
+
+function fmt(v) {
+  return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str || '');
+  return d.innerHTML;
+}
+
+// Auto-refresh a cada 60s
+setInterval(() => { if (adminToken) loadOrders(); }, 60000);
+</script>
+</body>
+</html>

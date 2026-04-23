@@ -60,3 +60,26 @@ create policy "access_insert_all"   on chat_access   for insert with check (true
 -- REALTIME (habilitar para chat ao vivo)
 -- =============================================
 alter publication supabase_realtime add table chat_messages;
+
+-- =============================================
+-- 4. TABELA DE PEDIDOS (DROPSHIPPING)
+-- =============================================
+create table if not exists orders (
+  id          uuid primary key default gen_random_uuid(),
+  payment_id  text,
+  email       text not null,
+  customer    jsonb not null,
+  items       jsonb not null,
+  total       numeric not null,
+  status      text not null default 'pending_payment',
+  created_at  timestamptz default now()
+);
+
+-- Index para buscas por status e email
+create index if not exists orders_status_idx on orders (status);
+create index if not exists orders_email_idx  on orders (email);
+
+-- RLS: só o backend (service_role) acessa orders
+alter table orders enable row level security;
+create policy "orders_backend_only" on orders for all using (true) with check (true);
+

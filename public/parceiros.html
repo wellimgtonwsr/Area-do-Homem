@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parceiros | Área do Homem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,140,0,0.2);
+    }
+    .page-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+    }
+    .page-hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .page-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+    .back-btn:hover { opacity: 0.8; }
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .partner-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,140,0,0.15);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: border-color 0.25s;
+    }
+    .partner-card:hover { border-color: var(--gold); }
+    .partner-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      background: var(--dark3);
+    }
+    .partner-icon svg { color: var(--gold); }
+    .partner-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .partner-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .partner-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(255,140,0,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(255,140,0,0.3);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 0.75rem;
+    }
+    .affiliate-note {
+      background: var(--dark3);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .affiliate-note h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .affiliate-note p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .cta-block {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(255,140,0,0.08), rgba(255,140,0,0.03));
+      border: 1px solid rgba(255,140,0,0.2);
+      border-radius: var(--radius);
+      padding: 3rem 2rem;
+    }
+    .cta-block h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--text);
+      letter-spacing: 2px;
+      margin-bottom: 0.75rem;
+    }
+    .cta-block p { font-size: 14px; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--gold-dark); }
+    @media (max-width: 600px) {
+      .page-hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div class="logo-text">
+        <span>Área do Homem</span>
+        <span>Ferramentas & Tecnologia</span>
+      </div>
+    </a>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="index.html#produtos">Produtos</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>Parceiros</h1>
+  <p>As maiores plataformas do Brasil que tornam a Área do Homem possível.</p>
+</div>
+
+<div class="page-content">
+  <a href="index.html" class="back-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Voltar à loja
+  </a>
+
+  <div class="affiliate-note">
+    <h4>Programa de Afiliados</h4>
+    <p>A Área do Homem faz parte dos programas de afiliados das lojas abaixo. Isso significa que, ao comprar por nossos links, podemos receber uma comissão — sem custo adicional para você. Usamos esses recursos para manter o site gratuito e atualizado.</p>
+  </div>
+
+  <div class="section-header" style="text-align:left;margin-bottom:1.5rem;">
+    <p class="section-label">Lojas Parceiras</p>
+    <h2 class="section-title">Onde você compra</h2>
+  </div>
+
+  <div class="partners-grid">
+    <div class="partner-card">
+      <div class="partner-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </div>
+      <h3>Mercado Livre</h3>
+      <p>Maior marketplace da América Latina. Entrega rápida com Mercado Envios.</p>
+      <span class="partner-badge">Afiliado Oficial</span>
+    </div>
+    <div class="partner-card">
+      <div class="partner-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      </div>
+      <h3>Shopee</h3>
+      <p>Produtos com ótimo custo-benefício e frete grátis em milhares de itens.</p>
+      <span class="partner-badge">Afiliado Oficial</span>
+    </div>
+    <div class="partner-card">
+      <div class="partner-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <h3>Amazon</h3>
+      <p>Referência mundial em e-commerce com entrega Prime e garantia de devolução.</p>
+      <span class="partner-badge">Afiliado Oficial</span>
+    </div>
+    <div class="partner-card">
+      <div class="partner-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <h3>Americanas</h3>
+      <p>Variedade de produtos com entrega para todo o Brasil e parcelamento facilitado.</p>
+      <span class="partner-badge">Parceiro</span>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h3>Quer ser parceiro?</h3>
+    <p>Se você tem uma loja ou produto masculino e quer aparecer na Área do Homem, entre em contato conosco.</p>
+    <a href="https://www.instagram.com/area_do_hoomem" target="_blank" rel="noopener noreferrer" class="cta-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      Falar no Instagram
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <p>© 2026 Área do Homem. Todos os direitos reservados.</p>
+      <div style="display:flex;gap:1.5rem;font-size:13px;">
+        <a href="privacidade.html" style="color:var(--text-muted);text-decoration:none;">Privacidade</a>
+        <a href="termos.html" style="color:var(--text-muted);text-decoration:none;">Termos</a>
+        <a href="index.html" style="color:var(--gold);text-decoration:none;">Voltar à Loja</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

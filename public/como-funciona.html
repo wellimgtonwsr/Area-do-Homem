@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Área do Homem - Como Funciona">
+  <title>Como Funciona | Área do Homem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,140,0,0.2);
+    }
+    .page-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+    }
+    .page-hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .page-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,140,0,0.15);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: white;
+      margin: 0 auto 1rem;
+    }
+    .step-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .step-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .info-block {
+      background: var(--dark3);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .info-block h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .info-block p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+    .back-btn:hover { opacity: 0.8; }
+    @media (max-width: 600px) {
+      .page-hero h1 { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div class="logo-text">
+        <span>Área do Homem</span>
+        <span>Ferramentas & Tecnologia</span>
+      </div>
+    </a>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="index.html#produtos">Produtos</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>Como Funciona</h1>
+  <p>Entenda como a Área do Homem seleciona e apresenta os melhores produtos para você.</p>
+</div>
+
+<div class="page-content">
+  <a href="index.html" class="back-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Voltar à loja
+  </a>
+
+  <div class="section-header" style="text-align:left;margin-bottom:2rem;">
+    <p class="section-label">Processo</p>
+    <h2 class="section-title">3 passos simples</h2>
+  </div>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <h3>Curadoria Manual</h3>
+      <p>Nossa equipe pesquisa e seleciona os melhores produtos masculinos disponíveis nas principais lojas do Brasil.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <h3>Compare & Escolha</h3>
+      <p>Você visualiza preço, avaliação e loja diretamente no catálogo. Filtre por categoria para encontrar o que precisa.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <h3>Compre com Segurança</h3>
+      <p>Ao clicar em "Ver Oferta", você é redirecionado para a loja oficial. A compra é 100% realizada na loja parceira.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="text-align:left;margin-bottom:1.5rem;">
+    <p class="section-label">Perguntas Frequentes</p>
+    <h2 class="section-title">Dúvidas</h2>
+  </div>
+
+  <div class="info-block">
+    <h4>O site cobra algum valor para navegar?</h4>
+    <p>Não. Navegar e ver os produtos é completamente gratuito. O único recurso pago é o Chat Global (R$ 4,00 vitalício).</p>
+  </div>
+  <div class="info-block">
+    <h4>A Área do Homem vende os produtos diretamente?</h4>
+    <p>Não. Somos um site de curadoria e afiliados. Os produtos são vendidos pelas lojas parceiras (Mercado Livre, Shopee, Amazon, etc.).</p>
+  </div>
+  <div class="info-block">
+    <h4>Como os preços são atualizados?</h4>
+    <p>Os preços são obtidos automaticamente das lojas parceiras e atualizados com regularidade. Porém, podem sofrer alterações sem aviso prévio.</p>
+  </div>
+  <div class="info-block">
+    <h4>Como entro em contato em caso de problema?</h4>
+    <p>Entre em contato via nossas redes sociais: Instagram <strong>@area_do_hoomem</strong> ou Facebook.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <p>© 2026 Área do Homem. Todos os direitos reservados.</p>
+      <div style="display:flex;gap:1.5rem;font-size:13px;">
+        <a href="privacidade.html" style="color:var(--text-muted);text-decoration:none;">Privacidade</a>
+        <a href="termos.html" style="color:var(--text-muted);text-decoration:none;">Termos</a>
+        <a href="index.html" style="color:var(--gold);text-decoration:none;">Voltar à Loja</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

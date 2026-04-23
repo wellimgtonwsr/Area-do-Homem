@@ -968,7 +968,7 @@
       <div class="chat-header-icon">💬</div>
       <div class="chat-header-info">
         <div class="chat-header-title">Chat Global do Homem</div>
-        <div class="chat-header-sub"><span class="online-dot"></span><span id="chatOnline">—</span> online agora</div>
+        <div class="chat-header-sub"><span class="online-dot"></span><span id="chatOnline">—</span> online agora • <span style="color:var(--gold)">Grátis</span></div>
       </div>
       <button class="chat-close-btn" onclick="closeChat()" aria-label="Fechar">✕</button>
     </div>
@@ -983,41 +983,13 @@
     </div>
     <!-- Mensagens (borradas quando bloqueado) -->
     <div class="chat-messages-area" id="chatMessages"></div>
-    <!-- Tela de Login / Criar Conta -->
-    <div class="chat-lock-overlay" id="chatLockOverlay">
-      <div class="chat-login-tabs">
-        <button class="chat-tab active" id="tabLogin" onclick="switchChatTab('login')">Entrar</button>
-        <button class="chat-tab" id="tabNew" onclick="switchChatTab('new')">Criar Conta</button>
-      </div>
-      <!-- Tab: Login -->
-      <div id="chatLoginForm">
-        <div class="chat-lock-title" style="font-size:1.1rem">Acesse com sua conta</div>
-        <input class="chat-nick-input" type="email" id="chatLoginEmail" placeholder="Seu e-mail cadastrado"
-               onkeydown="if(event.key==='Enter')loginChat()">
-        <button class="btn-enter-chat" onclick="loginChat()">Verificar Acesso →</button>
-        <div id="chatLoginMsg" style="font-size:12px;color:rgba(255,255,255,0.5)"></div>
-      </div>
-      <!-- Tab: Criar Conta -->
-      <div id="chatNewForm" style="display:none">
-        <div class="chat-lock-title" style="font-size:1.1rem">Primeiro Acesso</div>
-        <div class="chat-lock-desc">Acesso vitalício por apenas R$ 4,00 via PIX</div>
-        <input class="chat-nick-input" type="email" id="chatNewEmail" placeholder="Seu e-mail"
-               onkeydown="if(event.key==='Enter')openPayModalWithEmail()">
-        <button class="btn-pay-mp" onclick="openPayModalWithEmail()">💳 Pagar com PIX — R$ 4,00</button>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4)">Pagamento único • Acesso permanente</div>
-      </div>
-    </div>
+    <!-- Tela de Login / Chat Livre -->
+    <div class="chat-lock-overlay" id="chatLockOverlay" style="display:none"></div>
     <!-- Input desbloqueado -->
     <div class="chat-input-area" id="chatInputArea" style="display:none">
       <input class="chat-text-input" type="text" id="chatTextInput" placeholder="Digite uma mensagem..." maxlength="300"
              onkeydown="if(event.key==='Enter')sendChatMsg()">
       <button class="chat-send-btn" onclick="sendChatMsg()" aria-label="Enviar">↑</button>
-    </div>
-    <!-- Input bloqueado -->
-    <div class="chat-locked-input" id="chatLockedInput" onclick="switchChatTab('new')">
-      <span class="chat-locked-icon">🔒</span>
-      <span class="chat-locked-txt">Entre ou crie sua conta para participar</span>
-      <button class="chat-locked-cta">Acessar →</button>
     </div>
   </div>
 </div>
@@ -4869,7 +4841,7 @@ const API_BASE = window.location.hostname.endsWith('github.io')
   : '';
 
 // ===== CHAT =====
-let chatOpen = false, chatUnlocked = !!(localStorage.getItem('chat_unlocked')), chatUsername = localStorage.getItem('chat_nick') || '', chatUnread = 0;
+let chatOpen = false, chatUnlocked = true, chatUsername = localStorage.getItem('chat_nick') || '', chatUnread = 0;
 let _payInterval = null, _payCountdown = null, _currentPayId = null, _pixCode = '';
 let _chatEmail = localStorage.getItem('chat_email') || '';
 
@@ -4896,13 +4868,15 @@ function closeChat() {
 }
 
 function showChatScreen(screen) {
-  const locked   = screen === 'locked';
+  // chat é grátis — nunca mostra tela locked
+  if (screen === 'locked') screen = 'username';
   const username = screen === 'username';
   const messages = screen === 'messages';
   document.getElementById('chatUsernameScreen').style.display = username ? 'flex' : 'none';
   document.getElementById('chatMessages').style.display       = username ? 'none' : 'flex';
-  document.getElementById('chatLockOverlay').style.display    = locked   ? 'flex' : 'none';
-  document.getElementById('chatLockedInput').style.display    = locked   ? 'flex' : 'none';
+  document.getElementById('chatLockOverlay').style.display    = 'none';
+  const lockedInput = document.getElementById('chatLockedInput');
+  if (lockedInput) lockedInput.style.display = 'none';
   document.getElementById('chatInputArea').style.display      = messages ? 'flex' : 'none';
   document.getElementById('chatMessages').style.flexDirection = 'column';
   if (messages) { _appendWelcomeMsg(); _startChatPoll(); }
