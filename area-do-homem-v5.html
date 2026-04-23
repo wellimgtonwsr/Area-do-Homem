@@ -4905,7 +4905,7 @@ function showChatScreen(screen) {
   document.getElementById('chatLockedInput').style.display    = locked   ? 'flex' : 'none';
   document.getElementById('chatInputArea').style.display      = messages ? 'flex' : 'none';
   document.getElementById('chatMessages').style.flexDirection = 'column';
-  if (messages) _appendWelcomeMsg();
+  if (messages) { _appendWelcomeMsg(); _startChatPoll(); }
 }
 
 function enterChat() {
@@ -5178,13 +5178,7 @@ async function _pingOnline() {
   } catch(e) {}
 }
 
-// Inicia poll quando chat for desbloqueado
-const _origAppendWelcome = _appendWelcomeMsg;
-function _appendWelcomeMsg() {
-  _origAppendWelcome();
-  _startChatPoll();
-}
-// Re-pinga quando aba volca ao foco (browsers throttle timers em background)
+// Re-pinga quando aba volta ao foco (browsers throttle timers em background)
 document.addEventListener('visibilitychange', () => { if (!document.hidden && chatUnlocked) _pingOnline(); });
 window.addEventListener('focus', () => { if (chatUnlocked) _pingOnline(); });
 
