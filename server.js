@@ -16,10 +16,12 @@ const mpClient = new MercadoPagoConfig({
 const mpPayment = new Payment(mpClient);
 
 // ── Supabase client (service_role — backend only) ────────────────────────────
-const supabase = createClient(
-  process.env.SUPABASE_URL  || '',
-  process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || ''
-);
+const supabase = process.env.SUPABASE_URL
+  ? createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || ''
+    )
+  : null;
 
 // ── CORS (permite GitHub Pages e outros origens) ─────────────────────────────
 app.use((req, res, next) => {
@@ -46,6 +48,7 @@ app.get('/admin', (req, res) => {
 
 // ── API: Produtos (Supabase) ──────────────────────────────────────────────────
 app.get('/api/produtos', async (req, res) => {
+  if (!supabase) return res.json([]);
   try {
     const { data, error } = await supabase
       .from('products')
@@ -59,6 +62,7 @@ app.get('/api/produtos', async (req, res) => {
 });
 
 app.post('/api/produtos', async (req, res) => {
+  if (!supabase) return res.status(503).json({ error: 'Supabase não configurado.' });
   const p = req.body;
   if (!p || !p.name || !p.link || !p.price) {
     return res.status(400).json({ error: 'Campos obrigatórios: name, link, price' });
@@ -89,6 +93,7 @@ app.post('/api/produtos', async (req, res) => {
 });
 
 app.delete('/api/produtos/:id', async (req, res) => {
+  if (!supabase) return res.status(503).json({ error: 'Supabase não configurado.' });
   try {
     const { error } = await supabase
       .from('products')
@@ -110,13 +115,15 @@ app.post('/api/pagamento/criar', async (req, res) => {
   }
   email = email.toLowerCase().trim();
   // Verificar se email já pagou
-  const { data: existing } = await supabase
-    .from('chat_access')
-    .select('id')
-    .eq('email', email)
-    .maybeSingle();
-  if (existing) {
-    return res.json({ already_paid: true, email });
+  if (supabase) {
+    const { data: existing } = await supabase
+      .from('chat_access')
+      .select('id')
+      .eq('email', email)
+      .maybeSingle();
+    if (existing) {
+      return res.json({ already_paid: true, email });
+    }
   }
   if (!process.env.MP_ACCESS_TOKEN) {
     return res.status(503).json({ error: 'MP_ACCESS_TOKEN não configurado no servidor.' });
@@ -161,7 +168,7 @@ app.get('/api/pagamento/status/:id', async (req, res) => {
   try {
     const payment = await mpPayment.get({ id });
     // Se aprovado, salvar acesso no Supabase
-    if (payment.status === 'approved' && payment.payer?.email) {
+    if (supabase && payment.status === 'approved' && payment.payer?.email) {
       await supabase.from('chat_access').upsert({
         email:      payment.payer.email.toLowerCase(),
         payment_id: String(payment.id)
@@ -178,6 +185,7 @@ app.get('/api/pagamento/status/:id', async (req, res) => {
 app.get('/api/chat/acesso/:email', async (req, res) => {
   const email = decodeURIComponent(req.params.email).toLowerCase();
   if (!email || !email.includes('@')) return res.status(400).json({ error: 'Email inválido' });
+  if (!supabase) return res.json({ has_access: false, paid_at: null });
   const { data } = await supabase
     .from('chat_access')
     .select('id, paid_at')
@@ -195,7 +203,7 @@ app.post('/api/pagamento/webhook', async (req, res) => {
   if ((topic === 'payment' || req.body?.type === 'payment') && dataId && process.env.MP_ACCESS_TOKEN) {
     try {
       const payment = await mpPayment.get({ id: parseInt(dataId, 10) });
-      if (payment.status === 'approved' && payment.payer?.email) {
+      if (payment.status === 'approved' && payment.payer?.email && supabase) {
         await supabase.from('chat_access').upsert({
           email:      payment.payer.email.toLowerCase(),
           payment_id: String(payment.id)
